@@ -3,7 +3,7 @@ package com.diy.software.gui;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
-import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 
@@ -16,7 +16,7 @@ public class GUI{
 	 * @param wallet: Requires the wallet so the cards can be accessed and displayed onto the GUI
 	 * @param curretCart: Requires all the items as an array list;items can be displayed to simulate a scan
 	 */
-	public GUI(DoItYourselfStation doItYourselfStation, Customer customer, CardIssuer bank) {
+	public GUI(DoItYourselfStationAR doItYourselfStation, Customer customer, CardIssuer bank) {
 		frame = doItYourselfStation.touchScreen.getFrame();
 		
 		panel = new CustomJPanel(customer, doItYourselfStation, bank);
@@ -28,4 +28,4 @@ public class GUI{
 		frame.setLocationRelativeTo(null);
 		doItYourselfStation.touchScreen.setVisible(true);
 	}
-}	
+}
