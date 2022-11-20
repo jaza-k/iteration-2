@@ -25,6 +25,7 @@ import com.diy.simulation.Customer;
 import com.diy.software.payment.CreditPayment;
 import com.diy.software.scansoft.AddItemScanned;
 import com.jimmyselectronics.Item;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
@@ -34,7 +35,7 @@ public class CustomJPanel extends JPanel {
 	/**
 	 * Creation of the panel
 	 */
-	public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank) {
+	public CustomJPanel(Customer customer,DoItYourselfStationAR doItYourselfStationAR ,TouchScreen touchScreen, CardIssuer bank) {
 		setForeground(new Color(128, 128, 255));
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
@@ -70,7 +71,7 @@ public class CustomJPanel extends JPanel {
 		scanButton.setToolTipText("Use drop down to select");
 		scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
 		// Action event when "Scan" button clicked
-		AddItemScanned addItemScanned = new AddItemScanned(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStation.scanner);
+		AddItemScanned addItemScanned = new AddItemScanned(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStationAR.scanner);
 		scanButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -131,7 +132,7 @@ public class CustomJPanel extends JPanel {
 					
 					CreditPayment newpay = new CreditPayment();
 					newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
-					newpay.setReader(doItYourselfStation.cardReader);
+					newpay.setReader(doItYourselfStationAR.cardReader);
 					newpay.setCardIssuer(bank);
 					//System.out.println("Attempting to insert card.");
 					newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
@@ -139,7 +140,7 @@ public class CustomJPanel extends JPanel {
 					boolean flag = newpay.payForTotal(addItemScanned.getTotal());
 					if (flag)
 					{
-						doItYourselfStation.touchScreen.setVisible(false);
+						touchScreen.setVisible(false);
 					}
 					//else System.out.println("Transaction failed");
 					

@@ -3,12 +3,15 @@ package com.diy.software.gui;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
+import com.jimmyselectronics.disenchantment.TouchScreen;
+import com.jimmyselectronics.disenchantment.TouchScreenListener;
 
 public class CheckOutSystem {
 	private DoItYourselfStationAR checkOutSystem;
 	private Customer customer;
 	private CRListener crListener;
 	private BSListener bsListener;
+	private TouchScreen customerScreen;
 	
 	public CheckOutSystem(Customer inpuCustomer) {
 		customer = inpuCustomer;
@@ -21,6 +24,13 @@ public class CheckOutSystem {
 		checkOutSystem.turnOn();
 		checkOutSystem.cardReader.plugIn();
 		checkOutSystem.cardReader.turnOn();
+		//Creating a touch screen - for the customer
+		customerScreen = new TouchScreen();
+		customerScreen.plugIn();
+		customerScreen.turnOn();
+		
+		//TODO Create Touch Screen Listener and register it to the corresponding touch-screen
+		
 		bsListener = new BSListener();
 		crListener = new CRListener();
 		
@@ -31,6 +41,6 @@ public class CheckOutSystem {
 		// At this point we need to setup the customer's data
 		DataSetup customerData = new DataSetup(customer);
 		CardIssuer bank = customerData.getBank();
-		GUI customerGUI = new GUI(checkOutSystem, customer, bank);
+		GUI customerGUI = new GUI(checkOutSystem, customerScreen, customer, bank);
 	}
 }
