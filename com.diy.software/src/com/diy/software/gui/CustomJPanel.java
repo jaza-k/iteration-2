@@ -25,6 +25,7 @@ import com.diy.simulation.Customer;
 import com.diy.software.payment.CreditPayment;
 import com.diy.software.scansoft.AddItemScanned;
 import com.jimmyselectronics.Item;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
@@ -34,7 +35,7 @@ public class CustomJPanel extends JPanel {
 	/**
 	 * Creation of the panel
 	 */
-	public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank) {
+	public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank, TouchScreen screen) {
 		setForeground(new Color(128, 128, 255));
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
@@ -139,7 +140,7 @@ public class CustomJPanel extends JPanel {
 					boolean flag = newpay.payForTotal(addItemScanned.getTotal());
 					if (flag)
 					{
-						doItYourselfStation.touchScreen.setVisible(false);
+						screen.setVisible(false);
 					}
 					//else System.out.println("Transaction failed");
 					

@@ -1,6 +1,7 @@
 package com.diy.software.gui;
 
 import com.diy.hardware.DoItYourselfStationAR;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 
@@ -16,6 +17,8 @@ public class CheckOutSystem {
 	}
 	
 	private void setup() {
+		TouchScreen screen = new TouchScreen(); // customer station no longer has a touch screen?
+		
 		checkOutSystem = new DoItYourselfStationAR();
 		checkOutSystem.plugIn();
 		checkOutSystem.turnOn();
@@ -31,6 +34,6 @@ public class CheckOutSystem {
 		// At this point we need to setup the customer's data
 		DataSetup customerData = new DataSetup(customer);
 		CardIssuer bank = customerData.getBank();
-		GUI customerGUI = new GUI(checkOutSystem, customer, bank);
+		GUI customerGUI = new GUI(checkOutSystem, customer, bank, screen);
 	}
 }
