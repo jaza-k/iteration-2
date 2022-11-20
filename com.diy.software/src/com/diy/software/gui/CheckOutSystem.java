@@ -10,6 +10,7 @@ public class CheckOutSystem {
 	private Customer customer;
 	private CRListener crListener;
 	private BSListener bsListener;
+	private TouchScreen screen;
 	
 	public CheckOutSystem(Customer inpuCustomer) {
 		customer = inpuCustomer;
@@ -17,7 +18,9 @@ public class CheckOutSystem {
 	}
 	
 	private void setup() {
-		TouchScreen screen = new TouchScreen(); // customer station no longer has a touch screen?
+		screen = new TouchScreen(); // customer station no longer has a touch screen? Making touch screen object here instead then
+		screen.plugIn();
+		screen.turnOn();
 		
 		checkOutSystem = new DoItYourselfStationAR();
 		checkOutSystem.plugIn();
