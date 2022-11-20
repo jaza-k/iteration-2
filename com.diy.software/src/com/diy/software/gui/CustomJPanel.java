@@ -126,34 +126,25 @@ public class CustomJPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Action when "pay" button clicked
 				try {
-					//System.out.println(Integer.toString(cardComboBox.getSelectedIndex()));
-					//System.out.println(pinField.getText().intern());
-					//System.out.println(customer.wallet.cards.get(cardComboBox.getSelectedIndex()).cardholder);
-					
 					CreditPayment newpay = new CreditPayment();
 					newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
 					newpay.setReader(doItYourselfStationAR.cardReader);
 					newpay.setCardIssuer(bank);
-					//System.out.println("Attempting to insert card.");
-					newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
-					//System.out.println("Card successfully inserted");
+					newpay.insertCard(pinField.getText().intern()); // The intern() function will make sure the string is properly formatted.
 					boolean flag = newpay.payForTotal(addItemScanned.getTotal());
 					if (flag)
 					{
 						touchScreen.setVisible(false);
 					}
-					//else System.out.println("Transaction failed");
 					
 				}
 				catch (InvalidPINException e2)
 				{
 					JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-					//System.out.println(e2.toString());
 				}
 				catch (IOException e1) {
 					// When Transcation Fails
 					JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-					//System.out.println(e1.toString());
 				}
 			}
 		});
