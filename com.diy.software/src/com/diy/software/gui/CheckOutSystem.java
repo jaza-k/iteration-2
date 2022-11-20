@@ -1,11 +1,11 @@
 package com.diy.software.gui;
 
-import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 
 public class CheckOutSystem {
-	private DoItYourselfStation checkOutSystem;
+	private DoItYourselfStationAR checkOutSystem;
 	private Customer customer;
 	private CRListener crListener;
 	private BSListener bsListener;
@@ -16,7 +16,7 @@ public class CheckOutSystem {
 	}
 	
 	private void setup() {
-		checkOutSystem = new DoItYourselfStation();
+		checkOutSystem = new DoItYourselfStationAR();
 		checkOutSystem.plugIn();
 		checkOutSystem.turnOn();
 		checkOutSystem.cardReader.plugIn();

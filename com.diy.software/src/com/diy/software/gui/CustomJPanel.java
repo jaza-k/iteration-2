@@ -18,7 +18,7 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import com.diy.hardware.DoItYourselfStation;
+import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
@@ -34,7 +34,7 @@ public class CustomJPanel extends JPanel {
 	/**
 	 * Creation of the panel
 	 */
-	public CustomJPanel(Customer customer, DoItYourselfStation doItYourselfStation, CardIssuer bank) {
+	public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank) {
 		setForeground(new Color(128, 128, 255));
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
