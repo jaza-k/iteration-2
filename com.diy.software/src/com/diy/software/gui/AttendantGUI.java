@@ -21,19 +21,27 @@ public class AttendantGUI {
 	JButton PermitstationUse;
 	JButton BlockstationUse;
 	JButton Exit;
+	private JTabbedPane tabbedPane;
 	    
 	    public AttendantGUI() {
 	    	AttendantFrame = new JFrame("Attendant Panel");
 	    	AttendantPanel = new JPanel();
 	    	AttendantPanel.setLayout(new GridLayout(2,3));
 	    	
+	    	
 	    	addWidgets();
 	    	
 	    	AttendantFrame.getContentPane().add(AttendantPanel, BorderLayout.CENTER);
 	    	
+	    	tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	    	AttendantFrame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
 	    	AttendantFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    	AttendantFrame.pack();
+	    	tabbedPane.addTab("Station 1", AttendantPanel);
 	    	AttendantFrame.setVisible(true);
+	    	
+	    	
+	    	
 	    	
 	    }
 	    private void addWidgets() {
@@ -77,6 +85,6 @@ public class AttendantGUI {
 	    	AttendantPanel.add(PermitstationUse);
 	    	AttendantPanel.add(BlockstationUse);
 	    	AttendantPanel.add(Exit);
-    	
+	    	
 	    }
 }

@@ -17,6 +17,8 @@ public class CheckOutSystem {
 		setup();
 	}
 	
+	
+	
 	private void setup() {
 		screen = new TouchScreen(); // customer station no longer has a touch screen? Making touch screen object here instead then
 		screen.plugIn();
