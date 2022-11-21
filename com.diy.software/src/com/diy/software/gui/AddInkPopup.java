@@ -11,22 +11,9 @@ import javax.swing.border.EmptyBorder;
 
 public class AddInkPopup extends JDialog implements ActionListener {
     private final JPanel addInkContentPanel = new JPanel();
-    private final JFrame addInkFrame = new JFrame("Convert celsius to fahrenheit");
+    private final JFrame addInkFrame = new JFrame();
     private JLabel lowInk;
     private JButton ok;
-
-    /**
-     * Launch the application.
-     */
-	public static void main(String[] args) {
-		try {
-			AddInkPopup dialog = new AddInkPopup();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
     public AddInkPopup(){
         addInkFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
