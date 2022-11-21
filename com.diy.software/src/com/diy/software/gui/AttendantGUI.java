@@ -36,6 +36,12 @@ public class AttendantGUI {
 	    	AttendantFrame.setVisible(true);
 	    	
 	    }
+
+		public void printerInkLowBlock(){
+			AttendantPanel.setBackground(Color.RED);
+			AddInkPopup addInkPopup = new AddInkPopup();
+		}
+
 	    private void addWidgets() {
 
 	    	AddownBag = new JButton("Add Own Bag");
