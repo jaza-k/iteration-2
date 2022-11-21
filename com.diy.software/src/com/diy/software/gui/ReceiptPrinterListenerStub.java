@@ -11,6 +11,7 @@ ReceiptPrinterListenerStub extends AbstractDevice<com.jimmyselectronics.abagnale
 
     DoItYourselfStationAR doItYourselfStationAR;
     ReceiptPrinterStub receiptPrinterStub;
+    AttendantGUI Attendant;
 
     public ReceiptPrinterListenerStub(){};
 
@@ -55,7 +56,7 @@ ReceiptPrinterListenerStub extends AbstractDevice<com.jimmyselectronics.abagnale
         doItYourselfStationAR.coinSlot.disable();
         System.out.println("Printer is low on ink");
         // notify the attendant
-
+        Attendant.printerInkLowBlock();
     }
 
     @Override
@@ -68,6 +69,8 @@ ReceiptPrinterListenerStub extends AbstractDevice<com.jimmyselectronics.abagnale
         doItYourselfStationAR.cardReader.disable();
         doItYourselfStationAR.coinSlot.disable();
         System.out.println("Printer is low on paper");
+        // notify the attendant
+        Attendant.printerPaperLowBlock();
 
 
     }
