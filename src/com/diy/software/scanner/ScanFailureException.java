@@ -3,9 +3,7 @@ package com.diy.software.scanner;
 import java.io.IOException;
 
 /**
- * Represents exceptions arising from a blocked card.
- * 
- * @author Jimmy's Electronics LLP
+ * Represents exceptions arising from a generic scanning failure.
  */
 public class ScanFailureException extends IOException {
 	/**
