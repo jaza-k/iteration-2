@@ -39,19 +39,20 @@ public class IterationTwoPanel extends JPanel {
 		setLayout(null);
 		
 		JLabel priceTotal = new JLabel("Current Total: $");
+		priceTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		priceTotal.setFont(new Font("Georgia", Font.PLAIN, 13));
-		priceTotal.setBounds(178, 321, 196, 14);
+		priceTotal.setBounds(47, 376, 164, 34);
 		add(priceTotal);
 		
 		JLabel WeightLabel = new JLabel("Item Weight: ???");
 		WeightLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
 		WeightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		WeightLabel.setBounds(148, 383, 164, 34);
+		WeightLabel.setBounds(47, 409, 164, 34);
 		add(WeightLabel);
 		
 		JTextPane scannedItemPane = new JTextPane();
 		scannedItemPane.setEditable(false);
-		scannedItemPane.setBounds(45, 11, 329, 304);
+		scannedItemPane.setBounds(72, 11, 581, 336);
 		add(scannedItemPane);
 		
 		JComboBox<String> potentialScanComboBox = new JComboBox<String>();
@@ -61,7 +62,7 @@ public class IterationTwoPanel extends JPanel {
 			potentialScanComboBox.addItem("Item " + i);
 			cBarcodedItems.add((BarcodedItem) customer.shoppingCart.get(i - 1));
 		}
-		potentialScanComboBox.setBounds(109, 349, 91, 23);
+		potentialScanComboBox.setBounds(365, 383, 91, 23);
 		add(potentialScanComboBox);
 		
 		JButton scanButton = new JButton("Scan Item");
@@ -88,7 +89,7 @@ public class IterationTwoPanel extends JPanel {
 			}
 				}
 		});
-		scanButton.setBounds(237, 349, 91, 23);
+		scanButton.setBounds(489, 383, 129, 23);
 		add(scanButton);
 		
 		JComboBox<String> cardComboBox = new JComboBox<String>();
@@ -96,28 +97,29 @@ public class IterationTwoPanel extends JPanel {
 			cardComboBox.addItem(card.cardholder + ":" + card.kind);
 		}
 		//Add customer cards to the combo box here
-		cardComboBox.setBounds(109, 446, 91, 23);
+		cardComboBox.setBounds(150, 547, 101, 34);
 		add(cardComboBox);
 		
 		JLabel Wallet = new JLabel("Cards in Wallet");
 		Wallet.setForeground(Color.DARK_GRAY);
 		Wallet.setFont(new Font("Georgia", Font.PLAIN, 13));
 		Wallet.setHorizontalAlignment(SwingConstants.CENTER);
-		Wallet.setBounds(109, 434, 91, 11);
+		Wallet.setBounds(150, 526, 101, 23);
 		add(Wallet);
 		
 		JLabel lblItemsToScan = new JLabel("Items to Scan");
 		lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsToScan.setForeground(Color.DARK_GRAY);
 		lblItemsToScan.setFont(new Font("Georgia", Font.PLAIN, 13));
-		lblItemsToScan.setBounds(103, 336, 97, 11);
+		lblItemsToScan.setBounds(359, 370, 97, 11);
 		add(lblItemsToScan);
 		
 		JLabel pinLabel = new JLabel("Pin:");
-		pinLabel.setBounds(247, 470, 60, 23);
+		pinLabel.setFont(new Font("Georgia", Font.PLAIN, 14));
+		pinLabel.setBounds(489, 526, 50, 23);
 		add(pinLabel);
 		JTextField pinField = new JTextField();
-		pinField.setBounds(277, 470, 40, 23);
+		pinField.setBounds(541, 527, 65, 23);
 		add(pinField);
 		JButton PayButton = new JButton("Payment");
 		PayButton.addActionListener(new ActionListener() {
@@ -147,7 +149,7 @@ public class IterationTwoPanel extends JPanel {
 			}
 		});
 		PayButton.setFont(new Font("Georgia", Font.PLAIN, 13));
-		PayButton.setBounds(237, 445, 91, 23);
+		PayButton.setBounds(489, 560, 129, 51);
 		add(PayButton);
 	}
 

@@ -25,7 +25,7 @@ public class GUI{
 		
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		frame.pack();
-		frame.setSize(426, 500);
+		frame.setSize(740, 666);
 		frame.setLocationRelativeTo(null);
 		touchScreen.setVisible(true);
 	}
