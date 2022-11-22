@@ -1,4 +1,4 @@
-package com.diy.software.payment;
+package com.diy.software.ancillary;
 
 public class Member{
 	private String memNum;
