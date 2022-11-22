@@ -17,7 +17,7 @@ import ca.ucalgary.seng300.simulation.SimulationException;
  * have a sensitivity: changes to the weight smaller than this will go
  * unnoticed. Scales have a weight limit as well; when the items on the scale
  * are heavier than this limit, the scale cannot operate.
- * 
+ *
  * @author Jimmy's Electronics LLP
  */
 public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
@@ -32,7 +32,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 	 * Constructs an electronic scale with the indicated maximum weight that it can
 	 * handle before going into overload. The constructed scale will initially be in
 	 * the configuration phase.
-	 * 
+	 *
 	 * @param weightLimitInGrams
 	 *            The weight threshold beyond which the scale will overload.
 	 * @param sensitivity
@@ -55,7 +55,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 	/**
 	 * Gets the weight limit for the scale. Weights greater than this will not be
 	 * weighable by the scale, but will cause overload. Does not require power.
-	 * 
+	 *
 	 * @return The weight limit.
 	 */
 	public double getWeightLimit() {
@@ -64,7 +64,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 
 	/**
 	 * Gets the current weight on the scale. Requires power.
-	 * 
+	 *
 	 * @return The current weight.
 	 * @throws OverloadException
 	 *             If the weight has overloaded the scale.
@@ -82,7 +82,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 	/**
 	 * Gets the sensitivity of the scale. Changes smaller than this limit are not
 	 * noticed or announced. Does not require power.
-	 * 
+	 *
 	 * @return The sensitivity.
 	 */
 	public double getSensitivity() {
@@ -93,7 +93,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 	 * Adds an item to the scale. If the addition is successful, a weight changed
 	 * event is announced. If the weight is greater than the weight limit, announces
 	 * "overload" event. Requires power.
-	 * 
+	 *
 	 * @param item
 	 *            The item to add.
 	 * @throws SimulationException
@@ -125,7 +125,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 	 * "weightChanged" event. If the scale was overloaded and this removal causes it
 	 * to no longer be overloaded, announces "outOfOverload" event. Does not require
 	 * power.
-	 * 
+	 *
 	 * @param item
 	 *            The item to remove.
 	 * @throws SimulationException
@@ -149,7 +149,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleListener> {
 			notifyOutOfOverload();
 
 		if(currentWeightInGrams <= weightLimitInGrams
-			&& Math.abs(weightAtLastEvent - currentWeightInGrams) > sensitivity)
+				&& Math.abs(weightAtLastEvent - currentWeightInGrams) > sensitivity)
 			notifyWeightChanged();
 	}
 

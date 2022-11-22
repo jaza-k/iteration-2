@@ -4,13 +4,13 @@ public class AddOwnBagLogic {
 
     private AddOwnBagListener addOwnBagListener;
 
-    public void addUpTotalWeight() {
-        // listen for the weight change until the customer indicates that they are finished adding bags
-        // take the weight change and add it to the total expected weight
-    }
+//    public double getActualWeight() {
+//        // listen for the weight change until the customer indicates that they are finished adding bags
+//        return 0.0;
+//    }
 
     public void blockStation() {
-        // block the station so the customer cannot perform any actions
+        // disable the scanner, card reader, cash input, scale?
     }
 
     public void unblockStation() {
@@ -21,7 +21,12 @@ public class AddOwnBagLogic {
         // signal to GUI that the customer is unblocked (front-end)
     }
 
-    public void approveAddedBags() {
+    public boolean promptAttendantApproval() {
         // prompts the attendant station to approve the added bags
+        return true;
+    }
+
+    public void addOwnBagWeight(double totalWeight) {
+
     }
 }

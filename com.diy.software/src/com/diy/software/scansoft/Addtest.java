@@ -6,7 +6,6 @@ import java.util.Map;
 import com.diy.hardware.BarcodedProduct;
 
 import com.jimmyselectronics.necchi.*;
-import com.diy.software.*;
 
 public class Addtest {
 	
