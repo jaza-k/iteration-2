@@ -112,13 +112,7 @@ public class CustomJPanel extends JPanel {
 		lblItemsToScan.setBounds(103, 336, 97, 11);
 		add(lblItemsToScan);
 		
-		
-		
-	
-	
-		
-		
-		
+
 
 		JButton PayButton = new JButton("Proceed To Payment");
 		PayButton.addActionListener(new ActionListener() {

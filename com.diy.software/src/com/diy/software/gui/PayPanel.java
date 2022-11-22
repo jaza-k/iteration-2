@@ -50,10 +50,14 @@ public class PayPanel extends JPanel {
     private void addWidgets() {
 
     	cashButton = new JButton("Cash");
-    	cashButton.addActionListener(e -> {
-    		// indicating the electronic scale to ignore weight discrepancy for next item
+		cashButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// switch to PayPanel
+				tabbedPane.setSelectedIndex(3);
+				
+			}
 
-    	});
+		});
 
     	creditButton = new JButton("Credit");
 		creditButton.addActionListener(new ActionListener() {
@@ -66,9 +70,15 @@ public class PayPanel extends JPanel {
 		});
     	
     	debitButton = new JButton("Debit");
-    	debitButton.addActionListener(e -> {
-    		//pop out new panel and call function  of "Remove Item"
-    	});
+		debitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// switch to PayPanel
+				tabbedPane.setSelectedIndex(4);
+				
+			}
+
+		});
+    	
     	
     	backToScanButton = new JButton("Back to Scan");
     	backToScanButton.addActionListener(e -> {

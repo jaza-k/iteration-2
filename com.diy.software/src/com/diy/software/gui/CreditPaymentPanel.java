@@ -56,9 +56,6 @@ public class CreditPaymentPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// Action when "pay" button clicked
 				try {
-					//System.out.println(Integer.toString(cardComboBox.getSelectedIndex()));
-					//System.out.println(pinField.getText().intern());
-					//System.out.println(customer.wallet.cards.get(cardComboBox.getSelectedIndex()).cardholder);
 					
 					CreditPayment newpay = new CreditPayment();
 					newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
