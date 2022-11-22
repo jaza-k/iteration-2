@@ -10,7 +10,7 @@ import com.jimmyselectronics.disenchantment.TouchScreen;
 
 public class GUI{
 	private JFrame frame;
-	private CustomJPanel panel;
+	private IterationTwoPanel panel;
 	/**
 	 * 
 	 * @param doItYourselfStation: The current station
@@ -20,7 +20,7 @@ public class GUI{
 	public GUI(DoItYourselfStationAR doItYourselfStationAR, TouchScreen touchScreen, Customer customer, CardIssuer bank) {
 		frame = touchScreen.getFrame();
 		
-		panel = new CustomJPanel(customer, doItYourselfStationAR, touchScreen, bank);
+		panel = new IterationTwoPanel(customer, doItYourselfStationAR, touchScreen, bank);
 		frame.setTitle("Customer GUI");
 		
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
