@@ -38,7 +38,6 @@ public class ScannerTest {
             barcodes[i] = new Barcode(new Numeral[]{Numeral.valueOf((byte) i)});
             BarcodedProduct product = new BarcodedProduct(barcodes[i], "prod" + i, (long) (1.0 + i), 5);
             availableProducts.put(barcodes[i], product);
-
         }
     }
 
