@@ -10,19 +10,13 @@ import com.diy.hardware.*;
 import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
-public class ScannerController implements ElectronicScaleListener {
-    public enum Status {
-        READY,
-        WAITING_FOR_WEIGHT,
-        DISCREPANCY,
-        OVERLOAD
-    }
+public class ScannerController implements BarcodeScannerListener {
+
 
     private ArrayList<BarcodedItem> scannedItems = new ArrayList();
     private Map<Barcode, BarcodedProduct> availableProducts;
     private double total = 0;
     private double expectedWeight = 0;
-    private Status status = Status.READY;
     private BarcodeScanner scanner;
 
     /**
@@ -81,15 +75,6 @@ public class ScannerController implements ElectronicScaleListener {
     }
 
     /**
-     * Obtains the status of the scanner/scale on this machine
-     *
-     * @return The current status of the scanner/scale
-     */
-    public Status getStatus() {
-        return status;
-    }
-
-    /**
      * Obtains the list of items scanned with this machine
      *
      * @return The total list of items scanned during the current transaction.
@@ -105,24 +90,5 @@ public class ScannerController implements ElectronicScaleListener {
         scannedItems.clear();
         total = 0;
         expectedWeight = 0;
-    }
-
-
-    @Override
-    public void weightChanged(ElectronicScale scale, double weightInGrams) {
-        if(weightInGrams == expectedWeight)
-            status = Status.READY;
-        else
-            status = Status.DISCREPANCY;
-    }
-
-    @Override
-    public void overload(ElectronicScale scale) {
-        status = Status.OVERLOAD;
-    }
-
-    @Override
-    public void outOfOverload(ElectronicScale scale) {
-        status = Status.READY;
     }
 }
