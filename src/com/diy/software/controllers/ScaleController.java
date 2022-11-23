@@ -1,10 +1,22 @@
 package com.diy.software.controllers;
 
 
+import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
 public class ScaleController implements ElectronicScaleListener {
+    private DoItYourselfStationLogic stationLogic;
+
+    /**
+     * Basic Constructor
+     *
+     * @param stationLogic Logic instance that is using this controller
+     */
+    public ScaleController(DoItYourselfStationLogic stationLogic) {
+        this.stationLogic = stationLogic;
+    }
+
     public enum Status {
         READY,
         WAITING_FOR_WEIGHT,
