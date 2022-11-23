@@ -20,7 +20,7 @@ public class ScannerTest {
     Customer customer;
 
     Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 1)});
-    BarcodedItem item = new BarcodedItem(barcode, 10);
+    BarcodedItem item = new BarcodedItem(barcode, 5);
     BarcodedProduct product = new BarcodedProduct(barcode, "Test product", 10, 5);
 
     @Before
@@ -31,11 +31,6 @@ public class ScannerTest {
         customer = new Customer();
         customer.useStation(station);
         customer.shoppingCart.add(item);
-    }
-
-    @After
-    public void tearDown() {
-
     }
 
     @Test
