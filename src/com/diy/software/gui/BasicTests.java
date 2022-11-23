@@ -1,16 +1,37 @@
 package com.diy.software.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.diy.simulation.Customer;
-//import com.diy.software.payment.CashPaymentPanel;
-//import com.diy.software.payment.DebitPaymentPanel;
-//import com.diy.software.scansoft.AddItemScanned;
 
-public class BasicTest {
+// NEW RE: STATION LOGICS, DEMO, CONTROLLERS
+import com.diy.software.*;
 
+public class BasicTests {
+
+	public static DoItYourselfStationLogic[] stationsGen(int n){//List<DoItYourselfStationLogic> stationsGen(int n) {
+		// Init List
+		//List<DoItYourselfStationLogic> sts = new ArrayList<DoItYourselfStationLogic>();
+		DoItYourselfStationLogic[] sts = {};
+		
+		for(int i = 0; i < n; i++) {
+			//String sName = "Station " + Integer.toString(i);
+			//System.out.print("\n" + sName + "\n");
+			
+			DoItYourselfStationAR stat = new DoItYourselfStationAR();
+			DoItYourselfStationLogic newStation = new DoItYourselfStationLogic(stat);
+			
+			sts[i] = newStation;
+		}
+		
+		return sts;
+	}
+	
 	public static void custTest() {
 		// SETUP
 		DoItYourselfStationAR doit = new DoItYourselfStationAR();
@@ -28,10 +49,12 @@ public class BasicTest {
 	public static void attnTest() {
 		
 		// TEST
-		DoItYourselfStationAR s1 = new DoItYourselfStationAR();
-		DoItYourselfStationAR s2 = new DoItYourselfStationAR();
+		DoItYourselfStationAR r1 = new DoItYourselfStationAR();
+		DoItYourselfStationAR r2 = new DoItYourselfStationAR();
+		DoItYourselfStationLogic s1 = new DoItYourselfStationLogic(r1);
+		DoItYourselfStationLogic s2 = new DoItYourselfStationLogic(r2);
 		
-		DoItYourselfStationAR[] stations = {s1,s2};
+		DoItYourselfStationLogic[] stations = {s1,s2};
 		
 		// BELOW LINE JUST FOR NOW
 		if(stations.length > 6) {
@@ -44,8 +67,14 @@ public class BasicTest {
 	}
 	
 	public static void main(String[] args) {
-		attnTest();
-		//custTest();	
+		
+		// CHEAP TEST FOR @ DEMO STEPS
+		DoItYourselfStationLogic[] sts = stationsGen(5);
+		System.out.print(sts.length);
+		
+		// ~DEPRECATED, NOW @ DEMO
+		//attnTest();
+		//custTest();
 	}
 
 }
