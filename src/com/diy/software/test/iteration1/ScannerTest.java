@@ -68,30 +68,4 @@ public class ScannerTest {
         assertTrue(stationLogic.scannerController.getScannedItems().isEmpty());
         assertEquals(0, stationLogic.scannerController.getTotal(), 0.0);
     }
-
-
-//    @Test
-//    public void ItemWeightTest() {
-//        assertTrue(test.getScannedItems().isEmpty());
-//        test.Scan(item);
-//        assertEquals(5.0, test.getExpectedWeight(), 0);
-//    }
-//
-//    @Test
-//    public void ItemCostTest() {
-//        assertTrue(test.getScannedItems().isEmpty());
-//        test.Scan(item);
-//        assertEquals(2.0, test.getTotal(), 0);
-//    }
-//
-//    @Test
-//    public void failedScan() {
-//        while (true) {
-//            try {
-//                test.Scan(item);
-//            } catch (ScanFailureException e) {
-//                return;
-//            }
-//        }
-//    }
 }
