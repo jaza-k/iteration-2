@@ -2,6 +2,7 @@ package com.diy.software;
 
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
+import com.diy.software.controllers.ReceiptPrinterController;
 import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
 
@@ -18,14 +19,16 @@ public class DoItYourselfStationLogic {
      * The controller that tracks the electronic scale
      */
     public ScaleController scaleController;
+    /**
+     * The controller that tracks the receipt printer
+     */
+    public ReceiptPrinterController receiptPrinterController;
 
     /**
      * Installs an instance of the logic on the indicated station.
      *
      * @param station
      *            The station on which to install the logic.
-     * @param creditIssuer
-     *            The credit issuer to by used for payment.
      * @return The newly installed instance.
      * @throws NullPointerException
      *             If any argument is null.
@@ -39,8 +42,6 @@ public class DoItYourselfStationLogic {
      *
      * @param station
      *            The station on which to install the logic.
-     * @param creditIssuer
-     *            The credit issuer to by used for payment.
      * @return The newly installed instance.
      * @throws NullPointerException
      *             If any argument is null.
@@ -57,5 +58,18 @@ public class DoItYourselfStationLogic {
         station.scale.plugIn();
         station.scale.turnOn();
         station.scale.register(scaleController);
+
+        receiptPrinterController = new ReceiptPrinterController(this);
+        station.printer.plugIn();
+        station.printer.turnOn();
+        station.printer.register(receiptPrinterController);
+    }
+
+    public void receiptPrinterLowInk(){
+        AttendantStationLogic.getInstance().notifyReceiptPrinterLowInk();
+    }
+
+    public void receiptPrinterLowPaper(){
+        AttendantStationLogic.getInstance().notifyReceiptPrinterLowPaper();
     }
 }
