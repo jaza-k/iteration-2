@@ -6,13 +6,11 @@ import com.diy.software.gui.AttendantGUI;
 //import java.util.List;
 
 public class AttendantStationLogic {
-    //private DoItYourselfStationLogic stationLogic;
-	
     
 	private static DoItYourselfStationLogic[] stations;
     
     private AttendantGUI attendantGUI;
-    private static final AttendantStationLogic instance = new AttendantStationLogic(stations);
+    private static final AttendantStationLogic instance = new AttendantStationLogic();
     volatile private int numStations = 0;	// incremented as stations are added
 
     /*
@@ -28,25 +26,22 @@ public class AttendantStationLogic {
     }
     */
     
+    public int getStationNum() {
+    	return this.numStations;
+    }
     
-    public AttendantStationLogic(DoItYourselfStationLogic[] sts) {
-        // add the stationLogic to the list of watched station by the attendant
-    	
-    	quantizeStations(sts);
-    	
+    
+    public AttendantStationLogic() {
     	// TBH multithread?
+    	System.out.print("\nStarted an AttendantStationLogic node!\n");
     	
-    	//while(numStations == 0) {System.out.print("\nBlah\n");}
-    	//if (numStations == 0) wait();
-    	
-    	System.out.print("\nWe made it!\n");
-    	//attendantGUI = new AttendantGUI();
+    	attendantGUI = new AttendantGUI(stations);
     }
 
 
     public void quantizeStations (DoItYourselfStationLogic[] sts) {
-    	stations = sts;
-    	numStations = sts.length;
+    	this.stations = sts;
+    	this.numStations = sts.length;
     }
     
     public static AttendantStationLogic getInstance() {

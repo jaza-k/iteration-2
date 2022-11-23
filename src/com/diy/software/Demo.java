@@ -81,9 +81,11 @@ public class Demo {
         	stsLG[i] = stationLogic;
         }
         
-        // Setup attendant logic
-        //AttendantStationLogic attendantLogic = new AttendantStationLogic(stsLG);
-        //attendantLogic.getInstance().quantizeStations(stsLG);
+        // Whoops...
+        //System.out.print(AttendantStationLogic.getInstance());
+        AttendantStationLogic attendantLogic = AttendantStationLogic.getInstance();
+        attendantLogic.quantizeStations(stsLG);
+        System.out.print("\n" + attendantLogic.getStationNum() + "\n");
         
 
         // Start at welcome screen
