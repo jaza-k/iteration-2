@@ -1,18 +1,15 @@
 package com.diy.software.controllers;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-
+import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.software.DoItYourselfStationLogic;
-import com.diy.software.scanner.InvalidItemException;
-import com.diy.software.scanner.ScanFailureException;
-import com.jimmyselectronics.necchi.*;
-import com.diy.hardware.*;
-import com.jimmyselectronics.virgilio.ElectronicScale;
-import com.jimmyselectronics.virgilio.ElectronicScaleListener;
+import com.jimmyselectronics.necchi.Barcode;
+import com.jimmyselectronics.necchi.BarcodeScanner;
+import com.jimmyselectronics.necchi.BarcodeScannerListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ScannerController implements BarcodeScannerListener {
 
@@ -23,24 +20,24 @@ public class ScannerController implements BarcodeScannerListener {
     private double expectedWeight = 0;
     private DoItYourselfStationLogic diyStationLogic;
 
-    /**
-     * Basic Constructor
-     *
-     * @param availableProducts All products available at the store
-     * @param scanner           The scanner that will be used
-     */
+//    /**
+//     * Basic Constructor
+//     *
+//     * @param availableProducts All products available at the store
+//     * @param scanner           The scanner that will be used
+//     */
     public ScannerController(DoItYourselfStationLogic diyStationLogic) {
         this.diyStationLogic = diyStationLogic;
     }
 
-    /**
-     * Scans an item
-     * Increases the total cost and weight
-     *
-     * @param item The item being scanned
-     * @throws ScanFailureException if unable to scan the item
-     * @throws InvalidItemException if the barcode has not been registered
-     */
+//    /**
+//     * Scans an item
+//     * Increases the total cost and weight
+//     *
+//     * @param item The item being scanned
+//     * @throws ScanFailureException if unable to scan the item
+//     * @throws InvalidItemException if the barcode has not been registered
+//     */
     public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
         // Ignore when there is no product associated with the barcode
         if(!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
@@ -49,13 +46,14 @@ public class ScannerController implements BarcodeScannerListener {
         var product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 
         scannedItems.add(product);
-        expectedWeight += availableProducts.get(item.getBarcode()).getExpectedWeight();
-        boolean perUnit = availableProducts.get(item.getBarcode()).isPerUnit();
+        expectedWeight += availableProducts.get(product.getBarcode()).getExpectedWeight();
+        boolean perUnit = availableProducts.get(product.getBarcode()).isPerUnit();
         double price;
         if (perUnit)
-            price = availableProducts.get(item.getBarcode()).getPrice();
+            price = availableProducts.get(product.getBarcode()).getPrice();
         else
-            price = item.getWeight() * availableProducts.get(item.getBarcode()).getPrice();
+            // product.getExpectedWeight() should be the actual weight, not expected
+            price = product.getExpectedWeight() * availableProducts.get(product.getBarcode()).getPrice();
         total += price;
     }
 
@@ -82,7 +80,7 @@ public class ScannerController implements BarcodeScannerListener {
      *
      * @return The total list of items scanned during the current transaction.
      */
-    public List<BarcodedItem> getScannedItems() {
+    public ArrayList<BarcodedProduct> getScannedItems() {
         return scannedItems;
     }
 
