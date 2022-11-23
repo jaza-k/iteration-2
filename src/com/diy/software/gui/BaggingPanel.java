@@ -40,7 +40,7 @@ public class BaggingPanel extends JPanel {
 		
 		JTextPane scannedItemPane = new JTextPane();
 		scannedItemPane.setEditable(false);
-		scannedItemPane.setBounds(63, 82, 329, 98);
+		scannedItemPane.setBounds(63, 51, 329, 129);
 		add(scannedItemPane);
 		
 		JButton buyBag = new JButton("Buy Bags");
