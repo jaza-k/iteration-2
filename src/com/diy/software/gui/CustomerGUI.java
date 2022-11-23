@@ -10,19 +10,20 @@ import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.diy.simulation.Customer;
-//import com.diy.software.payment.CashPaymentPanel;
-//import com.diy.software.payment.DebitPaymentPanel;
-//import com.diy.software.scansoft.AddItemScanned;
+import com.diy.software.DoItYourselfStationLogic;
 
 
-public class GUI{
+
+public class CustomerGUI{
 	private JFrame frame;
-	private CustomJPanel panel;
+	
+	private MainCustomerPanel panel;
 	private PayPanel payPanel;
 	private JTabbedPane tabbedPane;
-	//private CreditPaymentPanel creditPanel;
-	//private CashPaymentPanel cashPanel;
-	//private DebitPaymentPanel debitPanel;
+	private CreditPaymentPanel creditPanel;
+	private CashPaymentPanel cashPanel;
+	private DebitPaymentPanel debitPanel;
+	
 	/**
 	 * 
 	 * @param doItYourselfStation: The current station
@@ -31,28 +32,27 @@ public class GUI{
 	 * @param screen: Contains the code to create the frame.
 	 */
 	
-	/*
-	public GUI(DoItYourselfStationAR doItYourselfStation, Customer customer, CardIssuer bank, TouchScreen screen) {
-		
-		AddItemScanned addItemScanned = new AddItemScanned(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStation.scanner);
-		Cart cart = new Cart(addItemScanned);
-		
+	public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen) {
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		panel = new CustomJPanel(customer, doItYourselfStation, bank, screen, cart, tabbedPane);
+		panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane);
 		payPanel = new PayPanel(tabbedPane);
-		creditPanel = new CreditPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
-		cashPanel = new CashPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
-		debitPanel = new DebitPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
 		
 		
+		//creditPanel = new CreditPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
+		debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
+		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
+		cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
+	
+		
+	
 		
 		tabbedPane.add(panel);
 		tabbedPane.add(payPanel);
 		tabbedPane.add(creditPanel);
 		tabbedPane.add(cashPanel);
 		tabbedPane.add(debitPanel);
-	    tabbedPane.setEnabledAt(1, false);
+		tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(0, false);
 	    tabbedPane.setEnabledAt(2, false);
 	    tabbedPane.setEnabledAt(3, false);
@@ -67,6 +67,5 @@ public class GUI{
 		frame.setLocationRelativeTo(null);
 		screen.setVisible(true);
 	}
-	*/
 
 }

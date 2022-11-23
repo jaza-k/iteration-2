@@ -11,12 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
+import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.payment.CreditPayment;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.opeechee.Card;
@@ -24,8 +26,11 @@ import com.jimmyselectronics.opeechee.InvalidPINException;
 
 public class CreditPaymentPanel extends JPanel {
 	
-	public CreditPaymentPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank, TouchScreen screen, Cart cart) {
+	public CreditPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
 		
+		
+		/**
+		 * 
 		JComboBox<String> cardComboBox = new JComboBox<String>();
 		for (Card card : customer.wallet.cards) {
 			cardComboBox.addItem(card.cardholder + ":" + card.kind);
@@ -95,5 +100,6 @@ public class CreditPaymentPanel extends JPanel {
 		PayButton.setBounds(237, 445, 91, 23);
 		add(PayButton);
 	}
-	
+	 */
+	}
 }

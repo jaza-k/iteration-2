@@ -5,6 +5,8 @@ import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
+import com.diy.software.gui.CustomerGUI;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
@@ -46,6 +48,7 @@ public class Demo {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode3, product3);
 
+      
         // Setup customer
         Customer customer = new Customer();
         customer.useStation(stsAR[0]);
@@ -57,6 +60,8 @@ public class Demo {
 
         // Create cards
         Card card = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
+      
+        
 
         // Add card to customer waller
         customer.wallet.cards.add(card);
@@ -72,6 +77,7 @@ public class Demo {
         /*
         // Setup station logic - 
         DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
+
         */
         
         // Changes above to accept multiple stations as list based on size of store
@@ -88,5 +94,12 @@ public class Demo {
 
         // Start at welcome screen
         // Initialize GUI here...
+        TouchScreen screen = new TouchScreen();
+        screen.plugIn();
+        screen.turnOn();
+		    CustomerGUI customerGUI = new CustomerGUI(stationLogic, customer, screen);
+		
+
+        
     }
 }
