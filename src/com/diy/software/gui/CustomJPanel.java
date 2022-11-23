@@ -75,7 +75,7 @@ public class CustomJPanel extends JPanel {
                     customer.scanItem();
                     priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
                     scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-                    WeightLabel.setText("Weight: " + stationLogic.scannerController.getExpectedWeight());
+                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams());
                     cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
                     potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
                 } catch (Exception e1) {

@@ -46,10 +46,11 @@ public class ScaleController implements ElectronicScaleListener {
     }
 
     /**
-     * Resets the total expected weight of the items scanned with this machine
+     * Resets the total expected weight of the items scanned with this machine and marks status as ready
      */
-    public void resetExpectedWeight() {
+    public void reset() {
         expectedWeightInGrams = 0;
+        status = Status.READY;
     }
 
     public Status getStatus() {
