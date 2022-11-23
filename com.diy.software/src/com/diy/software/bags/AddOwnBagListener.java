@@ -69,8 +69,8 @@ public class AddOwnBagListener implements ElectronicScaleListener {
             // are there two scales? one in the bagging area and one in the scanning area?
             System.out.println("totalWeight before adding own bags: " + totalWeight + "\n");
             Barcode barcode = new Barcode(new Numeral[] { Numeral.six, Numeral.nine, Numeral.six, Numeral.nine });
-            BarcodedItem item = new BarcodedItem(barcode, weightInGrams);
-            scale.add(item);
+            BarcodedItem ownBag = new BarcodedItem(barcode, weightInGrams);
+            scale.add(ownBag);
             totalWeight = scale.getCurrentWeight();
             System.out.println("totalWeight after adding own bags: " + totalWeight + "\n");
             // wait for Attendant approval before adding own bags weight to the total expected weight

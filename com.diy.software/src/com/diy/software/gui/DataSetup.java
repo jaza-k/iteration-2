@@ -13,11 +13,18 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.Card.CardData;
 import com.diy.software.payment.CreditPayment;
+import com.jimmyselectronics.virgilio.ElectronicScale;
 
 public class DataSetup {
 	private final String[] ITEM_LABELS = {"Aveeno Lotion", "Ritz Crackers", "Coca-Cola", "Pepsi", "Quakers Oats", "Frootloops", "Orignal Lays Chips"};
 	private Customer customer;
 	private CardIssuer bank;
+
+	private ElectronicScale scale;
+
+	private double weightLimitInGrams;
+
+	private double sensitivity;
 	
 	public DataSetup(Customer customer) {
 		this.customer = customer;
@@ -43,7 +50,8 @@ public class DataSetup {
 	
 		}
 		bank.addCardData(data.getNumber(), data.getCardholder(), expiry, data.getCVV(), 2000.00);
-		
+
+		initializeScale();
 		initialCart();
 	}
 	
@@ -75,5 +83,11 @@ public class DataSetup {
 	public CardIssuer getBank() {
 		// TODO Auto-generated method stub
 		return bank;
+	}
+
+	public void initializeScale() {
+		weightLimitInGrams = 1000.0;
+		sensitivity = 1.0;
+		this.scale = new ElectronicScale(weightLimitInGrams, sensitivity);
 	}
 }

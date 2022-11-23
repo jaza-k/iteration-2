@@ -79,7 +79,10 @@ public class AddItemScanned{
 		return false;
 
 	}
-	
+
+	public void addOwnBagToExpectedWeight(BarcodedItem ownBag) {
+		expectedWeight += ownBag.getWeight();
+	}
 	
 	public double getTotal() {
 		return total;
