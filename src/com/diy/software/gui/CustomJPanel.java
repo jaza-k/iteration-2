@@ -24,7 +24,7 @@ import com.diy.simulation.Customer;
 import com.diy.software.payment.CreditPayment;
 import com.diy.software.scanner.InvalidItemException;
 import com.diy.software.scanner.ScanFailureException;
-import com.diy.software.scanner.ScannerController;
+import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;

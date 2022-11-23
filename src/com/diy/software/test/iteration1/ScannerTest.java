@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.diy.hardware.BarcodedProduct;
-import com.diy.software.scanner.ScannerController;
+import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodedItem;
@@ -26,7 +26,6 @@ public class ScannerTest {
     Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 1)});
     BarcodedItem item = new BarcodedItem(barcode, 10);
     ScannerController test = new ScannerController(availableProducts, scanner);
-
 
     @Before
     public void setUp() {

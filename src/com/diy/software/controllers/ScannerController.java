@@ -1,10 +1,14 @@
-package com.diy.software.scanner;
+package com.diy.software.controllers;
 
 
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
+import com.diy.hardware.external.ProductDatabases;
+import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.scanner.InvalidItemException;
+import com.diy.software.scanner.ScanFailureException;
 import com.jimmyselectronics.necchi.*;
 import com.diy.hardware.*;
 import com.jimmyselectronics.virgilio.ElectronicScale;
@@ -13,11 +17,11 @@ import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 public class ScannerController implements BarcodeScannerListener {
 
 
-    private ArrayList<BarcodedItem> scannedItems = new ArrayList();
+    private ArrayList<BarcodedProduct> scannedItems = new ArrayList();
     private Map<Barcode, BarcodedProduct> availableProducts;
     private double total = 0;
     private double expectedWeight = 0;
-    private BarcodeScanner scanner;
+    private DoItYourselfStationLogic diyStationLogic;
 
     /**
      * Basic Constructor
@@ -25,9 +29,8 @@ public class ScannerController implements BarcodeScannerListener {
      * @param availableProducts All products available at the store
      * @param scanner           The scanner that will be used
      */
-    public ScannerController(Map<Barcode, BarcodedProduct> availableProducts, BarcodeScanner scanner) {
-        this.availableProducts = availableProducts;
-        this.scanner = scanner;
+    public ScannerController(DoItYourselfStationLogic diyStationLogic) {
+        this.diyStationLogic = diyStationLogic;
     }
 
     /**
@@ -38,14 +41,14 @@ public class ScannerController implements BarcodeScannerListener {
      * @throws ScanFailureException if unable to scan the item
      * @throws InvalidItemException if the barcode has not been registered
      */
-    public void Scan(BarcodedItem item) throws ScanFailureException, InvalidItemException {
-        if (!scanner.scan(item))
-            throw new ScanFailureException();
+    public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
+        // Ignore when there is no product associated with the barcode
+        if(!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
+            return;
 
-        if (!availableProducts.containsKey(item.getBarcode()))
-            throw new InvalidItemException();
+        var product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 
-        scannedItems.add(item);
+        scannedItems.add(product);
         expectedWeight += availableProducts.get(item.getBarcode()).getExpectedWeight();
         boolean perUnit = availableProducts.get(item.getBarcode()).isPerUnit();
         double price;

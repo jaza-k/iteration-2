@@ -1,4 +1,4 @@
-package com.diy.software.scale;
+package com.diy.software.controllers;
 
 
 import com.jimmyselectronics.virgilio.ElectronicScale;
