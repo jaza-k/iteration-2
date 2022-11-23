@@ -6,7 +6,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import com.diy.hardware.DoItYourselfStationAR;
+//import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.software.DoItYourselfStationLogic;
 
 /*
  * Set up attendant I/O
@@ -44,7 +45,7 @@ public class AttendantGUI {
 	int h = 350;
 	
 	// Stations connected
-	private DoItYourselfStationAR[] stations = {};
+	private DoItYourselfStationLogic[] stations = {};
 	
 	
 	
@@ -251,7 +252,7 @@ public class AttendantGUI {
 			
 		}
 	    
-	    public AttendantGUI(DoItYourselfStationAR[] sl) {
+	    public AttendantGUI(DoItYourselfStationLogic[] sl) {
 	    	
 	    	stations = sl;
 	    	// TEST BELOW LINE

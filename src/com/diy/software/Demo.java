@@ -15,8 +15,16 @@ import java.util.Date;
 
 public class Demo {
     public static void main(String[] args) {
-        // Create station
-        DoItYourselfStationAR station = new DoItYourselfStationAR();
+        // Create station - MOVED BELOW
+        //DoItYourselfStationAR station = new DoItYourselfStationAR();
+    	
+        // Changes above to accept multiple stations as list based on size of store
+        int locationSize = 6;	// 6 is arbitrary value representing a hypothetical store size (may limit to 99 later)
+        DoItYourselfStationAR[] stsAR = new DoItYourselfStationAR[locationSize];
+        for (int i = 0; i < locationSize; i++) {
+        	DoItYourselfStationAR station = new DoItYourselfStationAR();
+        	stsAR[i] = station;
+        }
 
         // Create barcodes
         Barcode barcode1 = new Barcode(new Numeral[] { Numeral.one });
@@ -40,7 +48,7 @@ public class Demo {
 
         // Setup customer
         Customer customer = new Customer();
-        customer.useStation(station);
+        customer.useStation(stsAR[0]);
 
         // Add items to cart
         customer.shoppingCart.add(item1);
@@ -61,8 +69,22 @@ public class Demo {
         c.add(Calendar.DATE, 1);
         creditIssuer.addCardData(card.number, card.cardholder, c, card.cvv, 10000);
 
-        // Setup station logic
+        /*
+        // Setup station logic - 
         DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
+        */
+        
+        // Changes above to accept multiple stations as list based on size of store
+        DoItYourselfStationLogic[] stsLG = new DoItYourselfStationLogic[locationSize];
+        for (int i = 0; i < locationSize; i++) {
+        	DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(stsAR[i]);
+        	stsLG[i] = stationLogic;
+        }
+        
+        // Setup attendant logic
+        //AttendantStationLogic attendantLogic = new AttendantStationLogic(stsLG);
+        //attendantLogic.getInstance().quantizeStations(stsLG);
+        
 
         // Start at welcome screen
         // Initialize GUI here...
