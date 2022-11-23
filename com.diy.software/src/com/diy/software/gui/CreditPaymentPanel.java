@@ -21,37 +21,43 @@ import com.diy.software.payment.CreditPayment;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
+import java.awt.SystemColor;
+import javax.swing.JTextPane;
 
 public class CreditPaymentPanel extends JPanel {
 	
 	public CreditPaymentPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank, TouchScreen screen, Cart cart) {
+		setBackground(SystemColor.inactiveCaption);
+		setToolTipText("");
 		
 		JComboBox<String> cardComboBox = new JComboBox<String>();
 		for (Card card : customer.wallet.cards) {
 			cardComboBox.addItem(card.cardholder + ":" + card.kind);
 		}
+		setLayout(null);
 		//Add customer cards to the combo box here
-		cardComboBox.setBounds(109, 446, 91, 23);
+		cardComboBox.setBounds(79, 370, 114, 22);
 		add(cardComboBox);
 		
-		
-	
-	
-			JLabel Wallet = new JLabel("Cards in Wallet");
-			Wallet.setForeground(Color.DARK_GRAY);
-			Wallet.setFont(new Font("Georgia", Font.PLAIN, 13));
-			Wallet.setHorizontalAlignment(SwingConstants.CENTER);
-			Wallet.setBounds(109, 434, 91, 11);
-			add(Wallet);
-	
-		
+		JLabel Wallet = new JLabel("Cards in Wallet");
+		Wallet.setForeground(Color.DARK_GRAY);
+		Wallet.setFont(new Font("Georgia", Font.PLAIN, 13));
+		Wallet.setHorizontalAlignment(SwingConstants.CENTER);
+		Wallet.setBounds(69, 344, 124, 15);
+		add(Wallet);
+			
 		JLabel pinLabel = new JLabel("Pin:");
-		pinLabel.setBounds(247, 470, 60, 23);
+		pinLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
+		pinLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		pinLabel.setBounds(257, 359, 43, 33);
 		add(pinLabel);
 		JTextField pinField = new JTextField();
-		pinField.setBounds(277, 470, 40, 23);
+		pinField.setToolTipText("pin");
+		pinField.setBounds(298, 366, 86, 20);
 		add(pinField);
-		JButton PayButton = new JButton("Payment");
+		JButton PayButton = new JButton("Make Payment");
+		PayButton.setBackground(new Color(143, 188, 143));
+		
 		PayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Action when "pay" button clicked
@@ -61,7 +67,6 @@ public class CreditPaymentPanel extends JPanel {
 					newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
 					newpay.setReader(doItYourselfStation.cardReader);
 					newpay.setCardIssuer(bank);
-					//System.out.println("Attempting to insert card.");
 					newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
 					//System.out.println("Card successfully inserted");
 					boolean flag = newpay.payForTotal(cart.addItemScanned.getTotal());
@@ -69,24 +74,25 @@ public class CreditPaymentPanel extends JPanel {
 					{
 						screen.setVisible(false);
 					}
-					//else System.out.println("Transaction failed");
-					
 				}
 				catch (InvalidPINException e2)
 				{
 					JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-					//System.out.println(e2.toString());
 				}
 				catch (IOException e1) {
 					// When Transcation Fails
 					JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-					//System.out.println(e1.toString());
 				}
 			}
 		});
 		PayButton.setFont(new Font("Georgia", Font.PLAIN, 13));
-		PayButton.setBounds(237, 445, 91, 23);
+		PayButton.setBounds(267, 403, 124, 49);
 		add(PayButton);
+		
+		JTextPane scannedItemPane = new JTextPane();
+		scannedItemPane.setEditable(false);
+		scannedItemPane.setBounds(55, 11, 329, 304);
+		add(scannedItemPane);
 	}
 	
 }

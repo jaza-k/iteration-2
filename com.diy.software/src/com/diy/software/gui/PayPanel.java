@@ -1,32 +1,14 @@
 package com.diy.software.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import com.diy.hardware.DoItYourselfStationAR;
-import com.diy.hardware.external.CardIssuer;
-import com.diy.simulation.Customer;
-import com.diy.software.payment.CreditPayment;
-import com.jimmyselectronics.disenchantment.TouchScreen;
-import com.jimmyselectronics.opeechee.Card;
-import com.jimmyselectronics.opeechee.InvalidPINException;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class PayPanel extends JPanel {
 //The panel is going to have six buttons
@@ -36,13 +18,8 @@ public class PayPanel extends JPanel {
 	JButton backToScanButton;
 	JTabbedPane tabbedPane;
 
-	
-	
-	
 	public PayPanel(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
-		
-    	setLayout(new GridLayout(2,2));
     	addWidgets();	
     }
 	
@@ -50,48 +27,50 @@ public class PayPanel extends JPanel {
     private void addWidgets() {
 
     	cashButton = new JButton("Cash");
+    	cashButton.setBackground(SystemColor.inactiveCaption);
+    	cashButton.setBounds(0, 0, 225, 301);
 		cashButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to PayPanel
 				tabbedPane.setSelectedIndex(3);
-				
 			}
-
 		});
 
     	creditButton = new JButton("Credit");
+    	creditButton.setBackground(SystemColor.inactiveCaption);
+    	creditButton.setBounds(225, 0, 240, 301);
 		creditButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to PayPanel
 				tabbedPane.setSelectedIndex(2);
-				
 			}
-
 		});
     	
     	debitButton = new JButton("Debit");
+    	debitButton.setBackground(SystemColor.inactiveCaption);
+    	debitButton.setBounds(0, 300, 225, 200);
 		debitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to PayPanel
 				tabbedPane.setSelectedIndex(4);
-				
 			}
-
 		});
     	
-    	
-    	backToScanButton = new JButton("Back to Scan");
-    	backToScanButton.addActionListener(e -> {
-    		//call function  of "Permit Station Use", make sure the scanner, scale etc is turned on.
+    	backToScanButton = new JButton("Back to Scanning");
+    	backToScanButton.setBackground(new Color(240, 128, 128));
+    	backToScanButton.setBounds(225, 300, 240, 200);
+    	backToScanButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// switch to PayPanel
+				tabbedPane.setSelectedIndex(0);
+			}
     	});
-    	
-    	
+    	setLayout(null);
     	
     	add(cashButton);
     	add(creditButton);
     	add(debitButton);
     	add(backToScanButton);	
-    	
     }
 	
 }

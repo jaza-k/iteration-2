@@ -35,12 +35,7 @@ public class DataSetup {
 		// Want to be able to always do this, without an exception (as its vital to our payment)
 		try {
 			data = customerCard.insert("1234");
-			System.out.println("successful");
-			System.out.println(data.getKind());
-			
 		} catch (IOException e) {
-			System.out.println("Somehow emperor palpatine has returned..");
-	
 		}
 		bank.addCardData(data.getNumber(), data.getCardholder(), expiry, data.getCVV(), 2000.00);
 		

@@ -40,10 +40,6 @@ public class CustomJPanel extends JPanel {
 	 */
 	public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank, TouchScreen screen, Cart cart, JTabbedPane tabbedPane) {
 
-		
-		
-		
-		
 		setForeground(new Color(128, 128, 255));
 		setBackground(SystemColor.inactiveCaption);
 		setLayout(null);
@@ -57,7 +53,7 @@ public class CustomJPanel extends JPanel {
 		JLabel WeightLabel = new JLabel("Item Weight: ???");
 		WeightLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
 		WeightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		WeightLabel.setBounds(148, 383, 164, 34);
+		WeightLabel.setBounds(139, 382, 164, 34);
 		add(WeightLabel);
 		
 		JTextPane scannedItemPane = new JTextPane();
@@ -87,9 +83,9 @@ public class CustomJPanel extends JPanel {
 				try{
 				// Handling item to product verification process here as it wasn't handled anywhere else
 				if(cart.addItemScanned.add(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()))) {
-					priceTotal.setText("Cart Total: " + (cart.addItemScanned.getTotal()));
+					priceTotal.setText("Cart Total: $" + (cart.addItemScanned.getTotal()));
 					scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-					WeightLabel.setText("Weight: " + cart.addItemScanned.getExpectedWeight());
+					WeightLabel.setText("Weight: " + cart.addItemScanned.getExpectedWeight() + " lbs");
 					cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
 					potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
 				}else{
@@ -103,8 +99,6 @@ public class CustomJPanel extends JPanel {
 		scanButton.setBounds(237, 349, 91, 23);
 		add(scanButton);
 		
-		
-		
 		JLabel lblItemsToScan = new JLabel("Items to Scan");
 		lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
 		lblItemsToScan.setForeground(Color.DARK_GRAY);
@@ -112,25 +106,15 @@ public class CustomJPanel extends JPanel {
 		lblItemsToScan.setBounds(103, 336, 97, 11);
 		add(lblItemsToScan);
 		
-
-
-		JButton PayButton = new JButton("Proceed To Payment");
-		PayButton.addActionListener(new ActionListener() {
+		JButton baggingButton = new JButton("Proceed to Bagging");
+		baggingButton.setFont(new Font("Georgia", Font.PLAIN, 13));
+		baggingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// switch to PayPanel
-				tabbedPane.setSelectedIndex(1);
-				
+				tabbedPane.setSelectedIndex(5);
 			}
-
 		});
-		PayButton.setFont(new Font("Georgia", Font.PLAIN, 13));
-		PayButton.setBounds(215, 445, 175, 23);
-		add(PayButton);
+		baggingButton.setBounds(223, 440, 155, 23);
+		add(baggingButton);
 		
-		
-		
-		
-		
-	
 	}
 }

@@ -26,8 +26,5 @@ public class DebitPaymentPanel extends JPanel {
 	
 	
 	public DebitPaymentPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank, TouchScreen screen, Cart cart) {
-		
-		
-		
 	}
 }

@@ -22,6 +22,7 @@ public class GUI{
 	private CreditPaymentPanel creditPanel;
 	private CashPaymentPanel cashPanel;
 	private DebitPaymentPanel debitPanel;
+	private BaggingPanel baggingPanel;
 	/**
 	 * 
 	 * @param doItYourselfStation: The current station
@@ -34,7 +35,6 @@ public class GUI{
 		AddItemScanned addItemScanned = new AddItemScanned(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStation.scanner);
 		Cart cart = new Cart(addItemScanned);
 		
-		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		panel = new CustomJPanel(customer, doItYourselfStation, bank, screen, cart, tabbedPane);
 		payPanel = new PayPanel(tabbedPane);
@@ -42,25 +42,26 @@ public class GUI{
 		cashPanel = new CashPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
 		debitPanel = new DebitPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
 		
-		
-		
+		baggingPanel = new BaggingPanel(customer, screen, cart, tabbedPane);
+		//Adding components to the tabbed pane
 		tabbedPane.add(panel);
 		tabbedPane.add(payPanel);
 		tabbedPane.add(creditPanel);
 		tabbedPane.add(cashPanel);
 		tabbedPane.add(debitPanel);
-	    tabbedPane.setEnabledAt(1, false);
+		tabbedPane.add(baggingPanel);
+		//Disabling ability to switch between tabs
 	    tabbedPane.setEnabledAt(0, false);
+	    tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(2, false);
 	    tabbedPane.setEnabledAt(3, false);
 	    tabbedPane.setEnabledAt(4, false);
-	    
-	    
+	    tabbedPane.setEnabledAt(5, false);
 		frame = screen.getFrame();
 		frame.setTitle("Customer GUI");
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		frame.pack();
-		frame.setSize(426, 500);
+		frame.setSize(465, 500);
 		frame.setLocationRelativeTo(null);
 		screen.setVisible(true);
 	}
