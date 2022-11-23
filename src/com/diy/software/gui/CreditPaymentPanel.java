@@ -64,7 +64,14 @@ public class CreditPaymentPanel extends JPanel {
 					//System.out.println("Attempting to insert card.");
 					newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
 					//System.out.println("Card successfully inserted");
-					boolean flag = newpay.payForTotal(cart.addItemScanned.getTotal());
+					
+					
+					//boolean flag = newpay.payForTotal(cart.addItemScanned.getTotal());
+					///////////////////////////////
+					// BELOW BOOL IS PLACEHOLDER //
+					///////////////////////////////
+					boolean flag = true;	// temporary junk
+					
 					if (flag)
 					{
 						screen.setVisible(false);
@@ -78,7 +85,7 @@ public class CreditPaymentPanel extends JPanel {
 					//System.out.println(e2.toString());
 				}
 				catch (IOException e1) {
-					// When Transcation Fails
+					// When Transaction Fails
 					JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
 					//System.out.println(e1.toString());
 				}

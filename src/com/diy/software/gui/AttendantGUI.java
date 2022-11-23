@@ -51,7 +51,14 @@ public class AttendantGUI {
 	private DoItYourselfStationAR[] stations = {};
 	
 	
-	
+	public void receiptPrinterPaperLowPopUp() {
+		
+	}
+
+
+	public void receiptPrinterInkLowPopUp() {
+		
+	}
 	
 	public void addStation(JPanel sts) {	//DoItYourselfStationAR station) {
 		

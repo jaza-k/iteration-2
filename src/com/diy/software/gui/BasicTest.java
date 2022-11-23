@@ -5,9 +5,9 @@ import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.diy.simulation.Customer;
-import com.diy.software.payment.CashPaymentPanel;
-import com.diy.software.payment.DebitPaymentPanel;
-import com.diy.software.scansoft.AddItemScanned;
+//import com.diy.software.payment.CashPaymentPanel;
+//import com.diy.software.payment.DebitPaymentPanel;
+//import com.diy.software.scansoft.AddItemScanned;
 
 public class BasicTest {
 
@@ -22,7 +22,7 @@ public class BasicTest {
 		screen.turnOn();
 		
 		// START
-		GUI gui = new GUI(doit,cust,bank,screen);
+		//GUI gui = new GUI(doit,cust,bank,screen);
 	}
 	
 	public static void attnTest() {

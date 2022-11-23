@@ -1,6 +1,7 @@
 package com.diy.software.gui;
 
 import java.awt.BorderLayout;
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
@@ -9,9 +10,9 @@ import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.diy.simulation.Customer;
-import com.diy.software.payment.CashPaymentPanel;
-import com.diy.software.payment.DebitPaymentPanel;
-import com.diy.software.scansoft.AddItemScanned;
+//import com.diy.software.payment.CashPaymentPanel;
+//import com.diy.software.payment.DebitPaymentPanel;
+//import com.diy.software.scansoft.AddItemScanned;
 
 
 public class GUI{
@@ -19,9 +20,9 @@ public class GUI{
 	private CustomJPanel panel;
 	private PayPanel payPanel;
 	private JTabbedPane tabbedPane;
-	private CreditPaymentPanel creditPanel;
-	private CashPaymentPanel cashPanel;
-	private DebitPaymentPanel debitPanel;
+	//private CreditPaymentPanel creditPanel;
+	//private CashPaymentPanel cashPanel;
+	//private DebitPaymentPanel debitPanel;
 	/**
 	 * 
 	 * @param doItYourselfStation: The current station
@@ -29,6 +30,8 @@ public class GUI{
 	 * @param curretCart: Requires all the items as an array list;items can be displayed to simulate a scan
 	 * @param screen: Contains the code to create the frame.
 	 */
+	
+	/*
 	public GUI(DoItYourselfStationAR doItYourselfStation, Customer customer, CardIssuer bank, TouchScreen screen) {
 		
 		AddItemScanned addItemScanned = new AddItemScanned(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStation.scanner);
@@ -64,6 +67,6 @@ public class GUI{
 		frame.setLocationRelativeTo(null);
 		screen.setVisible(true);
 	}
-
+	*/
 
 }
