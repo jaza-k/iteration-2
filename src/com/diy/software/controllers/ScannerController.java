@@ -10,6 +10,7 @@ import com.jimmyselectronics.necchi.BarcodeScannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Map;
 
 public class ScannerController implements BarcodeScannerListener {
@@ -34,6 +35,7 @@ public class ScannerController implements BarcodeScannerListener {
      * @param barcodeScanner The barcode scanner used to scan the item
      * @param barcode        The barcode of the scanned item
      */
+
     public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
         // Ignore when there is no product associated with the barcode
         if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
@@ -48,6 +50,7 @@ public class ScannerController implements BarcodeScannerListener {
             price = product.getPrice();
         else
             price = product.getExpectedWeight() * product.getPrice();
+
         total += price;
     }
 
@@ -67,6 +70,7 @@ public class ScannerController implements BarcodeScannerListener {
      * @return The total list of items scanned during the current transaction.
      */
     public List<BarcodedProduct> getScannedItems() {
+
         return scannedItems;
     }
 
