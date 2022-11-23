@@ -21,9 +21,8 @@ import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
+import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.payment.CreditPayment;
-import com.diy.software.scanner.InvalidItemException;
-import com.diy.software.scanner.ScanFailureException;
 import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
@@ -33,7 +32,7 @@ public class CustomJPanel extends JPanel {
     /**
      * Creation of the panel
      */
-    public CustomJPanel(Customer customer, DoItYourselfStationAR doItYourselfStation, CardIssuer bank) {
+    public CustomJPanel(Customer customer, DoItYourselfStationLogic stationLogic, CardIssuer bank) {
         setForeground(new Color(128, 128, 255));
         setBackground(SystemColor.inactiveCaption);
         setLayout(null);
@@ -69,20 +68,17 @@ public class CustomJPanel extends JPanel {
         scanButton.setToolTipText("Use drop down to select");
         scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
         // Action event when "Scan" button clicked
-        ScannerController scannerController = new ScannerController(ProductDatabases.BARCODED_PRODUCT_DATABASE, doItYourselfStation.scanner);
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     // Handling item to product verification process here as it wasn't handled anywhere else
-                    scannerController.Scan(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()));
-                    priceTotal.setText("Cart Total: " + (scannerController.getTotal()));
+                    customer.scanItem();
+                    priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
                     scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-                    WeightLabel.setText("Weight: " + scannerController.getExpectedWeight());
+                    WeightLabel.setText("Weight: " + stationLogic.scannerController.getExpectedWeight());
                     cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
                     potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
-                } catch (ScanFailureException e1) {
-                    JOptionPane.showMessageDialog(getParent(), "Invalid Scan!", "Scan Error", JOptionPane.ERROR_MESSAGE);
-                } catch (InvalidItemException e2) {
+                } catch (Exception e1) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -129,12 +125,12 @@ public class CustomJPanel extends JPanel {
 
                     CreditPayment newpay = new CreditPayment();
                     newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
-                    newpay.setReader(doItYourselfStation.cardReader);
+                    // TODO: FIX THIS -> newpay.setReader(doItYourselfStation.cardReader);
                     newpay.setCardIssuer(bank);
                     //System.out.println("Attempting to insert card.");
                     newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
                     //System.out.println("Card successfully inserted");
-                    boolean flag = newpay.payForTotal(scannerController.getTotal());
+                    boolean flag = newpay.payForTotal(stationLogic.scannerController.getTotal());
                     if (flag) {
                         //doItYourselfStation.touchScreen.setVisible(false);
                     }

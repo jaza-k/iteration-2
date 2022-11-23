@@ -9,51 +9,48 @@ import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodeScannerListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import java.util.Map;
 
 public class ScannerController implements BarcodeScannerListener {
 
 
     private ArrayList<BarcodedProduct> scannedItems = new ArrayList();
-    private Map<Barcode, BarcodedProduct> availableProducts;
     private double total = 0;
-    private double expectedWeight = 0;
-    private DoItYourselfStationLogic diyStationLogic;
+    private DoItYourselfStationLogic stationLogic;
 
-//    /**
-//     * Basic Constructor
-//     *
-//     * @param availableProducts All products available at the store
-//     * @param scanner           The scanner that will be used
-//     */
-    public ScannerController(DoItYourselfStationLogic diyStationLogic) {
-        this.diyStationLogic = diyStationLogic;
+    /**
+     * Basic Constructor
+     *
+     * @param stationLogic Logic instance that is using this controller
+     */
+    public ScannerController(DoItYourselfStationLogic stationLogic) {
+        this.stationLogic = stationLogic;
     }
 
-//    /**
-//     * Scans an item
-//     * Increases the total cost and weight
-//     *
-//     * @param item The item being scanned
-//     * @throws ScanFailureException if unable to scan the item
-//     * @throws InvalidItemException if the barcode has not been registered
-//     */
+    /**
+     * Barcode scanned listener
+     *
+     * @param barcodeScanner The barcode scanner used to scan the item
+     * @param barcode        The barcode of the scanned item
+     */
+
     public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
         // Ignore when there is no product associated with the barcode
-        if(!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
+        if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
             return;
 
         var product = ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
 
         scannedItems.add(product);
-        expectedWeight += availableProducts.get(product.getBarcode()).getExpectedWeight();
-        boolean perUnit = availableProducts.get(product.getBarcode()).isPerUnit();
+        boolean perUnit = product.isPerUnit();
         double price;
         if (perUnit)
-            price = availableProducts.get(product.getBarcode()).getPrice();
+            price = product.getPrice();
         else
-            // product.getExpectedWeight() should be the actual weight, not expected
-            price = product.getExpectedWeight() * availableProducts.get(product.getBarcode()).getPrice();
+            price = product.getExpectedWeight() * product.getPrice();
+
         total += price;
     }
 
@@ -66,30 +63,22 @@ public class ScannerController implements BarcodeScannerListener {
         return total;
     }
 
-    /**
-     * Obtains the total expected weight of the items scanned with this machine
-     *
-     * @return The total expected weight of items scanned during the current transaction.
-     */
-    public double getExpectedWeight() {
-        return expectedWeight;
-    }
 
     /**
      * Obtains the list of items scanned with this machine
      *
      * @return The total list of items scanned during the current transaction.
      */
-    public ArrayList<BarcodedProduct> getScannedItems() {
+    public List<BarcodedProduct> getScannedItems() {
+
         return scannedItems;
     }
 
     /**
-     * Clears the current list of items scanned with this machine and reset the total cost and weight
+     * Clears the current list of items scanned with this machine and reset the total cost
      */
-    public void clearScanned() {
+    public void reset() {
         scannedItems.clear();
         total = 0;
-        expectedWeight = 0;
     }
 }

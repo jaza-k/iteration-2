@@ -30,8 +30,8 @@ public class DoItYourselfStationLogic {
      * @throws NullPointerException
      *             If any argument is null.
      */
-    public static DoItYourselfStationLogic installOn(DoItYourselfStationAR station, CardIssuer creditIssuer) {
-        return new DoItYourselfStationLogic(station, creditIssuer);
+    public static DoItYourselfStationLogic installOn(DoItYourselfStationAR station) {
+        return new DoItYourselfStationLogic(station);
     }
 
     /**
@@ -45,13 +45,17 @@ public class DoItYourselfStationLogic {
      * @throws NullPointerException
      *             If any argument is null.
      */
-    public DoItYourselfStationLogic(DoItYourselfStationAR station, CardIssuer creditIssuer) {
+    public DoItYourselfStationLogic(DoItYourselfStationAR station) {
         this.station = station;
 
         scannerController = new ScannerController(this);
+        station.scanner.plugIn();
+        station.scanner.turnOn();
         station.scanner.register(scannerController);
 
         scaleController = new ScaleController(this);
+        station.scale.plugIn();
+        station.scale.turnOn();
         station.scale.register(scaleController);
     }
 }

@@ -15,10 +15,8 @@ import java.util.Date;
 
 public class Demo {
     public static void main(String[] args) {
-        // Setup station
+        // Create station
         DoItYourselfStationAR station = new DoItYourselfStationAR();
-        station.scanner.plugIn();
-        station.scanner.turnOn();
 
         // Create barcodes
         Barcode barcode1 = new Barcode(new Numeral[] { Numeral.one });
@@ -64,7 +62,7 @@ public class Demo {
         creditIssuer.addCardData(card.number, card.cardholder, c, card.cvv, 10000);
 
         // Setup station logic
-        DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station, creditIssuer);
+        DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
 
         // Start at welcome screen
         // Initialize GUI here...
