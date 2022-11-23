@@ -11,11 +11,9 @@ import com.jimmyselectronics.necchi.BarcodeScannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Map;
+import static com.diy.software.DoItYourselfStationLogic.Status.READY;
 
 public class ScannerController implements BarcodeScannerListener {
-
-
     private ArrayList<BarcodedProduct> scannedItems = new ArrayList();
     private double total = 0;
     private DoItYourselfStationLogic stationLogic;
@@ -37,6 +35,10 @@ public class ScannerController implements BarcodeScannerListener {
      */
     @Override
     public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
+        // Ignore when there system is not ready
+        if(stationLogic.getStatus() != READY)
+            return;
+
         // Ignore when there is no product associated with the barcode
         if (!ProductDatabases.BARCODED_PRODUCT_DATABASE.containsKey(barcode))
             return;

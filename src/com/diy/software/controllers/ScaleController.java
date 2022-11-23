@@ -5,6 +5,8 @@ import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
+import static com.diy.software.DoItYourselfStationLogic.Status.*;
+
 public class ScaleController implements ElectronicScaleListener {
     private DoItYourselfStationLogic stationLogic;
 
@@ -17,13 +19,6 @@ public class ScaleController implements ElectronicScaleListener {
         this.stationLogic = stationLogic;
     }
 
-    public enum Status {
-        READY,
-        WAITING_FOR_WEIGHT,
-        DISCREPANCY,
-        OVERLOAD
-    }
-    private Status status = Status.READY;
     private double expectedWeightInGrams = 0;
 
     /**
@@ -33,7 +28,7 @@ public class ScaleController implements ElectronicScaleListener {
      */
     public void addExpectedWeight(double weightInGrams) {
         expectedWeightInGrams += weightInGrams;
-        status = Status.WAITING_FOR_WEIGHT;
+        stationLogic.setStatus(WAITING_FOR_WEIGHT);
     }
 
     /**
@@ -50,28 +45,24 @@ public class ScaleController implements ElectronicScaleListener {
      */
     public void reset() {
         expectedWeightInGrams = 0;
-        status = Status.READY;
-    }
-
-    public Status getStatus() {
-        return status;
+        stationLogic.setStatus(READY);
     }
 
     @Override
     public void weightChanged(ElectronicScale scale, double weightInGrams) {
-        if(weightInGrams == expectedWeightInGrams)
-            status = Status.READY;
+        if (weightInGrams == expectedWeightInGrams)
+            stationLogic.setStatus(READY);
         else
-            status = Status.DISCREPANCY;
+            stationLogic.setStatus(DISCREPANCY);
     }
 
     @Override
     public void overload(ElectronicScale scale) {
-        status = Status.OVERLOAD;
+        stationLogic.setStatus(OVERLOAD);
     }
 
     @Override
     public void outOfOverload(ElectronicScale scale) {
-        status = Status.READY;
+        stationLogic.setStatus(READY);
     }
 }

@@ -12,6 +12,7 @@ import com.jimmyselectronics.necchi.Numeral;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.diy.software.DoItYourselfStationLogic.Status.*;
 import static org.junit.Assert.*;
 
 public class ScaleTest {
@@ -36,47 +37,53 @@ public class ScaleTest {
         customer.useStation(station);
         customer.shoppingCart.add(item2);
         customer.shoppingCart.add(item1);
+        customer.selectNextItem();
     }
 
     @Test
     public void WeighItemsTest() {
         assertEquals(0.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
-        customer.selectNextItem();
-        customer.scanItem();
-        assertEquals(ScaleController.Status.WAITING_FOR_WEIGHT, stationLogic.scaleController.getStatus());
+        assertEquals(READY, stationLogic.getStatus());
+        scanHelper();
+        assertEquals(WAITING_FOR_WEIGHT, stationLogic.getStatus());
         customer.placeItemInBaggingArea();
         assertEquals(5.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
+        assertEquals(READY, stationLogic.getStatus());
     }
 
     @Test
     public void DiscrepancyTest() {
         assertEquals(0.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
-        customer.selectNextItem();
-        customer.scanItem();
-        assertEquals(ScaleController.Status.WAITING_FOR_WEIGHT, stationLogic.scaleController.getStatus());
+        assertEquals(READY, stationLogic.getStatus());
+        scanHelper();
+        assertEquals(WAITING_FOR_WEIGHT, stationLogic.getStatus());
         customer.placeItemInBaggingArea();
         assertEquals(5.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
+        assertEquals(READY, stationLogic.getStatus());
         customer.selectNextItem();
-        customer.scanItem();
-        assertEquals(ScaleController.Status.WAITING_FOR_WEIGHT, stationLogic.scaleController.getStatus());
+        scanHelper();
+        assertEquals(WAITING_FOR_WEIGHT, stationLogic.getStatus());
         customer.placeItemInBaggingArea();
         assertEquals(15.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.DISCREPANCY, stationLogic.scaleController.getStatus());
+        assertEquals(DISCREPANCY, stationLogic.getStatus());
     }
 
     @Test
     public void ResetTest() {
         assertEquals(0.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
-        customer.selectNextItem();
-        customer.scanItem();
-        customer.placeItemInBaggingArea();
+        assertEquals(READY, stationLogic.getStatus());
+        scanHelper();
         stationLogic.scaleController.reset();
         assertEquals(0.0, stationLogic.scaleController.getExpectedWeightInGrams(), 0.0);
-        assertEquals(ScaleController.Status.READY, stationLogic.scaleController.getStatus());
+        assertEquals(READY, stationLogic.getStatus());
+    }
+
+    /**
+     * Helper function to scan an item
+     * Re-scans the item if the scanning failed
+     */
+    private void scanHelper() {
+        while (stationLogic.getStatus() == READY)
+            customer.scanItem();
     }
 }
