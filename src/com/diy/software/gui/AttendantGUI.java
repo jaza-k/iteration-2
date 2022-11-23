@@ -36,6 +36,15 @@ public class AttendantGUI {
 	    	AttendantFrame.setVisible(true);
 	    	
 	    }
+
+	public void receiptPrinterInkLowPopUp(){
+		AddInkPopup addInkPopup = new AddInkPopup();
+	}
+
+	public void receiptPrinterPaperLowPopUp(){
+		AddPaperPopup addPaperPopup = new AddPaperPopup();
+	}
+
 	    private void addWidgets() {
 
 	    	AddownBag = new JButton("Add Own Bag");
