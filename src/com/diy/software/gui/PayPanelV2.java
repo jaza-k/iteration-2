@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import com.diy.software.DoItYourselfStationLogic;
+
 public class PayPanelV2 extends JPanel {
 //The panel is going to have six buttons
 	JButton cashButton;
@@ -19,8 +21,12 @@ public class PayPanelV2 extends JPanel {
 
 	public PayPanelV2(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
+		
+		
     	addWidgets();	
+    	
     }
+	
 	
     private void addWidgets() {
 

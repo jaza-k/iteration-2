@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
@@ -28,20 +29,61 @@ public class CashPaymentPanel extends JPanel{
 	private double total;
 	private DoItYourselfStationLogic stationLogic;
 	private Payment newPay;
-	
+	Customer customer;
+	JTabbedPane tabbedPane;
 
 	public CashPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
+		this.customer = customer;
+		this.stationLogic = stationLogic;
+		this.tabbedPane = tabbedPane;
 		
 		
 		
+		
+		
+		
+
 		//newPay = new Payment(stationLogic.station, stationLogic.scannerController.getTotal());
 		
-		// total should not be hard-coded
-		/////////////////////////////////////////// FIX /////////////////////////////
-		newPay = new Payment(stationLogic.station, 50);
-		/////////////////////////////////////////////////////////////////////////////
+		
+		JButton beginCashPaymentButton = new JButton("Begin Inserting");
+		beginCashPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+		
+		
+		
+		
+		
+		
+		beginCashPaymentButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				remove(beginCashPaymentButton);
+				beginPayment();
+			}
+		});
+		
+		beginCashPaymentButton.setBounds(237, 349, 91, 23);
+		add(beginCashPaymentButton);	
+		
+	}
+	
+	
+	public void beginPayment() {
+	
+		updateTotal();
+
+		
+        JLabel priceTotal = new JLabel("Current Total: $");
+        priceTotal.setFont(new Font("Georgia", Font.PLAIN, 13));
+        priceTotal.setBounds(175, 321, 144, 14);
+        add(priceTotal);
+        
+		newPay = new Payment(stationLogic.station, total);
 		CashPayment cashPayment = new CashPayment(stationLogic.station);
 		
+	
+		double cost = newPay.checkoutTotal;
+		priceTotal.setText("Remaining Cost:" + cost);
 		
 		
 		
@@ -101,15 +143,15 @@ public class CashPaymentPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				int denomination = Integer.valueOf((String)billComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
+				int billDenomination = Integer.valueOf((String)billComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
 				// cad should not be hard-coded
 				/////////////////////////////////////////// FIX /////////////////////////////
-				Banknote bill = new Banknote(Currency.getInstance("CAD"), denomination);
+				Banknote bill = new Banknote(Currency.getInstance("CAD"), billDenomination );
 				///////////////////////////////////////////////////////////////////////////
 				try {
 					stationLogic.station.banknoteInput.receive(bill);
 					double cost = newPay.checkoutTotal;
-					System.out.println(cost);
+					priceTotal.setText("Remaining Cost:" + cost);
 				} catch (DisabledException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -129,13 +171,12 @@ public class CashPaymentPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Long denomination = Long.valueOf((String)coinComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
+				Long coinDenomination = Long.valueOf((String)coinComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
 				// cad should not be hard-coded
 				/////////////////////////////////////////// FIX /////////////////////////////
-				Coin coin = new Coin(Currency.getInstance("CAD"), denomination);
+				Coin coin = new Coin(Currency.getInstance("CAD"), coinDenomination);
 				///////////////////////////////////////////////////////////////////////////
 				try {
-					
 					stationLogic.station.coinSlot.receive(coin);
 					double cost = newPay.checkoutTotal;
 					System.out.println(cost);
@@ -149,17 +190,16 @@ public class CashPaymentPanel extends JPanel{
 			}
 	
 		});
-		
 		payCoinButton.setBounds(237, 349, 91, 23);
 		add(payCoinButton);	
-		
-		
-		
-		
-		
-		
-		
 	}
+
+		
+
+	public void updateTotal() {
+		this.total = stationLogic.scannerController.getTotal();
+	}
+	
 }
 		
 
