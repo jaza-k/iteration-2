@@ -76,7 +76,8 @@ public class MainCustomerPanel extends JPanel {
                 }
             }
 			private void scanItem() {
-				if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+				//if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+				if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
 	            	customer.selectNextItem();
 	                customer.scanItem();
 				}
@@ -98,7 +99,8 @@ public class MainCustomerPanel extends JPanel {
 					}
 					scannedItemPane.setText(stringBuilder.toString());
 	                
-	                if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+					//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+					if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
 						tabbedPane.setSelectedIndex(6);
 					}
                 }
