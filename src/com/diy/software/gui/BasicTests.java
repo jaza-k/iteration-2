@@ -12,6 +12,14 @@ import com.diy.simulation.Customer;
 // NEW RE: STATION LOGICS, DEMO, CONTROLLERS
 import com.diy.software.*;
 
+
+/*
+ * THIS FILE IS MOSTLY DEPRECATED
+ * - am keeping as reference only
+ */
+
+
+
 public class BasicTests {
 
 	public static DoItYourselfStationLogic[] stationsGen(int n){//List<DoItYourselfStationLogic> stationsGen(int n) {

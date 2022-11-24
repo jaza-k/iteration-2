@@ -107,6 +107,15 @@ public class Demo {
         
         // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
         CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
+        
+        
+        // TEST
+        stsLG[0].bagApproval();
+        //System.out.print("\nFrom Demo: " + stsLG[0].getStation() + "\n");
+        
+        // BELOW IS FOR HANDLING w/o GUI
+        //attendantLogic.attendantDecision(0, true);
+        //System.out.print("\nDone...\n");
 	        
     }
 }

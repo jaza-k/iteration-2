@@ -42,6 +42,10 @@ public class AttendantGUI {
 	//String selected = "Station ";
 	
 	
+	// sID which is currently selected
+	int sID = 0;	// should be nothing or -1 by default
+	
+	
 	int sx = 160;	// starting x
 	int sy = 200;	// starting y
 	int sw = 400;	// starting w
@@ -150,7 +154,9 @@ public class AttendantGUI {
 		AddownBag.setFocusPainted(false);
 		AddownBag.addActionListener(e -> {
 			// indicating the electronic scale to ignore weight discrepancy for next item
-
+			
+			// assume yes FOR NOW
+			AttendantStationLogic.getInstance().attendantDecision(sID, true);
 		});
 
 		AddItem = new JButton("Add Item");
