@@ -24,6 +24,8 @@ import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.payment.CreditPayment;
+import com.diy.software.controllers.ScaleController;
+import com.diy.software.controllers.ScaleController.Status;
 import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
@@ -74,23 +76,43 @@ public class MainCustomerPanel extends JPanel {
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    // Handling item to product verification process here as it wasn't handled anywhere else
-                	customer.selectNextItem();
-                    customer.scanItem();
-                    priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
-                    scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
-                    cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
-                    potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
+                    scanItem();
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
+			private void scanItem() {
+				// TODO Remove this state reset after bug has been found
+				stationLogic.scaleController.reset();
+				
+				if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+	            	customer.selectNextItem();
+	                customer.scanItem();
+				}
+				// Note, these clauses have to be independent incase an item was scanned and not bagged previously
+				if(stationLogic.scaleController.getStatus() == ScaleController.Status.WAITING_FOR_WEIGHT) {
+					// At this point, the status should be "Waiting for Weight"
+					JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
+					bagItem();
+				}
+			}
+
+			private void bagItem() {
+				// Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
+				customer.placeItemInBaggingArea();
+				if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+					//tabbedPane.setSelectedIndex(6);
+				}
+				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
+				priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
+				//TODO This can be done via simply accessing the scanned items from "ScannerController"
+                scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
+                cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
+                potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
+			}
         });
         scanButton.setBounds(250, 359, 91, 23);
         add(scanButton);
-
-      
 
         JLabel lblItemsToScan = new JLabel("Items to Scan");
         lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
@@ -98,9 +120,7 @@ public class MainCustomerPanel extends JPanel {
         lblItemsToScan.setFont(new Font("Georgia", Font.PLAIN, 13));
         lblItemsToScan.setBounds(107, 346, 97, 11);
         add(lblItemsToScan);
-
-        
-        
+  
         // Button for switching to payment tab
         JButton switchToPaymentButton = new JButton("Proceed To Bagging");
         switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));

@@ -35,9 +35,9 @@ public class Demo {
         Barcode barcode3 = new Barcode(new Numeral[] { Numeral.one, Numeral.two, Numeral.three });
 
         // Create barcoded items
-        BarcodedItem item1 = new BarcodedItem(barcode1, 1);
-        BarcodedItem item2 = new BarcodedItem(barcode2, 1);
-        BarcodedItem item3 = new BarcodedItem(barcode3, 1);
+        BarcodedItem item1 = new BarcodedItem(barcode1, 15);
+        BarcodedItem item2 = new BarcodedItem(barcode2, 25);
+        BarcodedItem item3 = new BarcodedItem(barcode3, 1000);
 
         // Create barcoded products
         BarcodedProduct product1 = new BarcodedProduct(barcode1, "Food", 5, 15);
