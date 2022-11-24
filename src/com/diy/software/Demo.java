@@ -49,6 +49,15 @@ public class Demo {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode3, product3);
 
+
+
+        Barcode bagBarcode = new Barcode(new Numeral[]{Numeral.one, Numeral.two, Numeral.three, Numeral.three, Numeral.nine}); // 1234
+        BarcodedProduct bagBP = new BarcodedProduct(bagBarcode, "Store Purchased Bag", 1, 0.05);
+        ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bagBarcode, bagBP);
+        ProductDatabases.INVENTORY.put(bagBP, 1000);
+
+        BarcodedItem bagItem = new BarcodedItem(bagBarcode, 0.05);
+
       
         // Setup customer
         Customer customer = new Customer();
@@ -58,6 +67,7 @@ public class Demo {
         customer.shoppingCart.add(item1);
         customer.shoppingCart.add(item2);
         customer.shoppingCart.add(item3);
+        customer.shoppingCart.add(bagItem);
 
         // Create cards
         Card card = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);

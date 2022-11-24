@@ -26,6 +26,7 @@ import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.payment.CreditPayment;
 import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.BarcodedItem;
+import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
 
@@ -33,6 +34,7 @@ import static com.diy.software.DoItYourselfStationLogic.Status.READY;
 import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
+    private JTextField numberOfBags;
     /**
      * Creation of the panel
      */
@@ -62,7 +64,7 @@ public class MainCustomerPanel extends JPanel {
         JComboBox<String> potentialScanComboBox = new JComboBox<String>();
         //Adds all the barcoded items into the potential scannable combo box
         ArrayList<BarcodedItem> cBarcodedItems = new ArrayList<BarcodedItem>();
-        for (int i = 1; i <= customer.shoppingCart.size(); i++) {
+        for (int i = 1; i <= customer.shoppingCart.size()-1; i++) {
             potentialScanComboBox.addItem("Item " + i);
             cBarcodedItems.add((BarcodedItem) customer.shoppingCart.get(i - 1));
         }
@@ -108,6 +110,64 @@ public class MainCustomerPanel extends JPanel {
         });
         scanButton.setBounds(250, 359, 91, 23);
         add(scanButton);
+
+
+        JButton buyBag = new JButton("Buy");
+        buyBag.setBounds(70, 420, 50, 23);
+        add(buyBag);
+
+        buyBag.addActionListener(new ActionListener() {
+                                     public void actionPerformed(ActionEvent e) {
+
+                                         for (int i = 1; i <= customer.shoppingCart.size(); i++) {
+                                             potentialScanComboBox.addItem("Item " + i);
+                                           //  cBarcodedItems.add((ProductDatabases.BARCODED_PRODUCT_DATABASE.get(); customer.shoppingCart.get(i - 1));
+                                         }
+
+
+                                         for (int i = 0; i <= (Integer.parseInt(numberOfBags.getText())); i++) {
+
+                                             customer.selectNextItem();
+                                             customer.scanItem();
+
+                                             if (stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                                                 JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                                                 return;
+                                             }
+
+                                             customer.placeItemInBaggingArea();
+                                             priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
+                                             scannedItemPane.setText(
+                                                     String.join("\n", stationLogic.scannerController.getScannedItems().stream().map(item -> item.getDescription()).toList())
+                                             );
+
+                                             WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
+
+
+                                         }
+                                     }
+
+                                 });
+
+
+
+
+
+
+
+
+        numberOfBags = new JTextField();
+        numberOfBags.setBounds(30, 420, 35, 20);
+        add(numberOfBags);
+        numberOfBags.setColumns(10);
+
+
+        JLabel lblNewLabel = new JLabel("Number of Bags");
+        lblNewLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(30, 400, 100, 14);
+        add(lblNewLabel);
+
 
 
         JLabel lblItemsToScan = new JLabel("Items to Scan");
