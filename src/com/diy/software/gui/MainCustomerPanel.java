@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
@@ -18,16 +17,9 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-import com.diy.hardware.DoItYourselfStationAR;
-import com.diy.hardware.external.CardIssuer;
-import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
-import com.diy.software.payment.CreditPayment;
-import com.diy.software.controllers.ScannerController;
 import com.jimmyselectronics.necchi.BarcodedItem;
-import com.jimmyselectronics.opeechee.Card;
-import com.jimmyselectronics.opeechee.InvalidPINException;
 
 import static com.diy.software.DoItYourselfStationLogic.Status.READY;
 import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
@@ -124,7 +116,7 @@ public class MainCustomerPanel extends JPanel {
         // Action event when "Proceed" button clicked
         switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(5);
+                tabbedPane.setSelectedIndex(1);
             }
         });
         switchToPaymentButton.setBounds(233, 434, 141, 35);
