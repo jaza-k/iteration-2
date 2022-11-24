@@ -72,7 +72,6 @@ public class MainCustomerPanel extends JPanel {
                     scanItem();
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
-                    e1.printStackTrace();
                 }
             }
 			private void scanItem() {
@@ -81,6 +80,12 @@ public class MainCustomerPanel extends JPanel {
 	            	customer.selectNextItem();
 	                customer.scanItem();
 				}
+
+                if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                    JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
 				// At this point, the status should be "Waiting for Weight"
 				JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
 				bagItem();
