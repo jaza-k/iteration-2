@@ -65,7 +65,7 @@ public class DebitPaymentTest {
         assertFalse(flag);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void ConstructorTesting2() throws IOException {
         new DebitPayment(100, null, testReader, pin, bank);
     }
