@@ -31,7 +31,7 @@ public class Demo {
         // Create barcoded products
         BarcodedProduct product1 = new BarcodedProduct(barcode1, "Food", 5, 15);
         BarcodedProduct product2 = new BarcodedProduct(barcode2, "More Food", 10, 25);
-        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Tood", 20, 35);
+        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Food", 20, 35);
 
         // Add barcoded products to database
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, product1);
@@ -48,18 +48,21 @@ public class Demo {
         customer.shoppingCart.add(item3);
 
         // Create cards
-        Card card = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
+        Card creditCard = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
+        Card debitCard = new Card("Debit", "1111111122223333", "Dave", "321", "555", true, true);
 
         // Add card to customer waller
-        customer.wallet.cards.add(card);
+        customer.wallet.cards.add(creditCard);
+        customer.wallet.cards.add(debitCard);
 
         // Populate card issuer
         CardIssuer creditIssuer = new CardIssuer("Credit", 10);
         Date date = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.DATE, 1);
-        creditIssuer.addCardData(card.number, card.cardholder, c, card.cvv, 10000);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 1);
+        creditIssuer.addCardData(creditCard.number, creditCard.cardholder, calendar, creditCard.cvv, 10000);
+        creditIssuer.addCardData(debitCard.number, debitCard.cardholder, calendar,  debitCard.cvv, 15000);
 
         // Setup station logic
         DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
