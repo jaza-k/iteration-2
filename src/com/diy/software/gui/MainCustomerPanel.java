@@ -34,6 +34,7 @@ import static com.diy.software.DoItYourselfStationLogic.Status.READY;
 import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
+	private JTextField numberOfBags;
     /**
      * Creation of the panel
      */
@@ -125,8 +126,18 @@ public class MainCustomerPanel extends JPanel {
                 tabbedPane.setSelectedIndex(1);
             }
         });
-        addBagging.setBounds(253, 427, 130, 35);
+        addBagging.setBounds(276, 440, 130, 35);
         add(addBagging);
+        
+        numberOfBags = new JTextField();
+        numberOfBags.setBounds(40, 445, 76, 27);
+        add(numberOfBags);
+        numberOfBags.setColumns(10);
+        
+        JLabel bagLabel = new JLabel("Number of Bags");
+        bagLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
+        bagLabel.setBounds(40, 416, 113, 23);
+        add(bagLabel);
         
         JButton purchaseBags = new JButton("Buy Bags");
         purchaseBags.setFont(new Font("Georgia", Font.PLAIN, 13));
@@ -136,7 +147,7 @@ public class MainCustomerPanel extends JPanel {
         		
         	}
         });
-        purchaseBags.setBounds(76, 427, 130, 35);
+        purchaseBags.setBounds(126, 440, 98, 35);
         add(purchaseBags);
     }
 }

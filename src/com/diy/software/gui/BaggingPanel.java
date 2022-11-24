@@ -19,7 +19,6 @@ import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.disenchantment.TouchScreen;
 
 public class BaggingPanel extends JPanel {
-	private JTextField numberOfBags;
 
 	/**
 	 * Create the panel.
@@ -35,28 +34,8 @@ public class BaggingPanel extends JPanel {
 				tabbedPane.setSelectedIndex(2);
 			}
 		});
-		btnNewButton.setBounds(203, 384, 189, 39);
+		btnNewButton.setBounds(210, 391, 189, 39);
 		add(btnNewButton);
-		
-		JTextPane scannedItemPane = new JTextPane();
-		scannedItemPane.setEditable(false);
-		scannedItemPane.setBounds(63, 51, 329, 129);
-		add(scannedItemPane);
-		
-		JButton buyBag = new JButton("Buy Bags");
-		buyBag.setBounds(267, 224, 114, 23);
-		add(buyBag);
-		
-		numberOfBags = new JTextField();
-		numberOfBags.setBounds(95, 225, 106, 20);
-		add(numberOfBags);
-		numberOfBags.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("Number of Bags");
-		lblNewLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(84, 209, 122, 14);
-		add(lblNewLabel);
 
 	}
 }
