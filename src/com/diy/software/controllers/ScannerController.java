@@ -4,6 +4,8 @@ package com.diy.software.controllers;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.software.DoItYourselfStationLogic;
+import com.jimmyselectronics.AbstractDevice;
+import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodeScannerListener;
@@ -82,4 +84,16 @@ public class ScannerController implements BarcodeScannerListener {
         scannedItems.clear();
         total = 0;
     }
+
+    @Override
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) { }
 }

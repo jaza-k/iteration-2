@@ -4,6 +4,7 @@ import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
+import com.diy.software.AttendantStationLogic;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.controllers.ScaleController;
 import com.jimmyselectronics.necchi.Barcode;
@@ -33,6 +34,7 @@ public class ScaleTest {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
         station = new DoItYourselfStationAR();
         stationLogic = new DoItYourselfStationLogic(station);
+        AttendantStationLogic.getInstance().quantizeStations(new DoItYourselfStationLogic[]{stationLogic});
         customer = new Customer();
         customer.useStation(station);
         customer.shoppingCart.add(item2);

@@ -19,16 +19,6 @@ public class ReceiptPrinterController implements ReceiptPrinterListener {
     }
 
     @Override
-    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-        System.out.println("Receipt printer is enabled");
-    }
-
-    @Override
-    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
-        System.out.println("Receipt printer is disabled");
-    }
-
-    @Override
     public void outOfPaper(IReceiptPrinter printer) {
 
     }
@@ -51,12 +41,20 @@ public class ReceiptPrinterController implements ReceiptPrinterListener {
     }
 
     @Override
-    public void paperAdded(IReceiptPrinter printer) {
-
-    }
+    public void paperAdded(IReceiptPrinter printer) { }
 
     @Override
-    public void inkAdded(IReceiptPrinter printer) {
+    public void inkAdded(IReceiptPrinter printer) { }
 
-    }
+    @Override
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) { }
 }

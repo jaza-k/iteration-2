@@ -2,6 +2,8 @@ package com.diy.software.controllers;
 
 
 import com.diy.software.DoItYourselfStationLogic;
+import com.jimmyselectronics.AbstractDevice;
+import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
@@ -66,4 +68,16 @@ public class ScaleController implements ElectronicScaleListener {
     public void outOfOverload(ElectronicScale scale) {
         stationLogic.setStatus(READY);
     }
+
+    @Override
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) { }
+
+    @Override
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) { }
 }

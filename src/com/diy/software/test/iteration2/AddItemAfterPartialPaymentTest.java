@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AddItemAfterPartialPaymentTest {
@@ -121,31 +122,25 @@ public class AddItemAfterPartialPaymentTest {
     {
         boolean flag;
         stationLogic.scannerController.barcodeScanned(station.scanner, item3.getBarcode());
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         Payment newpay = new Payment(station, stationLogic.scannerController.getTotal());
-        assertTrue(newpay.checkoutTotal == 20);
-        flag = newpay.CreditPay("345", card, 10, creditIssuer); //Even though the checkout total is 20, we'll only pay for 10
-        assertTrue(flag); //After paying ten dollars, there should still be ten dollars left to pay
-        assertTrue(newpay.checkoutTotal == 10);
-        assertTrue(stationLogic.scannerController.getTotal() == 20); //The checkout total for the scanner controller should still be 20
+        assertEquals(20.0, newpay.checkoutTotal);
+        while(!newpay.CreditPay("345", card, 10, creditIssuer)); // Even though the checkout total is 20, we'll only pay for 10
+        assertEquals(10.0, newpay.checkoutTotal); //After paying ten dollars, there should still be ten dollars left to pay
+        assertEquals(20.0, stationLogic.scannerController.getTotal()); //The checkout total for the scanner controller should still be 20
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController); //This will allow us to add more items after partially paying
-        assertTrue(stationLogic.scannerController.getTotal() == 10);
-        stationLogic.scannerController.barcodeScanned(station.scanner, item2.getBarcode());
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, stationLogic.scannerController.getTotal());
     }
 
     @Test public void PartialCash() throws TooMuchCashException, DisabledException
     {
-        boolean flag;
         stationLogic.scannerController.barcodeScanned(station.scanner, item3.getBarcode());
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         Payment newpay = new Payment(station, stationLogic.scannerController.getTotal());
         station.banknoteInput.receive(tenbill);
-        assertTrue(newpay.checkoutTotal == 10);
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, newpay.checkoutTotal);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController);
-        assertTrue(stationLogic.scannerController.getTotal() == 10);
-        stationLogic.scannerController.barcodeScanned(station.scanner, item2.getBarcode());
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, stationLogic.scannerController.getTotal());
     }
 }
