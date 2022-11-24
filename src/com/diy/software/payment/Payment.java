@@ -5,6 +5,8 @@ import java.util.Currency;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.unitedbankingservices.banknote.*;
 import com.unitedbankingservices.coin.*;
+import com.diy.hardware.external.CardIssuer;
+import com.jimmyselectronics.opeechee.Card;
 
 public class Payment {
 	public static double checkoutTotal;
@@ -119,7 +121,24 @@ public class Payment {
 	private CoinValid coinvalidob;
 	private CoinStorage coinstoreob; //These observers will hand the insertion of coins
 	
-	
+	public boolean CreditPay(String newpin, Card newcard, double payval, CardIssuer newbank) //I apologize for how many parameters go into this call.
+	{
+		//Call this function when the customer chooses to pay with a credit card. Using payval allows for the possibility of partial payments.
+		try
+		{
+			CreditPayment newpay = new CreditPayment(payval, newcard, customerStation.cardReader, newpin, newbank);
+			if (newpay.payForTotal())
+			{
+				checkoutTotal -= payval; //Subtract amount paid by customer on a successful transaction
+				return true;
+			}
+			return false;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+	}
 	
 	public Payment(DoItYourselfStationAR newstation, double newtotal)
 	{
