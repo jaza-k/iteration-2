@@ -63,6 +63,8 @@ public class ScannerController implements BarcodeScannerListener {
         return total;
     }
 
+    public void setTotal(double newval) {total = newval;} //This function will be used when adding items after a partial payment
+
 
     /**
      * Obtains the list of items scanned with this machine
