@@ -27,6 +27,7 @@ public class AttendantGUI {
 	JButton AddownBag;
 	JButton AddItem;
 	JButton RemoveItem;
+	JButton ApproveDiscrepancy;
 	JButton PermitstationUse;
 	JButton BlockstationUse;
 	JButton Close;
@@ -37,15 +38,17 @@ public class AttendantGUI {
 	// STATIONS (temporary solution)
 	JButton s1, s2, s3, s4, s5, s6;
 	
-	int sized = 0;
-	int issue = -1;	// represents the station having an issue
+	//int issue = -1;	// represents the station having an issue
 	//String selected = "Station ";
 	
 	
 	// sID which is currently selected
-	int sID = 0;	// should be nothing or -1 by default
+	int sID = -1;	// should be nothing or -1 by default
 	
 	
+	// sized = scaling tracker
+	int sized = 0;
+	// s_ = starting_
 	int sx = 160;	// starting x
 	int sy = 200;	// starting y
 	int sw = 400;	// starting w
@@ -82,7 +85,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 1");
-			issue = 1;
+			sID = 0;
 
 		});
 		
@@ -92,7 +95,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 2");
-			issue = 2;
+			sID = 1;
 
 		});
 		
@@ -102,7 +105,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 3");
-			issue = 3;
+			sID = 2;
 
 		});
 		
@@ -112,7 +115,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 4");
-			issue = 4;
+			sID = 3;
 
 		});
 		
@@ -122,7 +125,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 5");
-			issue = 5;
+			sID = 4;
 
 		});
 		
@@ -132,7 +135,7 @@ public class AttendantGUI {
 			// open station...
 			tabbedPane.setSelectedIndex(1);
 			tabbedPane.setTitleAt(1,"Station 6");
-			issue = 6;
+			sID = 5;
 
 		});
 		
@@ -156,7 +159,9 @@ public class AttendantGUI {
 			// indicating the electronic scale to ignore weight discrepancy for next item
 			
 			// assume yes FOR NOW
-			AttendantStationLogic.getInstance().attendantDecision(sID, true);
+			if(sID != -1) {
+				AttendantStationLogic.getInstance().attendantDecision(sID, true);
+			}
 		});
 
 		AddItem = new JButton("Add Item");
@@ -173,6 +178,16 @@ public class AttendantGUI {
 		RemoveItem.addActionListener(e -> {
 			//pop out new panel and call function  of "Remove Item"
 			
+		});
+		
+		ApproveDiscrepancy = new JButton("Approve Discrepancy");
+		ApproveDiscrepancy.setHorizontalAlignment(SwingConstants.LEFT);
+		ApproveDiscrepancy.setFocusPainted(false);
+		ApproveDiscrepancy.addActionListener(e -> {
+			//pop out new panel and call function  of "Remove Item"
+			if(sID != -1) {
+				AttendantStationLogic.getInstance().attendantDecision(sID, true);
+			}
 		});
 		
 		PermitstationUse = new JButton("Permit Station Use");
@@ -201,12 +216,13 @@ public class AttendantGUI {
 			tabbedPane.setTitleAt(1,"Station");
 			AttendantFrame.validate();
 			AttendantFrame.repaint();
-			issue = -1;
+			sID = -1;	// no station selected
 		});
 	    
 	    att.add(AddownBag);
 		att.add(AddItem);
 		att.add(RemoveItem);
+		att.add(ApproveDiscrepancy);
 		att.add(PermitstationUse);
 		att.add(BlockstationUse);
 		att.add(Close);
@@ -357,6 +373,7 @@ public class AttendantGUI {
 	    	
 	    	tabbedPane.addTab("Main Menu", MainMenu);
 	    	tabbedPane.addTab("Station", AttendantPanel);
+	    	
 	    	
 	    	AttendantFrame.setVisible(true);
 	    	
