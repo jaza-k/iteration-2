@@ -26,22 +26,20 @@ public class CustomerGUI{
 	private BaggingPanel baggingPanel;
 	
 	/**
+	 * Constructor for CustomerGUI
 	 * 
-	 * @param doItYourselfStation: The current station
-	 * @param wallet: Requires the wallet so the cards can be accessed and displayed onto the GUI
-	 * @param curretCart: Requires all the items as an array list;items can be displayed to simulate a scan
-	 * @param screen: Contains the code to create the frame.
+	 * @param doItYourselfStationLogic: The logic to be installed on the statio
+	 * @param customer: The customer currently using the station
+	 * @param screen: The DIY station touchscreen, contains the code to create the GUI frame
+	 * @param bankingInfo: A hashmap of cards and their associated card issuers
 	 */
-	
 	public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen, HashMap<Card, CardIssuer> bankingInfo){
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane);
 		payPanel = new PayPanelV2(tabbedPane);
 		
-		
-		//creditPanel = new CreditPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
-		debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
+		debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
 		baggingPanel = new BaggingPanel(customer, screen, doItYourselfStationLogic, tabbedPane);

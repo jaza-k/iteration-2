@@ -30,7 +30,7 @@ public class PayPanelV2 extends JPanel {
     	cashButton.setBounds(0, 0, 225, 301);
 		cashButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// switch to PayPanel
+				// switch to appropriate panel after selection
 				tabbedPane.setSelectedIndex(3);
 			}
 		});
@@ -40,7 +40,7 @@ public class PayPanelV2 extends JPanel {
     	creditButton.setBounds(225, 0, 240, 301);
 		creditButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// switch to PayPanel
+				// switch to appropriate panel after selection
 				tabbedPane.setSelectedIndex(2);
 			}
 		});
@@ -50,7 +50,7 @@ public class PayPanelV2 extends JPanel {
     	debitButton.setBounds(0, 300, 225, 200);
 		debitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// switch to PayPanel
+				// switch to appropriate panel after selection
 				tabbedPane.setSelectedIndex(4);
 			}
 		});
@@ -60,7 +60,7 @@ public class PayPanelV2 extends JPanel {
     	backToScanButton.setBounds(225, 300, 240, 200);
     	backToScanButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// switch to PayPanel
+				// switch to appropriate panel after selection
 				tabbedPane.setSelectedIndex(0);
 			}
     	});

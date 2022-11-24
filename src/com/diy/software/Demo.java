@@ -62,31 +62,29 @@ public class Demo {
         // Create cards
         Card creditCard = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
         Card debitCard = new Card("Debit", "1111111122223333", "Dave", "321", "555", true, true);
-        Card card = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
-      
-        
 
         // Add card to customer waller
         customer.wallet.cards.add(creditCard);
         customer.wallet.cards.add(debitCard);
 
         // Populate card issuer
-        CardIssuer creditIssuer = new CardIssuer("Credit", 10);
+        CardIssuer cardIssuer = new CardIssuer("Credit", 10);
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, 1);
-        creditIssuer.addCardData(creditCard.number, creditCard.cardholder, calendar, creditCard.cvv, 10000);
-        creditIssuer.addCardData(debitCard.number, debitCard.cardholder, calendar,  debitCard.cvv, 15000);
+        cardIssuer.addCardData(creditCard.number, creditCard.cardholder, calendar, creditCard.cvv, 10000);
+        cardIssuer.addCardData(debitCard.number, debitCard.cardholder, calendar,  debitCard.cvv, 15000);
 
         // Setup station logic
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DATE, 1);
-        creditIssuer.addCardData(card.number, card.cardholder, c, card.cvv, 10000);
+
         // Work around for veryfing card payments
         HashMap<Card, CardIssuer> bankingInfo = new HashMap<>();
-        bankingInfo.put(card, creditIssuer);
+        bankingInfo.put(creditCard, cardIssuer);
+        bankingInfo.put(debitCard, cardIssuer);
         /*
         // Setup station logic - 
         DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
