@@ -35,15 +35,16 @@ public class Demo {
         Barcode barcode3 = new Barcode(new Numeral[] { Numeral.one, Numeral.two, Numeral.three });
 
         // Create barcoded items
-        BarcodedItem item1 = new BarcodedItem(barcode1, 15);
-        BarcodedItem item2 = new BarcodedItem(barcode2, 25);
-        BarcodedItem item3 = new BarcodedItem(barcode3, 1000);
+        BarcodedItem item1 = new BarcodedItem(barcode1, 12);
+        BarcodedItem item2 = new BarcodedItem(barcode2, 5);
+        BarcodedItem item3 = new BarcodedItem(barcode3, 2);
 
         // Create barcoded products
-        BarcodedProduct product1 = new BarcodedProduct(barcode1, "Food", 5, 15);
-        BarcodedProduct product2 = new BarcodedProduct(barcode2, "More Food", 10, 25);
-        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Food", 20, 35);
-
+        BarcodedProduct product1 = new BarcodedProduct(barcode1, "Crackers", 5, 1);
+        BarcodedProduct product2 = new BarcodedProduct(barcode2, "Juice", 10, 5);
+        BarcodedProduct product3 = new BarcodedProduct(barcode3, "Chocolate", 4, 2);
+        
+        
         // Add barcoded products to database
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, product1);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
@@ -53,12 +54,12 @@ public class Demo {
         // Setup customer
         Customer customer = new Customer();
         customer.useStation(stsAR[0]);
-
+        
         // Add items to cart
         customer.shoppingCart.add(item1);
         customer.shoppingCart.add(item2);
         customer.shoppingCart.add(item3);
-
+        
         // Create cards
         Card card = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
       

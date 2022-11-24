@@ -59,9 +59,6 @@ public class ScaleController implements ElectronicScaleListener {
 
     @Override
     public void weightChanged(ElectronicScale scale, double weightInGrams) {
-    	//TODO Remove these print statements after testing
-    	System.out.println("Actual Weight: " + weightInGrams);
-    	System.out.println("Expected Weight: " + expectedWeightInGrams);
         if(weightInGrams == expectedWeightInGrams)
             status = Status.READY;
         else
