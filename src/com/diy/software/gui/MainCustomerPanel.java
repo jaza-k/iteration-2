@@ -29,13 +29,15 @@ import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
 
+import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
+
 public class MainCustomerPanel extends JPanel {
     /**
      * Creation of the panel
      */
     public MainCustomerPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
-    	
-    	
+
+
         setForeground(new Color(128, 128, 255));
         setBackground(SystemColor.inactiveCaption);
         setLayout(null);
@@ -75,10 +77,20 @@ public class MainCustomerPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     // Handling item to product verification process here as it wasn't handled anywhere else
-                	customer.selectNextItem();
+                    customer.selectNextItem();
                     customer.scanItem();
+
+                    // Stop if scan failed
+                    if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                        JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    customer.placeItemInBaggingArea();
                     priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
-                    scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
+                    scannedItemPane.setText(
+                            String.join("\n", stationLogic.scannerController.getScannedItems().stream().map(item -> item.getDescription()).toList())
+                    );
                     WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
                     cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
                     potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
@@ -90,7 +102,6 @@ public class MainCustomerPanel extends JPanel {
         scanButton.setBounds(250, 359, 91, 23);
         add(scanButton);
 
-      
 
         JLabel lblItemsToScan = new JLabel("Items to Scan");
         lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,15 +110,14 @@ public class MainCustomerPanel extends JPanel {
         lblItemsToScan.setBounds(107, 346, 97, 11);
         add(lblItemsToScan);
 
-        
-        
+
         // Button for switching to payment tab
         JButton switchToPaymentButton = new JButton("Proceed To Bagging");
         switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
         // Action event when "Proceed" button clicked
         switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	tabbedPane.setSelectedIndex(5);
+                tabbedPane.setSelectedIndex(5);
             }
         });
         switchToPaymentButton.setBounds(233, 434, 141, 35);
