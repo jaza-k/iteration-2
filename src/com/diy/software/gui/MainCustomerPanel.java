@@ -101,7 +101,9 @@ public class MainCustomerPanel extends JPanel {
 	                
 					//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
 					if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
-						tabbedPane.setSelectedIndex(6);
+						tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
+						
+						
 					}
                 }
         });

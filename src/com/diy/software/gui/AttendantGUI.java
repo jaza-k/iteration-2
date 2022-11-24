@@ -186,7 +186,9 @@ public class AttendantGUI {
 		ApproveDiscrepancy.addActionListener(e -> {
 			//pop out new panel and call function  of "Remove Item"
 			if(sID != -1) {
+				//System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
 				AttendantStationLogic.getInstance().attendantDecision(sID, true);
+				//System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
 			}
 		});
 		
