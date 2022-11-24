@@ -38,18 +38,17 @@ public class CustomerGUI{
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane);
 		payPanel = new PayPanelV2(tabbedPane);
-		
 		debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
 		baggingPanel = new BaggingPanel(customer, screen, doItYourselfStationLogic, tabbedPane);
 		
-		tabbedPane.add(panel);
-		tabbedPane.add(payPanel);
-		tabbedPane.add(creditPanel);
-		tabbedPane.add(cashPanel);
-		tabbedPane.add(debitPanel);
-		tabbedPane.add(baggingPanel);
+		tabbedPane.add("Scan Items", panel);
+		tabbedPane.add("Bags", baggingPanel);
+		tabbedPane.add("Payment", payPanel);
+		tabbedPane.add("Credit", creditPanel);
+		tabbedPane.add("Cash", cashPanel);
+		tabbedPane.add("Debit", debitPanel);
 		tabbedPane.setEnabledAt(0, false);
 	    tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(2, false);

@@ -22,7 +22,6 @@ public class PayPanelV2 extends JPanel {
     	addWidgets();	
     }
 	
-	
     private void addWidgets() {
 
     	cashButton = new JButton("Cash");
@@ -31,7 +30,7 @@ public class PayPanelV2 extends JPanel {
 		cashButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to appropriate panel after selection
-				tabbedPane.setSelectedIndex(3);
+				tabbedPane.setSelectedIndex(4);
 			}
 		});
 
@@ -41,7 +40,7 @@ public class PayPanelV2 extends JPanel {
 		creditButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to appropriate panel after selection
-				tabbedPane.setSelectedIndex(2);
+				tabbedPane.setSelectedIndex(3);
 			}
 		});
     	
@@ -51,7 +50,7 @@ public class PayPanelV2 extends JPanel {
 		debitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// switch to appropriate panel after selection
-				tabbedPane.setSelectedIndex(4);
+				tabbedPane.setSelectedIndex(5);
 			}
 		});
     	

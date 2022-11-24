@@ -116,7 +116,7 @@ public class MainCustomerPanel extends JPanel {
         // Action event when "Proceed" button clicked
         switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(5);
+                tabbedPane.setSelectedIndex(1);
             }
         });
         switchToPaymentButton.setBounds(233, 434, 141, 35);
