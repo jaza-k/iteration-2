@@ -1,5 +1,6 @@
 package com.diy.software.test.iteration2;
 
+import ca.powerutility.PowerSurge;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
@@ -121,8 +122,9 @@ public class AddItemAfterPartialPaymentTest {
         assertEquals(20.0, stationLogic.scannerController.getTotal());
         Payment newpay = new Payment(station, stationLogic.scannerController.getTotal());
         assertEquals(20.0, newpay.checkoutTotal);
-        while (!newpay.CreditPay("345", card, 10, creditIssuer))
-            ; // Even though the checkout total is 20, we'll only pay for 10
+        try {
+            while (!newpay.CreditPay("345", card, 10, creditIssuer));
+        } catch (PowerSurge e) { }
         assertEquals(10.0, newpay.checkoutTotal); //After paying ten dollars, there should still be ten dollars left to pay
         assertEquals(20.0, stationLogic.scannerController.getTotal()); //The checkout total for the scanner controller should still be 20
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController); //This will allow us to add more items after partially paying
