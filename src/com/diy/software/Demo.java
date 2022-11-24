@@ -13,11 +13,25 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Demo {
     public static void main(String[] args) {
+    	
+    	
+    	// Configuring Stations
+		int[] denominations = new int[] {5, 10, 20, 50, 100};
+		long[] coindenoms = new long[] {1, 5, 10, 25, 100, 200};
+		DoItYourselfStationAR.configureBanknoteDenominations(denominations); //Note that the static call to configure banknote denominations
+		DoItYourselfStationAR.configureBanknoteStorageUnitCapacity(4); //Only four bills can fit in station2's storage unit
+		DoItYourselfStationAR.configureCoinDenominations(coindenoms);
+		DoItYourselfStationAR.configureCoinTrayCapacity(10);
+		DoItYourselfStationAR.configureCurrency(Currency.getInstance("CAD"));
+    	
+    	
+    	
         // Create station - MOVED BELOW
         //DoItYourselfStationAR station = new DoItYourselfStationAR();
     	
@@ -107,6 +121,8 @@ public class Demo {
         screen.turnOn();
         
         // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
+        stsLG[0].station.plugIn();
+        stsLG[0].station.turnOn();
         CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
         
         
