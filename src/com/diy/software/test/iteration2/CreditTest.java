@@ -1,6 +1,7 @@
-package com.diy.software.payment;
+package com.diy.software.test.iteration2;
 
 import com.diy.hardware.external.CardIssuer;
+import com.diy.software.payment.CreditPayment;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.Card.CardData;
 import com.jimmyselectronics.opeechee.CardReader;
