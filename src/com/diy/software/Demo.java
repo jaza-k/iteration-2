@@ -91,10 +91,11 @@ public class Demo {
         //System.out.print(AttendantStationLogic.getInstance());
         AttendantStationLogic attendantLogic = AttendantStationLogic.getInstance();
         attendantLogic.quantizeStations(stsLG);
-        // BELOW LINE WORKS
-        //System.out.print("\n" + attendantLogic.getStationNum() + "\n");
+        attendantLogic.bind();	// note that DIY stations are (SHOULD BE) all bound
+        //TEST ON BELOW LINE - works nicely :)
+        //System.out.print("\n" + attendantLogic.matchStationID(stsLG[1]) + "\n");
         
-
+        
         // Start at welcome screen
         // Initialize GUI here...
         TouchScreen screen = new TouchScreen();

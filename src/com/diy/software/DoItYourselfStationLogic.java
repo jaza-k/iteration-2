@@ -64,7 +64,14 @@ public class DoItYourselfStationLogic {
         station.printer.turnOn();
         station.printer.register(receiptPrinterController);
         
-        receiptPrinterLowInk();
+        // BELOW BLOCK IS TESTS - USEFUL ONES SHOULD BE VIA GUI BUTTONS TO FUNCTION
+        //System.out.print("\n" + station + "\n");
+        //receiptPrinterLowInk();	// TEST
+        //System.out.print("\n" + Integer.toString(getStationID()) + "\n");
+    }
+    
+    public int getStationID() {
+    	return AttendantStationLogic.matchStationID(this);	// clumsy implementation here (needless extra steps)
     }
 
     public void receiptPrinterLowInk(){

@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 //import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.AttendantStationLogic;
 
 /*
  * Set up attendant I/O
@@ -53,6 +54,10 @@ public class AttendantGUI {
 	// Stations connected
 	private DoItYourselfStationLogic[] stations = {};
 	
+	public void updateIssues() {
+		AttendantStationLogic.getInstance().getIssues();
+		// update/refresh GUI based on above line
+	}
 	
 	public void receiptPrinterPaperLowPopUp() {
 		// TEST: KEPT AS DUMMY, BUT NOT NEEDED ATM
