@@ -29,6 +29,7 @@ import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
 
+import static com.diy.software.DoItYourselfStationLogic.Status.READY;
 import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
@@ -76,10 +77,15 @@ public class MainCustomerPanel extends JPanel {
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // Prevent scan if not ready
+                    if(stationLogic.getStatus() != READY) {
+                        JOptionPane.showMessageDialog(getParent(), "Not Ready To Scan!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
                     // Handling item to product verification process here as it wasn't handled anywhere else
                     customer.selectNextItem();
                     customer.scanItem();
-
                     // Stop if scan failed
                     if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
                         JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
