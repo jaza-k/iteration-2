@@ -108,7 +108,7 @@ public class AttendantStationLogic {
     		instance.getStationLogic(sID).setStatus(DoItYourselfStationLogic.Status.READY);
     		
     		// update customer GUI that is OK
-    		// instance.getStationLogic(sID).get
+    		instance.getStationLogic(sID).getCustomerGUI().setTabbedFocus(0);
     		
     		attendantGUI.updateIssues();	// repaint issues
     	} else notifyProblem(sID, instance.issues[sID]);

@@ -138,8 +138,8 @@ public class Demo {
         // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
         stsLG[0].station.plugIn();
         stsLG[0].station.turnOn();
-        CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
-        
+        //CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
+        stsLG[0].initCustomerGUI(stsLG[0], customer, screen, bankingInfo);
         
         // TEST
         //stsLG[0].bagApproval();

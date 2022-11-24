@@ -69,5 +69,9 @@ public class CustomerGUI{
 		//frame.setLocationRelativeTo(null);
 		screen.setVisible(true);
 	}
+	
+	public void setTabbedFocus (int t) {
+		tabbedPane.setSelectedIndex(0);
+	}
 
 }

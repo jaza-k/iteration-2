@@ -1,13 +1,20 @@
 package com.diy.software;
 
+import java.util.HashMap;
+
 import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.hardware.external.CardIssuer;
 import com.diy.software.controllers.ReceiptPrinterController;
 import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
+import com.diy.software.gui.CustomerGUI;
 
+import com.diy.simulation.Customer;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 
 // bag item
 import com.jimmyselectronics.necchi.*;
+import com.jimmyselectronics.opeechee.Card;
 
 public class DoItYourselfStationLogic {
 	
@@ -21,6 +28,9 @@ public class DoItYourselfStationLogic {
 	// TODO: make in demo
 	public Barcode bar = new Barcode(new Numeral[] { Numeral.one });
 	public BarcodedItem ownBag = new BarcodedItem(bar, 1);
+	
+	
+	private CustomerGUI customerGUI;
 	
 	
 	
@@ -110,6 +120,13 @@ public class DoItYourselfStationLogic {
     	return this.station;
     }
     
+    public CustomerGUI getCustomerGUI() {
+    	return this.customerGUI;
+    }
+    
+    public void initCustomerGUI(DoItYourselfStationLogic d, Customer c, TouchScreen s, HashMap<Card, CardIssuer> b) {
+    	this.customerGUI = new CustomerGUI(d,c,s,b);
+    }
     
     /*
      *  ADD OWN BAG
