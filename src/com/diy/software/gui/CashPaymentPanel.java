@@ -1,0 +1,165 @@
+package com.diy.software.gui;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Currency;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+
+import com.diy.hardware.DoItYourselfStationAR;
+import com.diy.simulation.Customer;
+import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.payment.CashPayment;
+import com.diy.software.payment.Payment;
+import com.unitedbankingservices.DisabledException;
+import com.unitedbankingservices.TooMuchCashException;
+import com.unitedbankingservices.banknote.Banknote;
+import com.unitedbankingservices.coin.Coin;
+
+public class CashPaymentPanel extends JPanel{
+	
+	
+	private double total;
+	private DoItYourselfStationLogic stationLogic;
+	private Payment newPay;
+	
+
+	public CashPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
+		
+		
+		
+		//newPay = new Payment(stationLogic.station, stationLogic.scannerController.getTotal());
+		
+		// total should not be hard-coded
+		/////////////////////////////////////////// FIX /////////////////////////////
+		newPay = new Payment(stationLogic.station, 50);
+		/////////////////////////////////////////////////////////////////////////////
+		CashPayment cashPayment = new CashPayment(stationLogic.station);
+		
+		
+		
+		
+		
+		
+		
+		JComboBox<String> billComboBox = new JComboBox<String>();
+		JComboBox<String> coinComboBox = new JComboBox<String>();
+		
+		
+		
+		//Adds all the barcoded items into the potential scannable combo box
+		
+		
+		// should be removed and instead done elsewhere eg-stationLogic
+
+		
+
+
+		int[] billDenominations = stationLogic.station.banknoteDenominations;
+		
+		List<Long> coinDenominations = stationLogic.station.coinDenominations;
+		
+		
+		
+		for (int i = 0; i < billDenominations.length; i++) {
+			// Ideally $ should be replaced with Currency
+			billComboBox.addItem(billDenominations[i] + "");
+		}
+		
+		
+	
+		for (int i = 0; i < coinDenominations.size(); i++) {
+			// Ideally $ should be replaced with Currency
+			coinComboBox.addItem(coinDenominations.get(i) + "");
+		}
+		
+		
+		
+		
+		billComboBox.setBounds(109, 349, 91, 23);
+		add(billComboBox);
+		
+		coinComboBox.setBounds(109, 349, 91, 23);
+		add(coinComboBox);
+		
+		
+		
+		
+		JButton payBillButton = new JButton("Insert Bill");
+		payBillButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+		
+		
+		
+		
+		payBillButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int denomination = Integer.valueOf((String)billComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
+				// cad should not be hard-coded
+				/////////////////////////////////////////// FIX /////////////////////////////
+				Banknote bill = new Banknote(Currency.getInstance("CAD"), denomination);
+				///////////////////////////////////////////////////////////////////////////
+				try {
+					stationLogic.station.banknoteInput.receive(bill);
+					double cost = newPay.checkoutTotal;
+					System.out.println(cost);
+				} catch (DisabledException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TooMuchCashException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+	
+		});
+		payBillButton.setBounds(237, 349, 91, 23);
+		add(payBillButton);	
+		
+		JButton payCoinButton = new JButton("Insert Coin");
+		payCoinButton .setFont(new Font("Georgia", Font.PLAIN, 12));
+		payCoinButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Long denomination = Long.valueOf((String)coinComboBox.getSelectedItem()); // Internally calls parseInt, returns Integer
+				// cad should not be hard-coded
+				/////////////////////////////////////////// FIX /////////////////////////////
+				Coin coin = new Coin(Currency.getInstance("CAD"), denomination);
+				///////////////////////////////////////////////////////////////////////////
+				try {
+					
+					stationLogic.station.coinSlot.receive(coin);
+					double cost = newPay.checkoutTotal;
+					System.out.println(cost);
+				} catch (DisabledException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TooMuchCashException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+	
+		});
+		
+		payCoinButton.setBounds(237, 349, 91, 23);
+		add(payCoinButton);	
+		
+		
+		
+		
+		
+		
+		
+	}
+}
+		
+

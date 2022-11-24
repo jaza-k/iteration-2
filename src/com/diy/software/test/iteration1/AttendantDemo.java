@@ -4,6 +4,6 @@ import com.diy.software.gui.AttendantGUI;
 
 public class AttendantDemo {
 	public static void main(String[] args) {
-    	AttendantGUI Attendant = new AttendantGUI();
+    	//AttendantGUI Attendant = new AttendantGUI();
     }
 }
