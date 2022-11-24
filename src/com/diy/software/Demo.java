@@ -14,6 +14,7 @@ import com.jimmyselectronics.opeechee.Card;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Demo {
     public static void main(String[] args) {
@@ -73,7 +74,9 @@ public class Demo {
         c.setTime(date);
         c.add(Calendar.DATE, 1);
         creditIssuer.addCardData(card.number, card.cardholder, c, card.cvv, 10000);
-
+        // Work around for veryfing card payments
+        HashMap<Card, CardIssuer> bankingInfo = new HashMap<>();
+        bankingInfo.put(card, creditIssuer);
         /*
         // Setup station logic - 
         DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(station);
@@ -103,7 +106,7 @@ public class Demo {
         screen.turnOn();
         
         // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
-	    CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen);
+        CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
 	        
     }
 }
