@@ -82,6 +82,7 @@ public class MainCustomerPanel extends JPanel {
 				}
 
                 if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                    customer.deselectCurrentItem();
                     JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
