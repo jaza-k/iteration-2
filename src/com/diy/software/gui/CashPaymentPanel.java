@@ -179,7 +179,7 @@ public class CashPaymentPanel extends JPanel{
 				try {
 					stationLogic.station.coinSlot.receive(coin);
 					double cost = newPay.checkoutTotal;
-					System.out.println(cost);
+					priceTotal.setText("Remaining Cost:" + cost);
 				} catch (DisabledException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
