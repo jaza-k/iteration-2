@@ -33,7 +33,7 @@ public class AttendantStationLogic {
     
     public AttendantStationLogic() {
     	// TBH multithread?
-    	System.out.print("\nStarted an AttendantStationLogic node!\n");
+    	//System.out.print("\nStarted an AttendantStationLogic node!\n");
     	
     	attendantGUI = new AttendantGUI(stations);
     }

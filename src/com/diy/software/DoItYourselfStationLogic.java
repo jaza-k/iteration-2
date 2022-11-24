@@ -63,6 +63,8 @@ public class DoItYourselfStationLogic {
         station.printer.plugIn();
         station.printer.turnOn();
         station.printer.register(receiptPrinterController);
+        
+        receiptPrinterLowInk();
     }
 
     public void receiptPrinterLowInk(){

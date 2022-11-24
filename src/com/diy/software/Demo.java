@@ -41,7 +41,7 @@ public class Demo {
         // Create barcoded products
         BarcodedProduct product1 = new BarcodedProduct(barcode1, "Food", 5, 15);
         BarcodedProduct product2 = new BarcodedProduct(barcode2, "More Food", 10, 25);
-        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Tood", 20, 35);
+        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Food", 20, 35);
 
         // Add barcoded products to database
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, product1);
@@ -83,15 +83,16 @@ public class Demo {
         // Changes above to accept multiple stations as list based on size of store
         DoItYourselfStationLogic[] stsLG = new DoItYourselfStationLogic[locationSize];
         for (int i = 0; i < locationSize; i++) {
-        	DoItYourselfStationLogic stationLogic = new DoItYourselfStationLogic(stsAR[i]);
-        	stsLG[i] = stationLogic;
+        	DoItYourselfStationLogic sLogic = new DoItYourselfStationLogic(stsAR[i]);
+        	stsLG[i] = sLogic;
         }
         
         // Whoops...
         //System.out.print(AttendantStationLogic.getInstance());
         AttendantStationLogic attendantLogic = AttendantStationLogic.getInstance();
         attendantLogic.quantizeStations(stsLG);
-        System.out.print("\n" + attendantLogic.getStationNum() + "\n");
+        // BELOW LINE WORKS
+        //System.out.print("\n" + attendantLogic.getStationNum() + "\n");
         
 
         // Start at welcome screen
@@ -99,8 +100,8 @@ public class Demo {
         TouchScreen screen = new TouchScreen();
         screen.plugIn();
         screen.turnOn();
-		    CustomerGUI customerGUI = new CustomerGUI(stationLogic, customer, screen);
-		
+		CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen);	// CustomerGUI(stationLogic, customer, screen);
+		//customerGUI.
 
         
     }

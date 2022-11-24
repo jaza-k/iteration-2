@@ -41,9 +41,11 @@ public class AttendantGUI {
 	//String selected = "Station ";
 	
 	
-	int sxw = 400;	// starting x & w
-	int syh = 200;	// starting y & h
-	int x = 400;
+	int sx = 160;	// starting x
+	int sy = 200;	// starting y
+	int sw = 400;	// starting w
+	int sh = 200;	// starting h
+	int x = 160;
 	int y = 200;
 	int w = 400;
 	int h = 200;
@@ -53,12 +55,14 @@ public class AttendantGUI {
 	
 	
 	public void receiptPrinterPaperLowPopUp() {
-		
+		// TEST: KEPT AS DUMMY, BUT NOT NEEDED ATM
+		System.out.print("\nWhere is Michael Scott when you need him??\n");
 	}
 
 
 	public void receiptPrinterInkLowPopUp() {
-		
+		// TEST: KEPT AS DUMMY, BUT NOT NEEDED ATM
+		System.out.print("\nOut of ink?? I guess we are bankrupt...\n");
 	}
 	
 	public void addStation(JPanel sts) {	//DoItYourselfStationAR station) {
@@ -211,26 +215,32 @@ public class AttendantGUI {
 		*/
 	
 		public void resizeGUI(int change) {
-			if((w + change > 400) && (w + change < 600)) {
+			if((w + change > sw) && (w + change < sw + (96*2))) {
 				sized += change;
 				
-				x = sxw - 48*sized;
-				y = syh - 24*sized;
-				w = sxw + 96*sized;
-				h = syh - 12*sized;
+				x = sx - 48*sized;
+				//y = sy - 24*sized;
+				w = sw + 96*sized;
+				//h = sh + 24*sized;
 				
-				
-				//x -= 50*change;
-				//y -= 25*change;
-				//w += 100*change;
-				//h += 50*change;
 			}
-			AttendantFrame.setBounds(x,y,w,h+11*(sized+1)-7);
+			//AttendantFrame.setBounds(x,y,w,h+11*(sized+1)-7);
+			
+			AttendantFrame.setBounds(x,y,w,h+2);
 			Controls.setLocation(w*5/8 + 37*sized, 0);
+			tabbedPane.setBounds(x,y,w,h);
+			MainMenu.setBounds(x,y,w,h);
+			AttendantPanel.setBounds(x,y,w,h);
+			/*
 			MainMenu.validate();
+			MainMenu.repaint();
+			AttendantPanel.validate();
+			AttendantPanel.repaint();
+			tabbedPane.validate();
+			tabbedPane.repaint();
 			AttendantFrame.validate();
 			AttendantFrame.repaint();
-			
+			*/
 		}
 		
 		public void sizingButtons() {
@@ -281,7 +291,7 @@ public class AttendantGUI {
 	    	AttendantFrame = new JFrame("Attendant Panel");
 	    	AttendantFrame.setUndecorated(true);
 	    	
-	    	AttendantFrame.setBounds(x,y,w,h+11*(sized+1)-8);
+	    	AttendantFrame.setBounds(sx,sy,w,h+2);
 	    	//printDimensions();
 	    	
 	    	
