@@ -32,7 +32,7 @@ public class BaggingPanel extends JPanel {
 		btnNewButton.setFont(new Font("Georgia", Font.PLAIN, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tabbedPane.setSelectedIndex(1);
+				tabbedPane.setSelectedIndex(2);
 			}
 		});
 		btnNewButton.setBounds(203, 384, 189, 39);

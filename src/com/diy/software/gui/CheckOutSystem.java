@@ -10,11 +10,18 @@ public class CheckOutSystem {
 	private CRListener crListener;
 	private BSListener bsListener;
 	
-	public CheckOutSystem(Customer inpuCustomer) {
-		customer = inpuCustomer;
+	/**
+	 * Basic constructor for CheckOutSystem
+	 * @param inputCustomer
+	 */
+	public CheckOutSystem(Customer inputCustomer) {
+		customer = inputCustomer;
 		setup();
 	}
 	
+	/**
+	 * Sets up the checkout system to make it ready for use
+	 */
 	private void setup() {
 		checkOutSystem = new DoItYourselfStationAR();
 		checkOutSystem.plugIn();

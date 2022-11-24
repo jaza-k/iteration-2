@@ -12,6 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
@@ -19,14 +26,20 @@ import com.diy.hardware.BarcodedProduct;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.controllers.ScaleController;
+import com.diy.simulation.Customer;
+import com.diy.software.DoItYourselfStationLogic;
+import com.jimmyselectronics.necchi.BarcodedItem;
+
+import static com.diy.software.DoItYourselfStationLogic.Status.READY;
+import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
     /**
      * Creation of the panel
      */
     public MainCustomerPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
-    	
-    	
+
+
         setForeground(new Color(128, 128, 255));
         setBackground(SystemColor.inactiveCaption);
         setLayout(null);
@@ -99,7 +112,7 @@ public class MainCustomerPanel extends JPanel {
         // Action event when "Proceed" button clicked
         switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	tabbedPane.setSelectedIndex(5);
+                tabbedPane.setSelectedIndex(1);
             }
         });
         switchToPaymentButton.setBounds(155, 425, 141, 35);
