@@ -5,8 +5,8 @@ import java.util.Currency;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.unitedbankingservices.banknote.*;
 import com.unitedbankingservices.coin.*;
-import com.jimmyselectronics.opeechee.Card;
 import com.diy.hardware.external.CardIssuer;
+import com.jimmyselectronics.opeechee.Card;
 
 public class Payment {
 	public static double checkoutTotal;

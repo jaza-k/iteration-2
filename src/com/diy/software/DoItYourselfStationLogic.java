@@ -1,12 +1,25 @@
 package com.diy.software;
 
 import com.diy.hardware.DoItYourselfStationAR;
-import com.diy.hardware.external.CardIssuer;
 import com.diy.software.controllers.ReceiptPrinterController;
 import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
 
 public class DoItYourselfStationLogic {
+	
+	// Can pass this to Attendant Station & check if -1
+	private int issue = -1;	// -1 is default (no issue)
+	
+    /**
+     * The status of the station
+     */
+    public enum Status {
+        READY,
+        WAITING_FOR_WEIGHT,
+        DISCREPANCY,
+        OVERLOAD
+    }
+    private Status status = Status.READY;
     /**
      * The station on which the logic is installed.
      */
@@ -27,11 +40,9 @@ public class DoItYourselfStationLogic {
     /**
      * Installs an instance of the logic on the indicated station.
      *
-     * @param station
-     *            The station on which to install the logic.
+     * @param station The station on which to install the logic.
      * @return The newly installed instance.
-     * @throws NullPointerException
-     *             If any argument is null.
+     * @throws NullPointerException If any argument is null.
      */
     public static DoItYourselfStationLogic installOn(DoItYourselfStationAR station) {
         return new DoItYourselfStationLogic(station);
@@ -40,15 +51,16 @@ public class DoItYourselfStationLogic {
     /**
      * Basic constructor.
      *
-     * @param station
-     *            The station on which to install the logic.
+     * @param station The station on which to install the logic.
      * @return The newly installed instance.
-     * @throws NullPointerException
-     *             If any argument is null.
+     * @throws NullPointerException If any argument is null.
      */
     public DoItYourselfStationLogic(DoItYourselfStationAR station) {
         this.station = station;
-
+        // Have to plug in the station
+        station.plugIn();
+        station.turnOn();
+        
         scannerController = new ScannerController(this);
         station.scanner.plugIn();
         station.scanner.turnOn();
@@ -63,13 +75,30 @@ public class DoItYourselfStationLogic {
         station.printer.plugIn();
         station.printer.turnOn();
         station.printer.register(receiptPrinterController);
+        
+        // BELOW BLOCK IS TESTS - USEFUL ONES SHOULD BE VIA GUI BUTTONS TO FUNCTION
+        //System.out.print("\n" + station + "\n");
+        //receiptPrinterLowInk();	// TEST
+        //System.out.print("\n" + Integer.toString(getStationID()) + "\n");
+    }
+    
+    public int getStationID() {
+    	return AttendantStationLogic.matchStationID(this);	// clumsy implementation here (needless extra steps)
     }
 
-    public void receiptPrinterLowInk(){
+    public void receiptPrinterLowInk() {
         AttendantStationLogic.getInstance().notifyReceiptPrinterLowInk();
     }
 
-    public void receiptPrinterLowPaper(){
+    public void receiptPrinterLowPaper() {
         AttendantStationLogic.getInstance().notifyReceiptPrinterLowPaper();
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
