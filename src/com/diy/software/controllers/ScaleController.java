@@ -6,7 +6,6 @@ import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
 import static com.diy.software.DoItYourselfStationLogic.Status.*;
-import static java.lang.Math.abs;
 
 public class ScaleController implements ElectronicScaleListener {
     private DoItYourselfStationLogic stationLogic;
@@ -51,7 +50,7 @@ public class ScaleController implements ElectronicScaleListener {
 
     @Override
     public void weightChanged(ElectronicScale scale, double weightInGrams) {
-        if (abs(weightInGrams - expectedWeightInGrams) < scale.getSensitivity())
+        if (weightInGrams == expectedWeightInGrams)
             stationLogic.setStatus(READY);
         else
             stationLogic.setStatus(DISCREPANCY);

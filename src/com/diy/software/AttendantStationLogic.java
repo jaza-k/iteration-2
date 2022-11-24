@@ -15,7 +15,7 @@ public class AttendantStationLogic {
 			"Bag Approval Required",	// 1
 			"Out of Bags",				// 2
 			"Insufficient Change",		// 3
-			"",	// 4
+			"Cash Storage Full",	// 4
 			"",	// 5
 			"",	// 6
 			"",	// 7

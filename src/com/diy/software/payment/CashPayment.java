@@ -8,13 +8,17 @@ import com.unitedbankingservices.DisabledException;
 import java.lang.Math;
 import java.util.List;
 import com.unitedbankingservices.coin.Coin;
+import com.diy.software.AttendantStationLogic;
+import com.diy.software.DoItYourselfStationLogic;
 
 public class CashPayment {
 	DoItYourselfStationAR customerStation;
+	DoItYourselfStationLogic stationLogic;
 	
-	public CashPayment(DoItYourselfStationAR newstation)
+	public CashPayment(DoItYourselfStationAR newstation, DoItYourselfStationLogic newlogic)
 	{
 		customerStation = newstation;
+		stationLogic = newlogic;
 	}
 	
 	public double payWithBill(Banknote bill, double checkoutTotal) throws TooMuchCashException, DisabledException
@@ -58,6 +62,7 @@ public class CashPayment {
 		List<Long> coindenom = customerStation.coinDenominations;
 		long cointoget = 0;
 		int billtoget = 0;
+		int stationid; //Used to flag attendant
 		while (centvalue > 0)
 		{
 			for (int i = 0; i < coindenom.size(); i++)
@@ -72,8 +77,11 @@ public class CashPayment {
 			}
 			catch (OutOfCashException e)
 			{
+				stationLogic.block(customerStation);
+				stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+				AttendantStationLogic.getInstance().notifyProblem(stationid, 3); //3 is the int value that flags to the attendant that a change dispenser is empty.
 				temp = dollarvalue + ((double)centvalue / 100);
-				return -temp; //If some negative value
+				return -temp; //If some negative value is returned by dispenseChange, that means we still owe the customer change.
 			}
 		}
 		while (dollarvalue > 0)
@@ -91,6 +99,9 @@ public class CashPayment {
 			}
 			catch (OutOfCashException e)
 			{
+				stationLogic.block(customerStation);
+				stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+				AttendantStationLogic.getInstance().notifyProblem(stationid, 3);
 				temp = dollarvalue; //We don't have to add the centvalue to the returned value here because we already should have dispensed all the cents in the first while loop
 				return -temp;
 			}

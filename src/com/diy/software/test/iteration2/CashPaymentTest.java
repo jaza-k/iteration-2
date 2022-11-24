@@ -32,6 +32,8 @@ import com.unitedbankingservices.banknote.BanknoteDispenserObserver;
 import com.unitedbankingservices.OutOfCashException;
 import com.unitedbankingservices.coin.*;
 import com.diy.software.payment.Payment;
+import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.AttendantStationLogic;
 
 import ca.powerutility.NoPowerException;
 
@@ -185,6 +187,7 @@ public class CashPaymentTest {
 	NoteStorageObserver storeobs1 = new NoteStorageObserver("Storage1");
 	NoteDispenserObserver dispobs1 = new NoteDispenserObserver("Dispenser1");
 	DoItYourselfStationAR station;
+	DoItYourselfStationLogic stationLogic;
 	
 	Banknote twentybill, tenbill, fivebill, fiftybill, hundredbill;
 	Coin penny, nickel, dime, quarter, loonie, toonie; //For the sake of simplicity, we'll assume this test takes place in an alternate universe where canadian pennies are still in circulation
@@ -204,6 +207,10 @@ public class CashPaymentTest {
 		station = new DoItYourselfStationAR();
 		station.plugIn();
 		station.turnOn();
+		stationLogic = new DoItYourselfStationLogic(station);
+		
+		DoItYourselfStationLogic[] stations = {stationLogic};
+		AttendantStationLogic.getInstance().quantizeStations(stations);
 		
 		twentybill = new Banknote(Currency.getInstance("CAD"), 20);
 		tenbill = new Banknote(Currency.getInstance("CAD"), 10);
@@ -260,7 +267,7 @@ public class CashPaymentTest {
 	@Test
 	public void NormalPayment() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 19.75);
+		Payment newpay = new Payment(station, stationLogic, 19.75);
 		assertTrue(newpay.checkoutTotal == 19.75);
 		station.banknoteInput.receive(twentybill);
 		assertTrue(newpay.checkoutTotal == 0);
@@ -272,18 +279,20 @@ public class CashPaymentTest {
 	@Test
 	public void NotEnoughChange() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 19.50);
+		Payment newpay = new Payment(station, stationLogic, 19.50);
 		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
 		assertTrue(newpay.checkoutTotal == -0.25);
 		List<Coin> coinlist = station.coinTray.collectCoins();
 		assertTrue(coinlist.size() == 1);
 		assertTrue(coinlist.get(0).getValue() == 25);
+		int[] issues = AttendantStationLogic.getInstance().getIssues();
+		assertTrue(issues[0] == 3);
 	}
 	
 	@Test
 	public void PartialPayment() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 40);
+		Payment newpay = new Payment(station, stationLogic, 40);
 		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
 		assertTrue(newpay.checkoutTotal == 20);
 		List<Coin> coinlist = station.coinTray.collectCoins();
@@ -293,7 +302,7 @@ public class CashPaymentTest {
 	@Test
 	public void SameBillTwice() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 40);
+		Payment newpay = new Payment(station, stationLogic, 40);
 		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
 		station.banknoteInput.receive(twentybill);
 		assertTrue(newpay.checkoutTotal == 0);
@@ -302,7 +311,7 @@ public class CashPaymentTest {
 	@Test
 	public void BillsInChange() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 3.75);
+		Payment newpay = new Payment(station, stationLogic, 3.75);
 		station.banknoteInput.receive(tenbill); //There is only one quarter in the dispenser, so the customer won't receive enough change
 		System.out.println("After inserting ten dollar bill, checkout total is " + Double.toString(newpay.checkoutTotal));
 		assertTrue(newpay.checkoutTotal == 0);
@@ -313,7 +322,7 @@ public class CashPaymentTest {
 	@Test
 	public void LargeBillSmallCheckout() throws DisabledException, TooMuchCashException
 	{
-		Payment newpay = new Payment(station, 3.75);
+		Payment newpay = new Payment(station, stationLogic, 3.75);
 		station.banknoteInput.receive(hundredbill); //There is only one quarter in the dispenser, so the customer won't receive enough change
 		List<Coin> coinlist = station.coinTray.collectCoins();
 		//The system should have been able to give a loonie, and a quarter as change, but then couldn't find any fifty dollar bills and gave up

@@ -38,9 +38,9 @@ public class CashPaymentPanel extends JPanel{
 		
 		// total should not be hard-coded
 		/////////////////////////////////////////// FIX /////////////////////////////
-		newPay = new Payment(stationLogic.station, 50);
+		newPay = new Payment(stationLogic.station, stationLogic, 50);
 		/////////////////////////////////////////////////////////////////////////////
-		CashPayment cashPayment = new CashPayment(stationLogic.station);
+		CashPayment cashPayment = new CashPayment(stationLogic.station, stationLogic);
 		
 		
 		

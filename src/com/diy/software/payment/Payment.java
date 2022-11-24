@@ -7,10 +7,15 @@ import com.unitedbankingservices.banknote.*;
 import com.unitedbankingservices.coin.*;
 import com.diy.hardware.external.CardIssuer;
 import com.jimmyselectronics.opeechee.Card;
+import com.diy.software.AttendantStationLogic;
+import com.diy.software.DoItYourselfStationLogic;
+import com.unitedbankingservices.TooMuchCashException;
+import com.unitedbankingservices.DisabledException;
 
 public class Payment {
 	public static double checkoutTotal;
 	public static DoItYourselfStationAR customerStation;
+	public static DoItYourselfStationLogic stationLogic;
 	private static Banknote latestnote;
 	private static boolean cashinserted;
 	private static boolean coininserted;
@@ -19,7 +24,12 @@ public class Payment {
 	private static class CoinStorage implements CoinStorageUnitObserver
 	{
 		@Override
-		public void coinsFull(CoinStorageUnit unit) {}
+		public void coinsFull(CoinStorageUnit unit)
+		{
+			stationLogic.block(customerStation);
+			int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+			AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
+		}
 
 		@Override
 		public void coinAdded(CoinStorageUnit unit)
@@ -28,20 +38,23 @@ public class Payment {
 			{
 				try
 				{
-					CashPayment newpayment = new CashPayment(customerStation);
+					CashPayment newpayment = new CashPayment(customerStation, stationLogic);
 					checkoutTotal = newpayment.payWithCoin(latestcoin, checkoutTotal);
 					coininserted = false;
 					latestcoin = null;
 				}
-				catch (Exception e)
+				catch(TooMuchCashException e)
 				{
-					//alert attendant
+					stationLogic.block(customerStation);
+					int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+					AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
 				}
+				catch (Exception e) {}
 			}
 		}
 
 		@Override
-		public void coinsLoaded(CoinStorageUnit unit) {}
+		public void coinsLoaded(CoinStorageUnit unit){}
 
 		@Override
 		public void coinsUnloaded(CoinStorageUnit unit) {}
@@ -64,7 +77,12 @@ public class Payment {
 	{
 		public NoteStorage() {}
 		@Override
-		public void banknotesFull(BanknoteStorageUnit unit) {}
+		public void banknotesFull(BanknoteStorageUnit unit) 
+		{
+			stationLogic.block(customerStation);
+			int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+			AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
+		}
 
 		@Override
 		public void banknoteAdded(BanknoteStorageUnit unit) 
@@ -74,16 +92,25 @@ public class Payment {
 				//If a banknote was added to the storage, then we should do a cash payment event
 				try
 				{
-					CashPayment newpayment = new CashPayment(customerStation);
+					CashPayment newpayment = new CashPayment(customerStation, stationLogic);
 					checkoutTotal = newpayment.payWithBill(latestnote, checkoutTotal);
 					cashinserted = false;
 					latestnote = null;
 				}
-				catch (Exception e)
+				catch (TooMuchCashException e)
 				{
-					//Alert attendant. 
+					stationLogic.block(customerStation);
+					int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+					AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
 				}
+				catch (Exception e) {}
 				//We would want to alert an attendant here if checkoutTotal < 0, because that would mean the customer is still owed change and there wasn't enough in the dispenser
+				if (checkoutTotal < 0)
+				{
+					stationLogic.block(customerStation);
+					int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+					AttendantStationLogic.getInstance().notifyProblem(stationid, 3);
+				}
 			}
 		}
 
@@ -140,9 +167,21 @@ public class Payment {
 		}
 	}
 	
-	public Payment(DoItYourselfStationAR newstation, double newtotal)
+	public void dispenseChange() throws DisabledException, TooMuchCashException
+	{
+		//If the customer is owed change, this function should be called after the attendant refills the change dispensers.
+		double returner;
+		CashPayment newchange = new CashPayment(customerStation, stationLogic);
+		if (checkoutTotal < 0)
+		{
+			checkoutTotal = newchange.dispenseChange(-checkoutTotal);
+		}
+	}
+	
+	public Payment(DoItYourselfStationAR newstation, DoItYourselfStationLogic newlogic, double newtotal)
 	{
 		customerStation = newstation;
+		stationLogic = newlogic;
 		checkoutTotal = newtotal;
 		latestnote = null;
 		latestcoin = null;
