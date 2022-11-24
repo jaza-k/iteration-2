@@ -24,7 +24,8 @@ import com.jimmyselectronics.opeechee.BlockedCardException;
 public class DebitPaymentTest {
 	Card testDebitCard = new Card("Debit", "0000000000000000", "Ben", "567", "1234", true, true);
 	Card testNoChipDebitCard = new Card("Debit", "1000000000000001", "Joe", "111", "0000", false, false);
-	CardData data;
+	Card testCreditCard = new Card("Visa", "1111000000000000", "Sam", "763", "1234", true, true);
+    CardData data;
 	CardIssuer bank;
 	long holdNumber;
 	CardReader testReader = new CardReader();
@@ -44,10 +45,6 @@ public class DebitPaymentTest {
 		testReader.turnOn();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void powerUpTesting() {
 		Assert.assertTrue(testReader.isPluggedIn()); // is the reader plugged in? should be yes
@@ -62,6 +59,18 @@ public class DebitPaymentTest {
 		Assert.assertNotNull(newpay2);
 	}
 	
+	@Test
+	public void payWithCreditCard() throws IOException {
+		DebitPayment newPay = new DebitPayment(100, testCreditCard, testReader, "1234", bank);
+		try {
+			newPay.insertCard("1234");
+		}
+		catch (IllegalArgumentException e) {
+			flag = false;
+		}
+		assertFalse(flag);
+	}
+
 	@Test
 	public void ConstructorTesting2() throws IOException {
 		new DebitPayment(100, null, testReader, pin, bank);

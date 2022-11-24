@@ -161,7 +161,10 @@ public class DebitPayment {
      * @throws BlockedCardException
      */
 	public DebitPayment(double newTotal, Card newCard, CardReader newReader, String newPin, CardIssuer newBank) throws ChipFailureException, IOException, InvalidPINException, BlockedCardException {
-		this.total = newTotal;
+		if (newCard.kind.equalsIgnoreCase("credit")) {
+            throw new IllegalArgumentException("Cannot use credit card for debit payment");
+        }
+        this.total = newTotal;
 		this.card = newCard;
 		this.reader = newReader;
 		this.bank = newBank;
