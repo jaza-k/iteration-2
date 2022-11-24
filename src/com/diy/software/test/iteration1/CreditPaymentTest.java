@@ -66,13 +66,6 @@ public class CreditPaymentTest {
     }
 
     @Test
-    public void ConstructorTesting12() throws IOException {
-
-        CreditPayment newpay2 = new CreditPayment(100, testcard, testreader, "1234", bank);
-        Assert.assertNull(newpay2);
-    }
-
-    @Test
     public void ConstructorTesting2() throws IOException {
         new CreditPayment(100, null, testreader, pin, bank);
     }
