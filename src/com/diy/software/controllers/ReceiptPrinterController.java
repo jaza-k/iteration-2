@@ -41,20 +41,26 @@ public class ReceiptPrinterController implements ReceiptPrinterListener {
     }
 
     @Override
-    public void paperAdded(IReceiptPrinter printer) { }
+    public void paperAdded(IReceiptPrinter printer) {
+    }
 
     @Override
-    public void inkAdded(IReceiptPrinter printer) { }
+    public void inkAdded(IReceiptPrinter printer) {
+    }
 
     @Override
-    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
 
     @Override
-    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) { }
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
 
     @Override
-    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) { }
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
 
     @Override
-    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) { }
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
 }

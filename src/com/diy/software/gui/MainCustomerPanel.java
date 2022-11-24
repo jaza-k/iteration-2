@@ -1,40 +1,19 @@
 package com.diy.software.gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-
 import com.diy.hardware.BarcodedProduct;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
-import com.diy.software.controllers.ScaleController;
-import com.diy.simulation.Customer;
-import com.diy.software.DoItYourselfStationLogic;
-import com.jimmyselectronics.necchi.BarcodedItem;
 
-import static com.diy.software.DoItYourselfStationLogic.Status.READY;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
-	private JTextField numberOfBags;
+    private JTextField numberOfBags;
+
     /**
      * Creation of the panel
      */
@@ -60,12 +39,12 @@ public class MainCustomerPanel extends JPanel {
         scannedItemPane.setEditable(false);
         scannedItemPane.setBounds(56, 11, 350, 304);
         add(scannedItemPane);
-        
+
 
         JButton scanButton = new JButton("Scan Item");
         scanButton.setToolTipText("");
         scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
-        
+
         // Action event when "Scan" button clicked
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,48 +54,49 @@ public class MainCustomerPanel extends JPanel {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-			private void scanItem() {
-				//if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
-				if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
-	            	customer.selectNextItem();
-	                customer.scanItem();
-				}
 
-                if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+            private void scanItem() {
+                //if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+                if (stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
+                    customer.selectNextItem();
+                    customer.scanItem();
+                }
+
+                if (stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
                     customer.deselectCurrentItem();
                     JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-				// At this point, the status should be "Waiting for Weight"
-				JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
-				bagItem();
-			}
+                // At this point, the status should be "Waiting for Weight"
+                JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
+                bagItem();
+            }
 
-			private void bagItem() {
-					// Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
-					customer.placeItemInBaggingArea();
-					
-					WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
-					priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
-					
-					StringBuilder stringBuilder = new StringBuilder();
-					for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
-						stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t$" + barcodedProduct.getPrice() + "\n");
-					}
-					scannedItemPane.setText(stringBuilder.toString());
-	                
-					//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
-					if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
-						tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
-						
-						
-					}
+            private void bagItem() {
+                // Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
+                customer.placeItemInBaggingArea();
+
+                WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
+                priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
+                    stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t$" + barcodedProduct.getPrice() + "\n");
                 }
+                scannedItemPane.setText(stringBuilder.toString());
+
+                //if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+                if (stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
+                    tabbedPane.setSelectedIndex(6);    // Weight Discrepancy
+
+
+                }
+            }
         });
         scanButton.setBounds(142, 346, 177, 36);
         add(scanButton);
-  
+
         // Button for switching to payment tab
         JButton addBagging = new JButton("Add Bags");
         addBagging.setFont(new Font("Georgia", Font.PLAIN, 13));
@@ -128,24 +108,24 @@ public class MainCustomerPanel extends JPanel {
         });
         addBagging.setBounds(276, 440, 130, 35);
         add(addBagging);
-        
+
         numberOfBags = new JTextField();
         numberOfBags.setBounds(40, 445, 76, 27);
         add(numberOfBags);
         numberOfBags.setColumns(10);
-        
+
         JLabel bagLabel = new JLabel("Number of Bags");
         bagLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
         bagLabel.setBounds(40, 416, 113, 23);
         add(bagLabel);
-        
+
         JButton purchaseBags = new JButton("Buy Bags");
         purchaseBags.setFont(new Font("Georgia", Font.PLAIN, 13));
         purchaseBags.addActionListener(new ActionListener() {
-        	// Action when the customer wants to buy bags
-        	public void actionPerformed(ActionEvent e) {
-        		
-        	}
+            // Action when the customer wants to buy bags
+            public void actionPerformed(ActionEvent e) {
+
+            }
         });
         purchaseBags.setBounds(126, 440, 98, 35);
         add(purchaseBags);
