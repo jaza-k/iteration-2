@@ -73,10 +73,11 @@ public class CreditPaymentPanel extends JPanel {
 					//The intern() function will make sure the string is properly formatted.
 					newpay.insertCard(pinField.getText().intern()); 
 					boolean flag = newpay.payForTotal(stationLogic.scannerController.getTotal());
-					
+				
 					if (flag)
 					{
 						screen.setVisible(false);
+						JOptionPane.showMessageDialog(getParent(), "Payment Successful!", "Transaction Update", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 				catch (InvalidPINException e2)
