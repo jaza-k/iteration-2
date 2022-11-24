@@ -84,6 +84,8 @@ public class DoItYourselfStationLogic {
         station.printer.turnOn();
         station.printer.register(receiptPrinterController);
         
+
+        
         // BELOW BLOCK IS TESTS - USEFUL ONES SHOULD BE VIA GUI BUTTONS TO FUNCTION
         //System.out.print("\n" + station + "\n");
         //receiptPrinterLowInk();	// TEST
