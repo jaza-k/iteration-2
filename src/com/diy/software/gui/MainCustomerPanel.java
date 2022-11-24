@@ -1,6 +1,7 @@
 package com.diy.software.gui;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -28,11 +29,16 @@ import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
 
-public class CustomJPanel extends JPanel {
+import static com.diy.software.DoItYourselfStationLogic.Status.READY;
+import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
+
+public class MainCustomerPanel extends JPanel {
     /**
      * Creation of the panel
      */
-    public CustomJPanel(Customer customer, DoItYourselfStationLogic stationLogic, CardIssuer bank) {
+    public MainCustomerPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
+
+
         setForeground(new Color(128, 128, 255));
         setBackground(SystemColor.inactiveCaption);
         setLayout(null);
@@ -45,7 +51,7 @@ public class CustomJPanel extends JPanel {
         JLabel WeightLabel = new JLabel("Item Weight: ???");
         WeightLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
         WeightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        WeightLabel.setBounds(148, 383, 164, 34);
+        WeightLabel.setBounds(145, 393, 164, 34);
         add(WeightLabel);
 
         JTextPane scannedItemPane = new JTextPane();
@@ -60,7 +66,7 @@ public class CustomJPanel extends JPanel {
             potentialScanComboBox.addItem("Item " + i);
             cBarcodedItems.add((BarcodedItem) customer.shoppingCart.get(i - 1));
         }
-        potentialScanComboBox.setBounds(109, 349, 91, 23);
+        potentialScanComboBox.setBounds(113, 359, 91, 23);
         add(potentialScanComboBox);
 
         JButton scanButton = new JButton("Scan Item");
@@ -71,11 +77,28 @@ public class CustomJPanel extends JPanel {
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // Prevent scan if not ready
+                    if(stationLogic.getStatus() != READY) {
+                        JOptionPane.showMessageDialog(getParent(), "Not Ready To Scan!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
                     // Handling item to product verification process here as it wasn't handled anywhere else
+                    customer.selectNextItem();
                     customer.scanItem();
+                    // Stop if scan failed
+                    if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                        JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Update the GUI
+                    customer.placeItemInBaggingArea();
                     priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
-                    scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams());
+                    scannedItemPane.setText(
+                            String.join("\n", stationLogic.scannerController.getScannedItems().stream().map(item -> item.getDescription()).toList())
+                    );
+                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
                     cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
                     potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
                 } catch (Exception e1) {
@@ -83,73 +106,28 @@ public class CustomJPanel extends JPanel {
                 }
             }
         });
-        scanButton.setBounds(237, 349, 91, 23);
+        scanButton.setBounds(250, 359, 91, 23);
         add(scanButton);
 
-        JComboBox<String> cardComboBox = new JComboBox<String>();
-        for (Card card : customer.wallet.cards) {
-            cardComboBox.addItem(card.cardholder + ":" + card.kind);
-        }
-        //Add customer cards to the combo box here
-        cardComboBox.setBounds(109, 446, 91, 23);
-        add(cardComboBox);
-
-        JLabel Wallet = new JLabel("Cards in Wallet");
-        Wallet.setForeground(Color.DARK_GRAY);
-        Wallet.setFont(new Font("Georgia", Font.PLAIN, 13));
-        Wallet.setHorizontalAlignment(SwingConstants.CENTER);
-        Wallet.setBounds(109, 434, 91, 11);
-        add(Wallet);
 
         JLabel lblItemsToScan = new JLabel("Items to Scan");
         lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
         lblItemsToScan.setForeground(Color.DARK_GRAY);
         lblItemsToScan.setFont(new Font("Georgia", Font.PLAIN, 13));
-        lblItemsToScan.setBounds(103, 336, 97, 11);
+        lblItemsToScan.setBounds(107, 346, 97, 11);
         add(lblItemsToScan);
 
-        JLabel pinLabel = new JLabel("Pin:");
-        pinLabel.setBounds(247, 470, 60, 23);
-        add(pinLabel);
-        JTextField pinField = new JTextField();
-        pinField.setBounds(277, 470, 40, 23);
-        add(pinField);
-        JButton PayButton = new JButton("Payment");
-        PayButton.addActionListener(new ActionListener() {
+
+        // Button for switching to payment tab
+        JButton switchToPaymentButton = new JButton("Proceed To Bagging");
+        switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+        // Action event when "Proceed" button clicked
+        switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Action when "pay" button clicked
-                try {
-                    //System.out.println(Integer.toString(cardComboBox.getSelectedIndex()));
-                    //System.out.println(pinField.getText().intern());
-                    //System.out.println(customer.wallet.cards.get(cardComboBox.getSelectedIndex()).cardholder);
-
-                    CreditPayment newpay = new CreditPayment();
-                    newpay.setCard(customer.wallet.cards.get(cardComboBox.getSelectedIndex()));
-                    // TODO: FIX THIS -> newpay.setReader(doItYourselfStation.cardReader);
-                    newpay.setCardIssuer(bank);
-                    //System.out.println("Attempting to insert card.");
-                    newpay.insertCard(pinField.getText().intern()); //The intern() function will make sure the string is properly formatted.
-                    //System.out.println("Card successfully inserted");
-                    boolean flag = newpay.payForTotal(stationLogic.scannerController.getTotal());
-                    if (flag) {
-                        //doItYourselfStation.touchScreen.setVisible(false);
-                    }
-                    //else System.out.println("Transaction failed");
-
-                } catch (InvalidPINException e2) {
-                    JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-                    //System.out.println(e2.toString());
-                } catch (IOException e1) {
-                    // When Transcation Fails
-                    JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-                    //System.out.println(e1.toString());
-                }
+                tabbedPane.setSelectedIndex(5);
             }
         });
-        PayButton.setFont(new Font("Georgia", Font.PLAIN, 13));
-        PayButton.setBounds(237, 445, 91, 23);
-        add(PayButton);
-
-
+        switchToPaymentButton.setBounds(233, 434, 141, 35);
+        add(switchToPaymentButton);
     }
 }

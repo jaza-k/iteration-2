@@ -6,6 +6,10 @@ import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
 
 public class DoItYourselfStationLogic {
+	
+	// Can pass this to Attendant Station & check if -1
+	private int issue = -1;	// -1 is default (no issue)
+	
     /**
      * The status of the station
      */
@@ -53,7 +57,10 @@ public class DoItYourselfStationLogic {
      */
     public DoItYourselfStationLogic(DoItYourselfStationAR station) {
         this.station = station;
-
+        // Have to plug in the station
+        station.plugIn();
+        station.turnOn();
+        
         scannerController = new ScannerController(this);
         station.scanner.plugIn();
         station.scanner.turnOn();
@@ -68,6 +75,15 @@ public class DoItYourselfStationLogic {
         station.printer.plugIn();
         station.printer.turnOn();
         station.printer.register(receiptPrinterController);
+        
+        // BELOW BLOCK IS TESTS - USEFUL ONES SHOULD BE VIA GUI BUTTONS TO FUNCTION
+        //System.out.print("\n" + station + "\n");
+        //receiptPrinterLowInk();	// TEST
+        //System.out.print("\n" + Integer.toString(getStationID()) + "\n");
+    }
+    
+    public int getStationID() {
+    	return AttendantStationLogic.matchStationID(this);	// clumsy implementation here (needless extra steps)
     }
 
     public void receiptPrinterLowInk() {
