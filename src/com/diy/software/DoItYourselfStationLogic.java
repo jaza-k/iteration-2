@@ -24,6 +24,8 @@ public class DoItYourselfStationLogic {
 	
 	
 	
+	
+	
     /**
      * The status of the station
      */
@@ -188,5 +190,19 @@ public class DoItYourselfStationLogic {
 
     public void setStatus(Status status) {
         this.status = status;
+        
+        if (this.status == Status.READY) {
+        	// do nothing?
+        	
+        }
+        else if (this.status == Status.DISCREPANCY) {
+        	AttendantStationLogic.getInstance().notifyProblem(this.getStationID(),0);	// pID = 0 == Weight Discrepancy
+        }
+        else if (this.status == Status.OVERLOAD) {
+        	
+        }
+        else if (this.status == Status.WAITING_FOR_WEIGHT) {
+        	
+        }
     }
 }

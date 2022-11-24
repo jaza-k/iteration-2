@@ -106,23 +106,36 @@ public class MainCustomerPanel extends JPanel {
 	                
 					//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
 					if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
-						tabbedPane.setSelectedIndex(6);
+						tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
+						
+						
 					}
                 }
         });
-        scanButton.setBounds(132, 346, 177, 36);
+        scanButton.setBounds(142, 346, 177, 36);
         add(scanButton);
   
         // Button for switching to payment tab
-        JButton switchToPaymentButton = new JButton("Proceed To Bagging");
-        switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+        JButton addBagging = new JButton("Add Bags");
+        addBagging.setFont(new Font("Georgia", Font.PLAIN, 13));
         // Action event when "Proceed" button clicked
-        switchToPaymentButton.addActionListener(new ActionListener() {
+        addBagging.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tabbedPane.setSelectedIndex(1);
             }
         });
-        switchToPaymentButton.setBounds(155, 425, 141, 35);
-        add(switchToPaymentButton);
+        addBagging.setBounds(253, 427, 130, 35);
+        add(addBagging);
+        
+        JButton purchaseBags = new JButton("Buy Bags");
+        purchaseBags.setFont(new Font("Georgia", Font.PLAIN, 13));
+        purchaseBags.addActionListener(new ActionListener() {
+        	// Action when the customer wants to buy bags
+        	public void actionPerformed(ActionEvent e) {
+        		
+        	}
+        });
+        purchaseBags.setBounds(76, 427, 130, 35);
+        add(purchaseBags);
     }
 }

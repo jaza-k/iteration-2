@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
@@ -94,9 +95,19 @@ public class CreditPaymentPanel extends JPanel {
 		PayButton.setBounds(267, 403, 124, 49);
 		add(PayButton);
 		
+		
 		JTextPane scannedItemPane = new JTextPane();
 		scannedItemPane.setEditable(false);
 		scannedItemPane.setBounds(55, 22, 329, 304);
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
+			stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t$" + barcodedProduct.getPrice() + "\n");
+		}
+		
+		scannedItemPane.setText(stringBuilder.toString());
+		
 		add(scannedItemPane);
 	}
 }
