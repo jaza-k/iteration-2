@@ -48,7 +48,7 @@ public class MainCustomerPanel extends JPanel {
         JLabel WeightLabel = new JLabel("Item Weight: ???");
         WeightLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
         WeightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        WeightLabel.setBounds(148, 383, 164, 34);
+        WeightLabel.setBounds(145, 393, 164, 34);
         add(WeightLabel);
 
         JTextPane scannedItemPane = new JTextPane();
@@ -63,7 +63,7 @@ public class MainCustomerPanel extends JPanel {
             potentialScanComboBox.addItem("Item " + i);
             cBarcodedItems.add((BarcodedItem) customer.shoppingCart.get(i - 1));
         }
-        potentialScanComboBox.setBounds(109, 349, 91, 23);
+        potentialScanComboBox.setBounds(113, 359, 91, 23);
         add(potentialScanComboBox);
 
         JButton scanButton = new JButton("Scan Item");
@@ -79,7 +79,7 @@ public class MainCustomerPanel extends JPanel {
                     customer.scanItem();
                     priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
                     scannedItemPane.setText(scannedItemPane.getText() + "\n" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(cBarcodedItems.get(potentialScanComboBox.getSelectedIndex()).getBarcode()).getDescription());
-                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams());
+                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
                     cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
                     potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
                 } catch (Exception e1) {
@@ -87,7 +87,7 @@ public class MainCustomerPanel extends JPanel {
                 }
             }
         });
-        scanButton.setBounds(237, 349, 91, 23);
+        scanButton.setBounds(250, 359, 91, 23);
         add(scanButton);
 
       
@@ -96,22 +96,21 @@ public class MainCustomerPanel extends JPanel {
         lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
         lblItemsToScan.setForeground(Color.DARK_GRAY);
         lblItemsToScan.setFont(new Font("Georgia", Font.PLAIN, 13));
-        lblItemsToScan.setBounds(103, 336, 97, 11);
+        lblItemsToScan.setBounds(107, 346, 97, 11);
         add(lblItemsToScan);
 
         
         
         // Button for switching to payment tab
-        JButton switchToPaymentButton = new JButton("Proceed To Payment");
-        switchToPaymentButton.setVerticalAlignment(SwingConstants.TOP);
+        JButton switchToPaymentButton = new JButton("Proceed To Bagging");
         switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
         // Action event when "Proceed" button clicked
         switchToPaymentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	tabbedPane.setSelectedIndex(1);
+            	tabbedPane.setSelectedIndex(5);
             }
         });
-        switchToPaymentButton.setBounds(300, 450, 91, 23);
+        switchToPaymentButton.setBounds(233, 434, 141, 35);
         add(switchToPaymentButton);
     }
 }

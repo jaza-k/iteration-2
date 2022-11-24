@@ -100,9 +100,9 @@ public class Demo {
         TouchScreen screen = new TouchScreen();
         screen.plugIn();
         screen.turnOn();
-		CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen);	// CustomerGUI(stationLogic, customer, screen);
-		//customerGUI.
-
         
+        // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
+	    CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen);
+	        
     }
 }
