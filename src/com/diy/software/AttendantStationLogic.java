@@ -89,14 +89,14 @@ public class AttendantStationLogic {
     public void notifyProblem (int sID, int pID) {
     	instance.issues[sID] = pID;
     	
-    	System.out.print("\nHello\n");
+    	//System.out.print("\nHello\n");
     	// block only in some cases except maybe all of them
     	
-    	System.out.print("\nFrom Notify: " + instance.stations[sID].getStation() + "\n");
+    	//System.out.print("\nFrom Notify: " + instance.stations[sID].getStation() + "\n");
     	
     	instance.stations[sID].block(instance.stations[sID].getStation());
     	//instance.stations[sID].block(instance.stations[sID]);
-    	System.out.print("\nGoodbye\n");
+    	//System.out.print("\nGoodbye\n");
     	
     	attendantGUI.updateIssues();	// updates list on GUI
     }

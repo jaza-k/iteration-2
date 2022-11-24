@@ -110,7 +110,7 @@ public class Demo {
         
         
         // TEST
-        stsLG[0].bagApproval();
+        //stsLG[0].bagApproval();
         //System.out.print("\nFrom Demo: " + stsLG[0].getStation() + "\n");
         
         // BELOW IS FOR HANDLING w/o GUI
