@@ -6,9 +6,22 @@ import com.diy.software.gui.AttendantGUI;
 //import java.util.List;
 
 public class AttendantStationLogic {
-    
-	private static int[] issues;	// tracks what issue stations have - ints for now
+
 	private static DoItYourselfStationLogic[] stations;
+	
+	private static int[] issues;	// tracks what issue stations have - ints for now
+	public String[] probDesc = {
+			"Weight Discrepancy",		// 0
+			"Bag Approval Required",	// 1
+			"Out of Bags",				// 2
+			"Insufficient Change",		// 3
+			"",	// 4
+			"",	// 5
+			"",	// 6
+			"",	// 7
+			"",	// 8
+			""	// 9
+	};
     
     private AttendantGUI attendantGUI;
     private static final AttendantStationLogic instance = new AttendantStationLogic();
@@ -77,6 +90,7 @@ public class AttendantStationLogic {
     	instance.issues[sID] = pID;
     	attendantGUI.updateIssues();
     }
+    
     
     public int[] getIssues() {
     	return issues;

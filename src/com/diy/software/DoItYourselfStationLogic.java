@@ -7,6 +7,10 @@ import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
 
 public class DoItYourselfStationLogic {
+	
+	// Can pass this to Attendant Station & check if -1
+	private int issue = -1;	// -1 is default (no issue)
+	
     /**
      * The station on which the logic is installed.
      */

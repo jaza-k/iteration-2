@@ -196,7 +196,6 @@ public class AttendantGUI {
 			AttendantFrame.validate();
 			AttendantFrame.repaint();
 			issue = -1;
-	    	
 		});
 	    
 	    att.add(AddownBag);
@@ -236,7 +235,7 @@ public class AttendantGUI {
 			tabbedPane.setBounds(x,y,w,h);
 			MainMenu.setBounds(x,y,w,h);
 			AttendantPanel.setBounds(x,y,w,h);
-			/*
+			
 			MainMenu.validate();
 			MainMenu.repaint();
 			AttendantPanel.validate();
@@ -245,7 +244,7 @@ public class AttendantGUI {
 			tabbedPane.repaint();
 			AttendantFrame.validate();
 			AttendantFrame.repaint();
-			*/
+			
 		}
 		
 		public void sizingButtons() {
