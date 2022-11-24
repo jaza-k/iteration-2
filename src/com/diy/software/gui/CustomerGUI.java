@@ -1,13 +1,16 @@
 package com.diy.software.gui;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
+import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.disenchantment.TouchScreen;
+import com.jimmyselectronics.opeechee.Card;
 
 
 
@@ -30,7 +33,7 @@ public class CustomerGUI{
 	 * @param screen: Contains the code to create the frame.
 	 */
 	
-	public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen) {
+	public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen, HashMap<Card, CardIssuer> bankingInfo){
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane);
@@ -39,7 +42,7 @@ public class CustomerGUI{
 		
 		//creditPanel = new CreditPaymentPanel(customer, doItYourselfStation, bank, screen, cart);
 		debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
-		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
+		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
 		baggingPanel = new BaggingPanel(customer, screen, doItYourselfStationLogic, tabbedPane);
 		

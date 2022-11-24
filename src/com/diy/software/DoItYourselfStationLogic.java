@@ -1,7 +1,6 @@
 package com.diy.software;
 
 import com.diy.hardware.DoItYourselfStationAR;
-import com.diy.hardware.external.CardIssuer;
 import com.diy.software.controllers.ReceiptPrinterController;
 import com.diy.software.controllers.ScaleController;
 import com.diy.software.controllers.ScannerController;
@@ -52,7 +51,10 @@ public class DoItYourselfStationLogic {
      */
     public DoItYourselfStationLogic(DoItYourselfStationAR station) {
         this.station = station;
-
+        // Have to plug in the station
+        station.plugIn();
+        station.turnOn();
+        
         scannerController = new ScannerController(this);
         station.scanner.plugIn();
         station.scanner.turnOn();
