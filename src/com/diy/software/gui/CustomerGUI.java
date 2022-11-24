@@ -24,6 +24,7 @@ public class CustomerGUI{
 	private CashPaymentPanel cashPanel;
 	private DebitPaymentPanel debitPanel;
 	private BaggingPanel baggingPanel;
+	private UnexpectedWeight unexpectedWeightPanel;
 	
 	/**
 	 * Constructor for CustomerGUI
@@ -42,6 +43,7 @@ public class CustomerGUI{
 		creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
 		cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
 		baggingPanel = new BaggingPanel(customer, screen, doItYourselfStationLogic, tabbedPane);
+		unexpectedWeightPanel = new UnexpectedWeight();
 		
 		tabbedPane.add("Scan Items", panel);
 		tabbedPane.add("Bags", baggingPanel);
@@ -49,12 +51,14 @@ public class CustomerGUI{
 		tabbedPane.add("Credit", creditPanel);
 		tabbedPane.add("Cash", cashPanel);
 		tabbedPane.add("Debit", debitPanel);
+		tabbedPane.add("Unexpected Weight", unexpectedWeightPanel);
 		tabbedPane.setEnabledAt(0, false);
 	    tabbedPane.setEnabledAt(1, false);
 	    tabbedPane.setEnabledAt(2, false);
 	    tabbedPane.setEnabledAt(3, false);
 	    tabbedPane.setEnabledAt(4, false);
 	    tabbedPane.setEnabledAt(5, false);
+	    tabbedPane.setEnabledAt(6, false);
 	    
 		frame = screen.getFrame();
 		frame.setTitle("Customer GUI");

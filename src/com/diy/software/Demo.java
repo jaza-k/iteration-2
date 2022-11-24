@@ -13,11 +13,25 @@ import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
 
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Demo {
     public static void main(String[] args) {
+    	
+    	
+    	// Configuring Stations
+		int[] denominations = new int[] {5, 10, 20, 50, 100};
+		long[] coindenoms = new long[] {1, 5, 10, 25, 100, 200};
+		DoItYourselfStationAR.configureBanknoteDenominations(denominations); //Note that the static call to configure banknote denominations
+		DoItYourselfStationAR.configureBanknoteStorageUnitCapacity(4); //Only four bills can fit in station2's storage unit
+		DoItYourselfStationAR.configureCoinDenominations(coindenoms);
+		DoItYourselfStationAR.configureCoinTrayCapacity(10);
+		DoItYourselfStationAR.configureCurrency(Currency.getInstance("CAD"));
+    	
+    	
+    	
         // Create station - MOVED BELOW
         //DoItYourselfStationAR station = new DoItYourselfStationAR();
     	
@@ -35,15 +49,16 @@ public class Demo {
         Barcode barcode3 = new Barcode(new Numeral[] { Numeral.one, Numeral.two, Numeral.three });
 
         // Create barcoded items
-        BarcodedItem item1 = new BarcodedItem(barcode1, 15);
-        BarcodedItem item2 = new BarcodedItem(barcode2, 25);
-        BarcodedItem item3 = new BarcodedItem(barcode3, 35);
+        BarcodedItem item1 = new BarcodedItem(barcode1, 12);
+        BarcodedItem item2 = new BarcodedItem(barcode2, 5);
+        BarcodedItem item3 = new BarcodedItem(barcode3, 2);
 
         // Create barcoded products
-        BarcodedProduct product1 = new BarcodedProduct(barcode1, "Food", 5, 15);
-        BarcodedProduct product2 = new BarcodedProduct(barcode2, "More Food", 10, 25);
-        BarcodedProduct product3 = new BarcodedProduct(barcode3, "All The Food", 20, 35);
-
+        BarcodedProduct product1 = new BarcodedProduct(barcode1, "Crackers", 5, 1);
+        BarcodedProduct product2 = new BarcodedProduct(barcode2, "Juice", 10, 5);
+        BarcodedProduct product3 = new BarcodedProduct(barcode3, "Chocolate", 4, 2);
+        
+        
         // Add barcoded products to database
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, product1);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
@@ -53,12 +68,12 @@ public class Demo {
         // Setup customer
         Customer customer = new Customer();
         customer.useStation(stsAR[0]);
-
+        
         // Add items to cart
         customer.shoppingCart.add(item1);
         customer.shoppingCart.add(item2);
         customer.shoppingCart.add(item3);
-
+        
         // Create cards
         Card creditCard = new Card("Credit", "0000111122223333", "John Doe", "012", "345", true, true);
         Card debitCard = new Card("Debit", "1111111122223333", "Dave", "321", "555", true, true);
@@ -114,7 +129,18 @@ public class Demo {
         screen.turnOn();
         
         // Ideally we should be able to create multiple customer GUI's, but for the purposes of this demo, one is enough
+        stsLG[0].station.plugIn();
+        stsLG[0].station.turnOn();
         CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
+        
+        
+        // TEST
+        //stsLG[0].bagApproval();
+        //System.out.print("\nFrom Demo: " + stsLG[0].getStation() + "\n");
+        
+        // BELOW IS FOR HANDLING w/o GUI
+        //attendantLogic.attendantDecision(0, true);
+        //System.out.print("\nDone...\n");
 	        
     }
 }

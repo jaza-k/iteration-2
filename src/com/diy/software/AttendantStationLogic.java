@@ -88,14 +88,40 @@ public class AttendantStationLogic {
     // params: station id, problem id (int for now)
     public void notifyProblem (int sID, int pID) {
     	instance.issues[sID] = pID;
-    	attendantGUI.updateIssues();
+    	
+    	//System.out.print("\nHello\n");
+    	// block only in some cases except maybe all of them
+    	
+    	//System.out.print("\nFrom Notify: " + instance.stations[sID].getStation() + "\n");
+    	
+    	instance.stations[sID].block(instance.stations[sID].getStation());
+    	//instance.stations[sID].block(instance.stations[sID]);
+    	//System.out.print("\nGoodbye\n");
+    	
+    	attendantGUI.updateIssues();	// updates list on GUI
     }
     
+    
+    public void attendantDecision(int sID, boolean choice) {
+    	if (choice) {
+    		instance.stations[sID].unblock(instance.stations[sID].getStation());
+    	} else notifyProblem(sID, instance.issues[sID]);
+    	// also provide opportunity to cancel IN SOME CASES
+    }
+    
+    /*
+    public void notifyAttendantOwnBag() {
+    	
+    }
+    */
     
     public int[] getIssues() {
     	return issues;
     }
     
+    public static DoItYourselfStationLogic getStationLogic(int sID) {
+    	return instance.stations[sID];
+    }
     
     public static AttendantStationLogic getInstance() {
         return instance;

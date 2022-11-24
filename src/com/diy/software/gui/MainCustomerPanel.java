@@ -1,5 +1,15 @@
 package com.diy.software.gui;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -10,13 +20,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import com.diy.hardware.BarcodedProduct;
+import com.diy.simulation.Customer;
+import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.controllers.ScaleController;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.necchi.BarcodedItem;
@@ -37,79 +46,68 @@ public class MainCustomerPanel extends JPanel {
 
         JLabel priceTotal = new JLabel("Current Total: $");
         priceTotal.setFont(new Font("Georgia", Font.PLAIN, 13));
-        priceTotal.setBounds(178, 321, 196, 14);
+        priceTotal.setBounds(175, 321, 144, 14);
         add(priceTotal);
 
         JLabel WeightLabel = new JLabel("Item Weight: ???");
         WeightLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
         WeightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        WeightLabel.setBounds(145, 393, 164, 34);
+        WeightLabel.setBounds(142, 393, 164, 23);
         add(WeightLabel);
 
         JTextPane scannedItemPane = new JTextPane();
         scannedItemPane.setEditable(false);
-        scannedItemPane.setBounds(45, 11, 329, 304);
+        scannedItemPane.setBounds(56, 11, 350, 304);
         add(scannedItemPane);
-
-        JComboBox<String> potentialScanComboBox = new JComboBox<String>();
-        //Adds all the barcoded items into the potential scannable combo box
-        ArrayList<BarcodedItem> cBarcodedItems = new ArrayList<BarcodedItem>();
-        for (int i = 1; i <= customer.shoppingCart.size(); i++) {
-            potentialScanComboBox.addItem("Item " + i);
-            cBarcodedItems.add((BarcodedItem) customer.shoppingCart.get(i - 1));
-        }
-        potentialScanComboBox.setBounds(113, 359, 91, 23);
-        add(potentialScanComboBox);
+        
 
         JButton scanButton = new JButton("Scan Item");
-        scanButton.setVerticalAlignment(SwingConstants.TOP);
-        scanButton.setToolTipText("Use drop down to select");
+        scanButton.setToolTipText("");
         scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+        
         // Action event when "Scan" button clicked
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    // Prevent scan if not ready
-                    if(stationLogic.getStatus() != READY) {
-                        JOptionPane.showMessageDialog(getParent(), "Not Ready To Scan!", "Scan Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Handling item to product verification process here as it wasn't handled anywhere else
-                    customer.selectNextItem();
-                    customer.scanItem();
-                    // Stop if scan failed
-                    if(stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
-                        JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-
-                    // Update the GUI
-                    customer.placeItemInBaggingArea();
-                    priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
-                    scannedItemPane.setText(
-                            String.join("\n", stationLogic.scannerController.getScannedItems().stream().map(item -> item.getDescription()).toList())
-                    );
-                    WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " lbs");
-                    cBarcodedItems.remove(potentialScanComboBox.getSelectedIndex());
-                    potentialScanComboBox.removeItemAt(potentialScanComboBox.getSelectedIndex());
+                    scanItem();
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
                 }
             }
+			private void scanItem() {
+				//if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+				if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
+	            	customer.selectNextItem();
+	                customer.scanItem();
+				}
+				// At this point, the status should be "Waiting for Weight"
+				JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
+				bagItem();
+			}
+
+			private void bagItem() {
+					// Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
+					customer.placeItemInBaggingArea();
+					
+					WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
+					priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
+					
+					StringBuilder stringBuilder = new StringBuilder();
+					for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
+						stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t$" + barcodedProduct.getPrice() + "\n");
+					}
+					scannedItemPane.setText(stringBuilder.toString());
+	                
+					//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+					if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
+						tabbedPane.setSelectedIndex(6);
+					}
+                }
         });
-        scanButton.setBounds(250, 359, 91, 23);
+        scanButton.setBounds(132, 346, 177, 36);
         add(scanButton);
-
-
-        JLabel lblItemsToScan = new JLabel("Items to Scan");
-        lblItemsToScan.setHorizontalAlignment(SwingConstants.CENTER);
-        lblItemsToScan.setForeground(Color.DARK_GRAY);
-        lblItemsToScan.setFont(new Font("Georgia", Font.PLAIN, 13));
-        lblItemsToScan.setBounds(107, 346, 97, 11);
-        add(lblItemsToScan);
-
-
+  
         // Button for switching to payment tab
         JButton switchToPaymentButton = new JButton("Proceed To Bagging");
         switchToPaymentButton.setFont(new Font("Georgia", Font.PLAIN, 12));
@@ -119,7 +117,7 @@ public class MainCustomerPanel extends JPanel {
                 tabbedPane.setSelectedIndex(1);
             }
         });
-        switchToPaymentButton.setBounds(233, 434, 141, 35);
+        switchToPaymentButton.setBounds(155, 425, 141, 35);
         add(switchToPaymentButton);
     }
 }
