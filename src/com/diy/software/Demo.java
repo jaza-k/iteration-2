@@ -11,6 +11,7 @@ import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
+import com.unitedbankingservices.coin.Coin;
 
 import java.util.Calendar;
 import java.util.Currency;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 public class Demo {
     public static void main(String[] args) {
     	
+    	Coin.DEFAULT_CURRENCY = Currency.getInstance("CAD");
     	
     	// Configuring Stations
 		int[] denominations = new int[] {5, 10, 20, 50, 100};
