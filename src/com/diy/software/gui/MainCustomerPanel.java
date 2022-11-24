@@ -92,6 +92,7 @@ public class MainCustomerPanel extends JPanel {
                         return;
                     }
 
+                    // Update the GUI
                     customer.placeItemInBaggingArea();
                     priceTotal.setText("Cart Total: " + (stationLogic.scannerController.getTotal()));
                     scannedItemPane.setText(
