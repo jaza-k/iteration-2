@@ -39,7 +39,8 @@ public class DoItYourselfStationLogic {
         READY,
         WAITING_FOR_WEIGHT,
         DISCREPANCY,
-        OVERLOAD
+        OVERLOAD,
+        BLOCKED
     }
 
     private Status status = Status.READY;
@@ -161,7 +162,8 @@ public class DoItYourselfStationLogic {
 
         //System.out.print("\nFrom Block: " + stat + "\n");
         //System.out.print("\n" + stat.scanner.isDisabled());
-
+    	this.status = Status.BLOCKED;
+    	
         // MAYBE MORE???
         stat.scanner.turnOff();
         stat.cardReader.turnOff();
@@ -194,6 +196,8 @@ public class DoItYourselfStationLogic {
         //stat.banknoteOutput.activate();
         stat.coinSlot.activate();
         stat.cardReader.turnOn();
+        
+        this.status = Status.READY;
     }
 
 
