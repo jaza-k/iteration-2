@@ -68,11 +68,11 @@ public class MainCustomerPanel extends JPanel {
                     JOptionPane.showMessageDialog(getParent(), "Shopping Cart is Empty!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else
-                try {
-                    scanItem();
-                } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
-                }
+                    try {
+                        scanItem();
+                    } catch (Exception e1) {
+                        JOptionPane.showMessageDialog(getParent(), "Invalid Item!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                    }
             }
 
             private void scanItem() {
