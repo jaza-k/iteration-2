@@ -121,7 +121,7 @@ public class CashPaymentPanel extends JPanel {
                     priceTotal.setText("Remaining Cost: " + cost + currency.getSymbol());
                     changeTotal.setText("Change: " + change + currency.getSymbol());
                 } catch (DisabledException e1) {
-                	JOptionPane.showMessageDialog(getParent(), "Banknote Slot is disabled!", "Insertion Error", JOptionPane.ERROR_MESSAGE);
+                	JOptionPane.showMessageDialog(getParent(), "Banknote Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Remove Dangling Banknote", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (NoPowerException e1) {
@@ -159,23 +159,44 @@ public class CashPaymentPanel extends JPanel {
                     priceTotal.setText("Remaining Cost: " + cost + currency.getSymbol());
                     changeTotal.setText("Change: " + change + currency.getSymbol());
                 } catch (DisabledException e1) {
-                	JOptionPane.showMessageDialog(getParent(), "Coin Slot is disabled!!", "Insertion Error", JOptionPane.ERROR_MESSAGE);
-                    e1.printStackTrace();
+                	JOptionPane.showMessageDialog(getParent(), "Coin Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Insertion Error", JOptionPane.ERROR_MESSAGE);
-                    e1.printStackTrace();
                 } catch (NoPowerException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Loss of power!", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 	stationLogic.station.plugIn();
                 	stationLogic.station.turnOn();
-                } 
+                } catch (Exception e1) {
+                	e1.printStackTrace();
+                }
             }
 
         });
         payCoinButton.setBounds(237, 349, 91, 23);
         add(payCoinButton);
+
         
-    }
+    // Insert Coin Button setup
+    JButton removeBanknoteButton = new JButton("Remove Dangling Banknote");
+    removeBanknoteButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+    removeBanknoteButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+			Boolean flag = stationLogic.station.banknoteInput.hasDanglingBanknote();
+			if (flag) {
+				stationLogic.station.banknoteInput.removeDanglingBanknote();
+			} else {
+				JOptionPane.showMessageDialog(getParent(), "No Banknote is Dangling!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+        }
+    });
+       
+   
+    removeBanknoteButton.setBounds(237, 349, 20, 20);
+    add(removeBanknoteButton);
+}
+    
+    
 
     public void updateTotal() {
         this.total = stationLogic.scannerController.getTotal();
