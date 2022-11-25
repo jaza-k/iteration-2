@@ -24,6 +24,7 @@ public class CashPaymentPanel extends JPanel {
 
 
     private double total;
+    private double change;
     private DoItYourselfStationLogic stationLogic;
     private Payment newPay;
     private Customer customer;
@@ -43,9 +44,6 @@ public class CashPaymentPanel extends JPanel {
         this.tabbedPane = tabbedPane;
         // CURRENCY SHOULD IDEALLY BE PASSED INTO CONSTRUCTOR
         this.currency = Currency.getInstance("CAD");
-
-
-
 
         GridLayout experimentLayout = new GridLayout(4,3);
         setLayout(experimentLayout);
@@ -127,13 +125,14 @@ public class CashPaymentPanel extends JPanel {
                 try {
                     stationLogic.station.banknoteInput.receive(bill);
                     double cost = newPay.checkoutTotal;
-                    double change = 0;
-                    if (cost < 0) {
-                    	change = -cost;
+                    if (cost <= 0) {
+                    	change += -cost;
                     	cost = 0;
                     }
-                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(cost)));
-                    changeTotal.setText("Change: " +  (dollarFormat.format(cost)));
+                    total = cost;
+                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(total)));
+                    changeTotal.setText("Change: " +  (dollarFormat.format(change)));
+                    checkDone();
                 } catch (DisabledException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Banknote Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
@@ -165,13 +164,14 @@ public class CashPaymentPanel extends JPanel {
                 try {
                     stationLogic.station.coinSlot.receive(coin);
                     double cost = newPay.checkoutTotal;
-                    double change = 0;
-                    if (cost < 0) {
-                    	change = -cost;
+                    if (cost <= 0) {
+                    	change += -cost;
                     	cost = 0;
                     }
-                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(cost)));
-                    changeTotal.setText("Change: " +  (dollarFormat.format(cost)));
+                    total = cost;
+                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(total)));
+                    changeTotal.setText("Change: " +  (dollarFormat.format(change)));
+                    checkDone();
                 } catch (DisabledException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Coin Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
@@ -188,9 +188,8 @@ public class CashPaymentPanel extends JPanel {
         });
         payCoinButton.setBounds(237, 349, 91, 23);
         add(payCoinButton);
-
-
-    // Insert Coin Button setup
+ 
+    // Insert removeBankNote setup
     JButton removeBanknoteButton = new JButton("Remove Dangling Banknote");
     removeBanknoteButton.setFont(new Font("Georgia", Font.PLAIN, 12));
     removeBanknoteButton.addActionListener(new ActionListener() {
@@ -207,14 +206,47 @@ public class CashPaymentPanel extends JPanel {
 
 
     removeBanknoteButton.setBounds(237, 349, 20, 20);
-    add(removeBanknoteButton);
-}
+    add(removeBanknoteButton);   
+    
+    // collect change setup
+    JButton collectChangeButton = new JButton("Collect Change");
+    collectChangeButton.setFont(new Font("Georgia", Font.PLAIN, 12));
+    collectChangeButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	List<Coin> coinlist = stationLogic.station.coinTray.collectCoins();
+        	for (int i = 0; i < coinlist.size(); i++ ) {
+        		Coin coin = coinlist.get(i);
+        		coin.getValue();
+        		total =- coin.getValue();
+        	} 
+        	checkDone();
+        }
 
+    });
+    
+    collectChangeButton.setBounds(237, 349, 20, 20);
+    add(collectChangeButton);
+    }
+    
 
-
+    
+    
+    
     public void updateTotal() {
         this.total = stationLogic.scannerController.getTotal();
     }
+    
+    
+    
+    public void checkDone() {
+        if (this.total == 0 && this.change == 0) {
+        	tabbedPane.setSelectedIndex(0);	
+        }
+    }
+    
+    
+    
 
 }
 		
