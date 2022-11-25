@@ -22,7 +22,6 @@ public class MainCustomerPanel extends JPanel {
     // Create a formatter given the Locale
     NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(ca);
 	private JTextField numberOfBags;
-	private int bagTotal = 0;
     /**
      * Creation of the panel
      * @param bagBarcode 
@@ -90,10 +89,7 @@ public class MainCustomerPanel extends JPanel {
             private void bagItem() {
 				// Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
 				customer.placeItemInBaggingArea();
-				
-				updateFields();
-	            
-				//if(stationLogic.scaleController.getStatus() == ScaleController.Status.DISCREPANCY) {
+	            updateFields();
 				if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
 					tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
 					
@@ -101,8 +97,10 @@ public class MainCustomerPanel extends JPanel {
 				}
             }
             private void updateFields() {
-				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
-				priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
+            	// Initializing this integer here to avoid duplicate prices
+            	int bagTotal = 0;
+				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
+				priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
 				
 				StringBuilder stringBuilder = new StringBuilder();
 				for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
@@ -168,9 +166,11 @@ public class MainCustomerPanel extends JPanel {
         	}
 
 			private void updateBaggingFields() {
-				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
-				priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
 				
+				int bagTotal = 0;
+				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
+				priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
+
 				StringBuilder stringBuilder = new StringBuilder();
 				for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
 					if(barcodedProduct.getBarcode() != bagBarcode) {
