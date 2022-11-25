@@ -63,6 +63,10 @@ public class MainCustomerPanel extends JPanel {
         // Action event when "Scan" button clicked
         scanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (customer.shoppingCart.isEmpty()){
+                    JOptionPane.showMessageDialog(getParent(), "Shopping Cart is Empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else
                 try {
                     scanItem();
                 } catch (Exception e1) {
@@ -157,7 +161,8 @@ public class MainCustomerPanel extends JPanel {
             			stationLogic.scannerController.barcodeScanned(stationLogic.station.scanner, bagBarcode);
             			stationLogic.setStatus(Status.READY);
 					}
-        			updateBaggingFields();
+                    updateBaggingFields();
+
 					
         		}catch (Exception e1) {
 					// Catching when the number of bags isn't a valid number
