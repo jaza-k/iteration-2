@@ -141,7 +141,7 @@ public class Demo {
         stsLG[0].station.turnOn();
         //CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
         stsLG[0].initCustomerGUI(stsLG[0], customer, screen, bankingInfo, bagBarcode);
-      
+
         // TEST
         //stsLG[0].bagApproval();
         //System.out.print("\nFrom Demo: " + stsLG[0].getStation() + "\n");

@@ -13,9 +13,8 @@ import com.jimmyselectronics.necchi.Numeral;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Scanner;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AddItemByScanningTest {
 
@@ -33,9 +32,10 @@ public class AddItemByScanningTest {
     // create barcoded product
     BarcodedProduct product1 = new BarcodedProduct(barcode1, "Test product 1", 10, 5);
     BarcodedProduct product2 = new BarcodedProduct(barcode2, "Test product 2", 10, 10);
+
     //Set before tests run
     @Before
-    public void setup(){
+    public void setup() {
         ScannerController scanControl = new ScannerController(stationLogic);
 
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode1, product1);
@@ -54,18 +54,19 @@ public class AddItemByScanningTest {
 
     //Testing when scanning a valid item
     @Test
-    public void validItemScanned(){
+    public void validItemScanned() {
 
         customer.shoppingCart.add(item1);
         customer.selectNextItem();
         customer.scanItem();
         customer.placeItemInBaggingArea();
-        assertEquals(1,stationLogic.scannerController.getScannedItems().size());
+        assertEquals(1, stationLogic.scannerController.getScannedItems().size());
 
     }
+
     //testing when not scanning from an empty db and shopping cart
     @Test
-    public void noItemScanned(){
+    public void noItemScanned() {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.remove(barcode1, product1);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.remove(barcode2, product2);
 
@@ -77,9 +78,10 @@ public class AddItemByScanningTest {
 
         assertTrue(stationLogic.scannerController.getScannedItems().isEmpty());
     }
+
     //testing scanning when disabled
     @Test
-    public void scannerDisabled(){
+    public void scannerDisabled() {
 
         station.plugIn();
         station.turnOn();
@@ -93,9 +95,10 @@ public class AddItemByScanningTest {
         assertTrue(stationLogic.scannerController.getScannedItems().isEmpty());
 
     }
+
     //Testing when scanning two items
     @Test
-    public void scanTwoItems(){
+    public void scanTwoItems() {
         station.scanner.enable();
         customer.shoppingCart.add(item1);
         customer.selectNextItem();
@@ -107,7 +110,7 @@ public class AddItemByScanningTest {
         customer.scanItem();
         // System.out.println(stationLogic.scannerController.getScannedItems().size());
 
-        assertEquals(2,stationLogic.scannerController.getScannedItems().size());
+        assertEquals(2, stationLogic.scannerController.getScannedItems().size());
 
     }
 

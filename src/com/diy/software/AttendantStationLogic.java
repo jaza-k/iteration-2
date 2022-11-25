@@ -10,11 +10,11 @@ public class AttendantStationLogic {
 
     private static int[] issues;    // tracks what issue stations have - ints for now
     public String[] probDesc = {
-            "No Issues",        		// 0
+            "No Issues",                // 0
             "Bag Approval Required",    // 1
             "Out of Bags",              // 2
             "Insufficient Change",      // 3
-            "Weight Discrepancy",    	// 4
+            "Weight Discrepancy",        // 4
             "",    // 5
             "",    // 6
             "",    // 7

@@ -58,8 +58,7 @@ public class AddOwnBagTest {
         stationLogic.bagApproval(ownBags);
         try {
             weightFromScale = station.scale.getCurrentWeight();
-        }
-        catch (OverloadException e) {
+        } catch (OverloadException e) {
             System.out.println("OverloadException thrown");
         }
         if (station.scale.getSensitivity() > abs(weightFromScale - ownBags.getWeight()) && !station.scanner.isPoweredUp()) {
@@ -73,8 +72,7 @@ public class AddOwnBagTest {
         stationLogic.bagApproval(ownBags);
         try {
             weightFromScale = station.scale.getCurrentWeight();
-        }
-        catch (OverloadException e) {
+        } catch (OverloadException e) {
             System.out.println("OverloadException thrown");
         }
         if (station.scale.getSensitivity() > abs(weightFromScale - ownBags.getWeight()) && !station.scanner.isPoweredUp()) {
@@ -91,8 +89,7 @@ public class AddOwnBagTest {
         stationLogic.bagApproval(ownBags);
         try {
             customer.scanItem();
-        }
-        catch (NoPowerException e) {
+        } catch (NoPowerException e) {
             flag = true;
         }
         assertTrue(flag);
