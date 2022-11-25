@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.diy.software.test.iteration1;
 
 import com.diy.simulation.Customer;
@@ -20,5 +19,4 @@ public class CustomerTerminalDemo {
         Customer customer = new Customer();
         CheckOutSystem system = new CheckOutSystem(customer);
     }
->>>>>>> main
 }
