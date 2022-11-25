@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class CreditPaymentPanel extends JPanel {
 
-    public CreditPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane, TouchScreen screen, HashMap<Card, CardIssuer> bankingInfo) {
+    public CreditPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane, HashMap<Card, CardIssuer> bankingInfo) {
         setBackground(SystemColor.inactiveCaption);
 
         JComboBox<String> cardComboBox = new JComboBox<String>();
@@ -65,14 +65,17 @@ public class CreditPaymentPanel extends JPanel {
                     boolean flag = newpay.payForTotal(stationLogic.scannerController.getTotal());
 
                     if (flag) {
-                        screen.setVisible(false);
-                        JOptionPane.showMessageDialog(getParent(), "Payment Successful!", "Transaction Update", JOptionPane.INFORMATION_MESSAGE);
+                        tabbedPane.setSelectedIndex(7);
+                    } else {
+                        JOptionPane.showMessageDialog(getParent(), "Transaction Failed!", "Payment Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (InvalidPINException e2) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
                 } catch (IOException e1) {
                     // When Transaction Fails
                     JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e3 ){
+                    System.out.println("DEBUG2");
                 }
             }
         });

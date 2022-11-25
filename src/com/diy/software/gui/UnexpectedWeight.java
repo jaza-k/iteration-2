@@ -20,7 +20,7 @@ public class UnexpectedWeight extends JPanel {
         lblNewLabel.setBounds(126, 181, 221, 161);
         add(lblNewLabel);
 
-        JLabel lblNewLabel_1 = new JLabel("Station Blocked!");
+        JLabel lblNewLabel_1 = new JLabel("Weight Discrepancy Detected!");
         lblNewLabel_1.setForeground(new Color(255, 255, 255));
         lblNewLabel_1.setFont(new Font("Georgia", Font.PLAIN, 14));
         lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);

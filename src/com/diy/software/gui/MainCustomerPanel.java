@@ -54,8 +54,6 @@ public class MainCustomerPanel extends JPanel {
 
 
         JButton scanButton = new JButton("Scan Item");
-        scanButton.setBackground(SystemColor.activeCaptionBorder);
-        scanButton.setToolTipText("");
         scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
 
         // Action event when "Scan" button clicked

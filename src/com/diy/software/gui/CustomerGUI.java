@@ -23,6 +23,7 @@ public class CustomerGUI {
     private DebitPaymentPanel debitPanel;
     private BaggingPanel baggingPanel;
     private UnexpectedWeight unexpectedWeightPanel;
+    private PaymentSuccessPanel paymentSuccessPanel;
 
     /**
      * Constructor for CustomerGUI
@@ -39,10 +40,11 @@ public class CustomerGUI {
         panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane, bagBarcode);
         payPanel = new PayPanelV2(tabbedPane);
         debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
-        creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
+        creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, bankingInfo);
         cashPanel = new CashPaymentPanel(customer, doItYourselfStationLogic, tabbedPane);
         baggingPanel = new BaggingPanel(customer, screen, doItYourselfStationLogic, tabbedPane);
         unexpectedWeightPanel = new UnexpectedWeight();
+        paymentSuccessPanel = new PaymentSuccessPanel(tabbedPane, screen);
 
         tabbedPane.add("Scan Items", panel);
         tabbedPane.add("Bags", baggingPanel);
@@ -51,6 +53,7 @@ public class CustomerGUI {
         tabbedPane.add("Cash", cashPanel);
         tabbedPane.add("Debit", debitPanel);
         tabbedPane.add("Unexpected Weight", unexpectedWeightPanel);
+        tabbedPane.add("Payment Success", paymentSuccessPanel);
         tabbedPane.setEnabledAt(0, false);
         tabbedPane.setEnabledAt(1, false);
         tabbedPane.setEnabledAt(2, false);
@@ -58,6 +61,7 @@ public class CustomerGUI {
         tabbedPane.setEnabledAt(4, false);
         tabbedPane.setEnabledAt(5, false);
         tabbedPane.setEnabledAt(6, false);
+        tabbedPane.setEnabledAt(7, false);
 
         frame = screen.getFrame();
         frame.setTitle("Customer GUI");
