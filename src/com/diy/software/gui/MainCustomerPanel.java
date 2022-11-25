@@ -113,7 +113,7 @@ public class MainCustomerPanel extends JPanel {
 					}
 				}
 				if(bagTotal != 0) {
-					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t$" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal + "\n");
+					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
 				}
 				scannedItemPane.setText(stringBuilder.toString());
             }
@@ -170,19 +170,19 @@ public class MainCustomerPanel extends JPanel {
 			private void updateBaggingFields() {
 				
 				int bagTotal = 0;
-				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
-				priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
+				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
+				priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
 
 				StringBuilder stringBuilder = new StringBuilder();
 				for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
 					if(barcodedProduct.getBarcode() != bagBarcode) {
-						stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t$" + barcodedProduct.getPrice() + "\n");
+						stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t" + dollarFormat.format(barcodedProduct.getPrice()) + "\n");
 					}else {
 						bagTotal++;
 					}
 				}
 				if(bagTotal != 0) {
-					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t$" + ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal + "\n");
+					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
 				}
 				scannedItemPane.setText(stringBuilder.toString());
 				numberOfBags.setText("");
