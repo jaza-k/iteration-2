@@ -117,6 +117,9 @@ public class MainCustomerPanel extends JPanel {
         scanButton.setBounds(142, 346, 177, 36);
         add(scanButton);
 
+
+        ///////////////////////////////////////////////////////////////////
+
         // Button for switching to payment tab
         JButton payment = new JButton("Proceed to Payment");
         payment.setBackground(SystemColor.activeCaptionBorder);
@@ -129,8 +132,34 @@ public class MainCustomerPanel extends JPanel {
             }
         });
 
-        payment.setBounds(142, 481, 177, 36);
+        payment.setBounds(20, 481, 140, 36);
         add(payment);
+
+        ///////////////////////////////////////////////////////////////////
+
+        JTextField memNum = new JTextField();
+        memNum.setBounds(320, 481, 120, 36);
+        add(memNum);
+
+        ///////////////////////////////////////////////////////////////////
+
+        // Button for switching to payment tab
+        JButton enterMem = new JButton("Enter Member#");
+        enterMem.setBackground(SystemColor.activeCaptionBorder);
+        enterMem.setFont(new Font("Georgia", Font.PLAIN, 13));
+
+        // Action event when "Proceed" button clicked
+        enterMem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(memNum.getText() == "12345") System.out.print("\nHello again, Dr. Walker!\n");
+                //tabbedPane.setSelectedIndex(2);
+            }
+        });
+
+        enterMem.setBounds(170, 481, 140, 36);
+        add(enterMem);
+
+        ///////////////////////////////////////////////////////////////////
 
         numberOfBags = new JTextField();
         numberOfBags.setBounds(50, 432, 76, 27);
