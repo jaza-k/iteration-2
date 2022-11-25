@@ -200,6 +200,8 @@ public class MainCustomerPanel extends JPanel {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
         		// At this point the attendant should be pinged
         		tabbedPane.setSelectedIndex(1);
+        		// Notifying using the scale that the weight has changed
+        		stationLogic.scaleController.weightChanged(stationLogic.station.scale, 1);
         	}
         });
         addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));
