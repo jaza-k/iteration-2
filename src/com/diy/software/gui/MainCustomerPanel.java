@@ -151,7 +151,7 @@ public class MainCustomerPanel extends JPanel {
         // Action event when "Proceed" button clicked
         enterMem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(memNum.getText() == "12345") System.out.print("\nHello again, Dr. Walker!\n");
+                if(memNum.getText().equals("12345")) System.out.print("\nHello again, Dr. Walker!\n");
                 //tabbedPane.setSelectedIndex(2);
             }
         });
