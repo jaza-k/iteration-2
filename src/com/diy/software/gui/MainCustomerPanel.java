@@ -238,11 +238,9 @@ public class MainCustomerPanel extends JPanel {
         
         JButton addOwnBag = new JButton("Use Own Bags");
         addOwnBag.addActionListener(new ActionListener() {
-            private void updateFields(BarcodedItem ownBags) {
-                double newWeight = stationLogic.scaleController.getExpectedWeightInGrams()+ ownBags.getWeight();
-                WeightLabel.setText("Weight: " + newWeight + "g");
+            private void updateFields() {
+                WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
                 priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
-                stationLogic.scaleController.addExpectedWeight(ownBags.getWeight());
 
                 StringBuilder stringBuilder = new StringBuilder();
                 for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
@@ -255,11 +253,21 @@ public class MainCustomerPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
         		// At this point the attendant should be pinged
-        		tabbedPane.setSelectedIndex(1);
+        		
+
                 Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
                 BarcodedItem ownBags = new BarcodedItem(barcode, 10);
+                
+        		tabbedPane.setSelectedIndex(1);
+        		
+        		stationLogic.bagApproval(ownBags);
+        		
+
+        		tabbedPane.setSelectedIndex(1);
+                stationLogic.scaleController.addExpectedWeight(ownBags.getWeight());
         		// Notifying using the scale that the weight has changed
-        		updateFields(ownBags);
+        		updateFields();
+
             }
         });
         addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));

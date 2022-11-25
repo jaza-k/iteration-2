@@ -145,7 +145,7 @@ public class DoItYourselfStationLogic {
     	*/
 
         // NO EXPECTED WEIGHT
-        this.station.scale.add(ownBag);
+        //this.station.scale.add(ownBag);
 
         // IF ATTENDANT OK, add ownBag.weight to ExceptedWeight (scale controller)
 

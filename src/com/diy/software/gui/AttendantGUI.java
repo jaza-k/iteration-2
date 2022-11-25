@@ -32,7 +32,7 @@ public class AttendantGUI {
     JButton bigger, smaller, finish;
 
     // STATIONS (temporary solution)
-    JButton s1, s2, s3, s4, s5, s6;
+    JButton s1, s2, s3, s4, s5, s6;	// SHOULD HAVE DONE AS ARRAY
 
 
     //int issue = -1;	// represents the station having an issue
@@ -40,6 +40,7 @@ public class AttendantGUI {
 
     // sID which is currently selected
     int sID = -1;    // should be nothing or -1 by default
+    int[] sIssues;	// issues per station, each -1 if not init, 0 if init & good
 
 
     // sized = scaling tracker
@@ -58,8 +59,20 @@ public class AttendantGUI {
     private DoItYourselfStationLogic[] stations = {};
 
     public void updateIssues() {
-        AttendantStationLogic.getInstance().getIssues();
+        sIssues = AttendantStationLogic.getInstance().getIssues();
         // update/refresh GUI based on above line
+        for(int i = 0; i < sIssues.length; i++) {
+        	System.out.print("\nStation " + i + " status is: " + sIssues[i]);
+        }
+        
+        if(sIssues[0] != 0) s1.setBackground(Color.getHSBColor(160, 100, 60)); else s1.setBackground(null);
+        if(sIssues[1] != 0) s2.setBackground(Color.getHSBColor(160, 100, 60)); else s2.setBackground(null);
+        if(sIssues[2] != 0) s3.setBackground(Color.getHSBColor(160, 100, 60)); else s3.setBackground(null);
+        if(sIssues[3] != 0) s4.setBackground(Color.getHSBColor(160, 100, 60)); else s4.setBackground(null);
+        if(sIssues[4] != 0) s5.setBackground(Color.getHSBColor(160, 100, 60)); else s5.setBackground(null);
+        if(sIssues[5] != 0) s6.setBackground(Color.getHSBColor(160, 100, 60)); else s6.setBackground(null);
+       
+        
     }
 
     public void receiptPrinterPaperLowPopUp() {
@@ -193,9 +206,9 @@ public class AttendantGUI {
         PermitstationUse.addActionListener(e -> {
             //call function  of "Permit Station Use", make sure the scanner, scale etc is turned on.
             if (sID != -1) {
-                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
                 AttendantStationLogic.getInstance().getStationLogic(sID).unblock(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
-                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
             }
         });
 
@@ -205,9 +218,9 @@ public class AttendantGUI {
         BlockstationUse.addActionListener(e -> {
             //call function of "Block Station Use", make sure the scanner, scale etc is enabled.
             if (sID != -1) {
-                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
                 AttendantStationLogic.getInstance().getStationLogic(sID).block(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
-                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
             }
         });
 
