@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.diy.software.test.iteration1;
 
 import com.diy.hardware.external.CardIssuer;
@@ -391,4 +390,3 @@ public class CreditPaymentTest {
         assertTrue(flag);
     }
 }
->>>>>>> main
