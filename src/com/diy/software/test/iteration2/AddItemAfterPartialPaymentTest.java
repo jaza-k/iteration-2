@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package com.diy.software.test.iteration2;
 
 import ca.powerutility.PowerSurge;
