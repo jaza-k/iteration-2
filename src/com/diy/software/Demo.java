@@ -30,6 +30,7 @@ public class Demo {
         DoItYourselfStationAR.configureCoinDenominations(coindenoms);
         DoItYourselfStationAR.configureCoinTrayCapacity(10);
         DoItYourselfStationAR.configureCurrency(Currency.getInstance("CAD"));
+        DoItYourselfStationAR.configureCoinStorageUnitCapacity(1000);
 
 
         // Create station - MOVED BELOW
