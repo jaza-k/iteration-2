@@ -102,6 +102,7 @@ public class AttendantStationLogic {
     public void attendantDecision(int sID, boolean choice) {
         if (choice) {
             instance.stations[sID].unblock(instance.stations[sID].getStation());
+            instance.getStationLogic(sID).scaleController.clearDiscrepancy();
             instance.getStationLogic(sID).setStatus(DoItYourselfStationLogic.Status.READY);
 
             // update customer GUI that is OK

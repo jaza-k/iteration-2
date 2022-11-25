@@ -22,6 +22,7 @@ public class ScaleController implements ElectronicScaleListener {
         this.stationLogic = stationLogic;
     }
 
+    private double actualWeightInGrams = 0;
     private double expectedWeightInGrams = 0;
 
     /**
@@ -51,8 +52,16 @@ public class ScaleController implements ElectronicScaleListener {
         stationLogic.setStatus(READY);
     }
 
+    /**
+     * Sets the expected weight of the items to the actual weight of item scanned with this machine
+     */
+    public void clearDiscrepancy() {
+        expectedWeightInGrams = actualWeightInGrams;
+    }
+
     @Override
     public void weightChanged(ElectronicScale scale, double weightInGrams) {
+        actualWeightInGrams = weightInGrams;
         if (abs(weightInGrams - expectedWeightInGrams) < scale.getSensitivity())
             stationLogic.setStatus(READY);
         else
