@@ -194,7 +194,7 @@ public class MainCustomerPanel extends JPanel {
         purchaseBags.setBounds(166, 427, 95, 35);
         add(purchaseBags);
         
-        JButton addOwnBag = new JButton("Add Bag");
+        JButton addOwnBag = new JButton("Use Own Bags");
         addOwnBag.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
@@ -205,7 +205,7 @@ public class MainCustomerPanel extends JPanel {
         	}
         });
         addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));
-        addOwnBag.setBounds(283, 427, 95, 35);
+        addOwnBag.setBounds(283, 427, 125, 35);
         add(addOwnBag);
     }
 }
