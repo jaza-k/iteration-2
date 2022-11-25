@@ -7,6 +7,8 @@ import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.DoItYourselfStationLogic.Status;
 import com.jimmyselectronics.necchi.Barcode;
+import com.jimmyselectronics.necchi.BarcodedItem;
+import com.jimmyselectronics.necchi.Numeral;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,9 +101,9 @@ public class MainCustomerPanel extends JPanel {
             private void updateFields() {
             	// Initializing this integer here to avoid duplicate prices
             	int bagTotal = 0;
-				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + " grams");
-				priceTotal.setText("Cart Total: $" + (stationLogic.scannerController.getTotal()));
-				
+                WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
+                priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
+
 				StringBuilder stringBuilder = new StringBuilder();
 				for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
 					if(barcodedProduct.getBarcode() != bagBarcode) {
@@ -186,18 +188,35 @@ public class MainCustomerPanel extends JPanel {
 				numberOfBags.setText("");
 			}
         });
+
         purchaseBags.setBounds(166, 427, 95, 35);
         add(purchaseBags);
         
         JButton addOwnBag = new JButton("Use Own Bags");
         addOwnBag.addActionListener(new ActionListener() {
+            private void updateFields(BarcodedItem ownBags) {
+                double newWeight = stationLogic.scaleController.getExpectedWeightInGrams()+ ownBags.getWeight();
+                WeightLabel.setText("Weight: " + newWeight + "g");
+                priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
+                stationLogic.scaleController.addExpectedWeight(ownBags.getWeight());
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
+                    if(barcodedProduct.getBarcode() != bagBarcode) {
+                        stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t" + dollarFormat.format(barcodedProduct.getPrice()) + "\n");
+                    }
+                }
+                scannedItemPane.setText(stringBuilder.toString());
+            }
         	public void actionPerformed(ActionEvent e) {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
         		// At this point the attendant should be pinged
         		tabbedPane.setSelectedIndex(1);
+                Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
+                BarcodedItem ownBags = new BarcodedItem(barcode, 10);
         		// Notifying using the scale that the weight has changed
-        		stationLogic.scaleController.weightChanged(stationLogic.station.scale, 1);
-        	}
+        		updateFields(ownBags);
+            }
         });
         addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));
         addOwnBag.setBounds(283, 427, 125, 35);
