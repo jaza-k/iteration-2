@@ -1,6 +1,9 @@
 package com.diy.software.test.iteration2;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Currency;
 import java.util.List;
@@ -22,9 +25,6 @@ import com.unitedbankingservices.coin.*;
 import com.diy.software.payment.Payment;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.AttendantStationLogic;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 
 public class CashPaymentTest {
@@ -258,65 +258,108 @@ public class CashPaymentTest {
 	public void NormalPayment() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 19.75);
-		assertTrue(newpay.checkoutTotal == 19.75);
-		station.banknoteInput.receive(twentybill);
-		assertTrue(newpay.checkoutTotal == 0);
+		Assert.assertTrue(newpay.checkoutTotal == 19.75);
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(twentybill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
+		Assert.assertTrue(newpay.checkoutTotal == 0);
 		List<Coin> coinlist = station.coinTray.collectCoins();
-		assertTrue(coinlist.size() == 1); //The station should have given one quarter as change.
-		assertTrue(coinlist.get(0).getValue() == 25);
+		Assert.assertTrue(coinlist.size() == 1); //The station should have given one quarter as change.
+		Assert.assertTrue(coinlist.get(0).getValue() == 25);
 	}
 	
 	@Test
 	public void NotEnoughChange() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 19.50);
-		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
-		assertTrue(newpay.checkoutTotal == -0.25);
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
+		Assert.assertTrue(newpay.checkoutTotal == -0.25);
 		List<Coin> coinlist = station.coinTray.collectCoins();
-		assertTrue(coinlist.size() == 1);
-		assertTrue(coinlist.get(0).getValue() == 25);
+		Assert.assertTrue(coinlist.size() == 1);
+		Assert.assertTrue(coinlist.get(0).getValue() == 25);
 		int[] issues = AttendantStationLogic.getInstance().getIssues();
+		Assert.assertTrue(issues[0] == 3);
 	}
 	
 	@Test
 	public void PartialPayment() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 40);
-		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
-		assertTrue(newpay.checkoutTotal == 20);
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(twentybill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
+		Assert.assertTrue(newpay.checkoutTotal == 20);
 		List<Coin> coinlist = station.coinTray.collectCoins();
-		assertTrue(coinlist.size() == 0);
+		Assert.assertTrue(coinlist.size() == 0);
 	}
 	
 	@Test
 	public void SameBillTwice() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 40);
-		station.banknoteInput.receive(twentybill); //There is only one quarter in the dispenser, so the customer won't receive enough change
-		station.banknoteInput.receive(twentybill);
-		assertTrue(newpay.checkoutTotal == 0);
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(twentybill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(twentybill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
+		Assert.assertTrue(newpay.checkoutTotal == 0);
 	}
 	
 	@Test
 	public void BillsInChange() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 3.75);
-		station.banknoteInput.receive(tenbill); //There is only one quarter in the dispenser, so the customer won't receive enough change
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(tenbill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
 		System.out.println("After inserting ten dollar bill, checkout total is " + Double.toString(newpay.checkoutTotal));
-		assertTrue(newpay.checkoutTotal == 0);
+		Assert.assertTrue(newpay.checkoutTotal == 0);
 		List<Coin> coinlist = station.coinTray.collectCoins();
-		assertTrue(coinlist.size() == 2);
+		Assert.assertTrue(coinlist.size() == 2);
 	}
 	
 	@Test
 	public void LargeBillSmallCheckout() throws DisabledException, TooMuchCashException
 	{
 		Payment newpay = new Payment(station, stationLogic, 3.75);
-		station.banknoteInput.receive(hundredbill); //There is only one quarter in the dispenser, so the customer won't receive enough change
+		flag = true;
+		while (flag)
+		{
+			station.banknoteInput.receive(hundredbill);
+			flag = station.banknoteInput.hasDanglingBanknote();
+			if (flag) station.banknoteInput.removeDanglingBanknote();
+		}
 		List<Coin> coinlist = station.coinTray.collectCoins();
 		//The system should have been able to give a loonie, and a quarter as change, but then couldn't find any fifty dollar bills and gave up
-		assertTrue(coinlist.size() == 2);
-		assertTrue(newpay.checkoutTotal == (-95));
+		Assert.assertTrue(coinlist.size() == 2);
+		Assert.assertTrue(newpay.checkoutTotal == (-95));
 	}
 	
 	
