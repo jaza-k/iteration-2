@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package com.diy.software.test.iteration1;
 
 public class AttendantDemo {
@@ -14,4 +14,3 @@ public class AttendantDemo {
         //AttendantGUI Attendant = new AttendantGUI();
     }
 }
->>>>>>> main
