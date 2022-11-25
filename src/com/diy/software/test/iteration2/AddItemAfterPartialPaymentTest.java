@@ -124,8 +124,9 @@ public class AddItemAfterPartialPaymentTest {
         Payment newpay = new Payment(station, stationLogic, stationLogic.scannerController.getTotal());
         assertEquals(20.0, newpay.checkoutTotal);
         try {
-            while (!newpay.CreditPay("345", card, 10, creditIssuer));
-        } catch (PowerSurge e) { }
+            while (!newpay.CreditPay("345", card, 10, creditIssuer)) ;
+        } catch (PowerSurge e) {
+        }
         assertEquals(10.0, newpay.checkoutTotal); //After paying ten dollars, there should still be ten dollars left to pay
         assertEquals(20.0, stationLogic.scannerController.getTotal()); //The checkout total for the scanner controller should still be 20
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController); //This will allow us to add more items after partially paying
@@ -143,3 +144,4 @@ public class AddItemAfterPartialPaymentTest {
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController);
         assertEquals(10.0, stationLogic.scannerController.getTotal());
     }
+}
