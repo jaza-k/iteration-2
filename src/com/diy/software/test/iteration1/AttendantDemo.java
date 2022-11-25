@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.diy.software.test.iteration1;
 
 public class AttendantDemo {
@@ -5,3 +6,12 @@ public class AttendantDemo {
         //AttendantGUI Attendant = new AttendantGUI();
     }
 }
+=======
+package com.diy.software.test.iteration1;
+
+public class AttendantDemo {
+    public static void main(String[] args) {
+        //AttendantGUI Attendant = new AttendantGUI();
+    }
+}
+>>>>>>> main
