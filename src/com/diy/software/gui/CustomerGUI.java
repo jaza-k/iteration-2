@@ -4,6 +4,7 @@ import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.jimmyselectronics.disenchantment.TouchScreen;
+import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.opeechee.Card;
 
 import javax.swing.*;
@@ -25,16 +26,17 @@ public class CustomerGUI {
 
     /**
      * Constructor for CustomerGUI
+     * @param bagBarcode 
      *
      * @param doItYourselfStationLogic: The logic to be installed on the statio
      * @param customer:                 The customer currently using the station
      * @param screen:                   The DIY station touchscreen, contains the code to create the GUI frame
      * @param bankingInfo:              A hashmap of cards and their associated card issuers
      */
-    public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen, HashMap<Card, CardIssuer> bankingInfo) {
+    public CustomerGUI(DoItYourselfStationLogic doItYourselfStationLogic, Customer customer, TouchScreen screen, HashMap<Card, CardIssuer> bankingInfo, Barcode bagBarcode) {
 
         tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-        panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane);
+        panel = new MainCustomerPanel(customer, doItYourselfStationLogic, tabbedPane, bagBarcode);
         payPanel = new PayPanelV2(tabbedPane);
         debitPanel = new DebitPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
         creditPanel = new CreditPaymentPanel(customer, doItYourselfStationLogic, tabbedPane, screen, bankingInfo);
@@ -67,8 +69,8 @@ public class CustomerGUI {
         screen.setVisible(true);
     }
 
+
     public void setTabbedFocus(int t) {
         tabbedPane.setSelectedIndex(0);
     }
-
 }

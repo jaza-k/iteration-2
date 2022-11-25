@@ -65,11 +65,11 @@ public class Demo {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode3, product3);
 
         Barcode bagBarcode = new Barcode(new Numeral[]{Numeral.one, Numeral.two, Numeral.three, Numeral.three, Numeral.nine});
-        BarcodedProduct bagBP = new BarcodedProduct(bagBarcode, "Store Purchased Bag", 1, 0.05);
+        BarcodedProduct bagBP = new BarcodedProduct(bagBarcode, "Store Purchased Bags", 1, 1);
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bagBarcode, bagBP);
         ProductDatabases.INVENTORY.put(bagBP, 1000);
 
-        BarcodedItem bagItem = new BarcodedItem(bagBarcode, 0.05);
+        BarcodedItem bagItem = new BarcodedItem(bagBarcode, 1);
 
 
         // Setup customer
@@ -139,8 +139,8 @@ public class Demo {
         stsLG[0].station.plugIn();
         stsLG[0].station.turnOn();
         //CustomerGUI customerGUI = new CustomerGUI(stsLG[0], customer, screen, bankingInfo);
-        stsLG[0].initCustomerGUI(stsLG[0], customer, screen, bankingInfo);
-
+        stsLG[0].initCustomerGUI(stsLG[0], customer, screen, bankingInfo, bagBarcode);
+      
         // TEST
         //stsLG[0].bagApproval();
         //System.out.print("\nFrom Demo: " + stsLG[0].getStation() + "\n");

@@ -119,9 +119,10 @@ public class DoItYourselfStationLogic {
     public CustomerGUI getCustomerGUI() {
         return this.customerGUI;
     }
+    
+    public void initCustomerGUI(DoItYourselfStationLogic d, Customer c, TouchScreen s, HashMap<Card, CardIssuer> b, Barcode bagBarcode) {
+    	this.customerGUI = new CustomerGUI(d,c,s,b, bagBarcode);
 
-    public void initCustomerGUI(DoItYourselfStationLogic d, Customer c, TouchScreen s, HashMap<Card, CardIssuer> b) {
-        this.customerGUI = new CustomerGUI(d, c, s, b);
     }
 
     /*
