@@ -12,7 +12,7 @@ public class AddPaperPopup extends JDialog implements ActionListener {
     private JLabel lowPaper;
     private JButton ok;
 
-    public AddPaperPopup(){
+    public AddPaperPopup() {
         addPaperFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 400, 300);
         addPaperContentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

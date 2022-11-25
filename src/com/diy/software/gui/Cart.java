@@ -1,15 +1,22 @@
 package com.diy.software.gui;
 
-import com.diy.hardware.external.ProductDatabases;
-//import com.diy.software.scansoft.AddItemScanned;
+import com.diy.software.DoItYourselfStationLogic;
 
 public class Cart {
-	/*
-	AddItemScanned addItemScanned;
-	
-	
-	public Cart(AddItemScanned addItemScanned) {
-		this.addItemScanned = addItemScanned;
-	}
-	*/	
+    private double total;
+    private DoItYourselfStationLogic stationLogic;
+
+    public Cart(DoItYourselfStationLogic stationLogic) {
+        this.total = 0;
+        this.stationLogic = stationLogic;
+
+    }
+
+    public void updateTotal() {
+        this.total = stationLogic.scannerController.getTotal();
+    }
+
+    public double getTotal() {
+        return total;
+    }
 }

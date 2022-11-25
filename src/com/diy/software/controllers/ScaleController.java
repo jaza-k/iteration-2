@@ -2,10 +2,13 @@ package com.diy.software.controllers;
 
 
 import com.diy.software.DoItYourselfStationLogic;
+import com.jimmyselectronics.AbstractDevice;
+import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.virgilio.ElectronicScale;
 import com.jimmyselectronics.virgilio.ElectronicScaleListener;
 
 import static com.diy.software.DoItYourselfStationLogic.Status.*;
+import static java.lang.Math.abs;
 
 public class ScaleController implements ElectronicScaleListener {
     private DoItYourselfStationLogic stationLogic;
@@ -50,7 +53,7 @@ public class ScaleController implements ElectronicScaleListener {
 
     @Override
     public void weightChanged(ElectronicScale scale, double weightInGrams) {
-        if (weightInGrams == expectedWeightInGrams)
+        if (abs(weightInGrams - expectedWeightInGrams) < scale.getSensitivity())
             stationLogic.setStatus(READY);
         else
             stationLogic.setStatus(DISCREPANCY);
@@ -64,5 +67,21 @@ public class ScaleController implements ElectronicScaleListener {
     @Override
     public void outOfOverload(ElectronicScale scale) {
         stationLogic.setStatus(READY);
+    }
+
+    @Override
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
     }
 }

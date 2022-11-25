@@ -1,14 +1,10 @@
 package com.diy.software.gui;
 
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 
-public class TabbedPanel extends JTabbedPane{
-	public TabbedPanel() {
-	}
+public class TabbedPanel extends JTabbedPane {
+    public TabbedPanel() {
+    }
 
-	
-	
-	
-	
 
 }

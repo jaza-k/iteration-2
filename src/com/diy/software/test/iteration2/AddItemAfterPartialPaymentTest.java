@@ -1,30 +1,31 @@
 package com.diy.software.test.iteration2;
 
+import ca.powerutility.PowerSurge;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
+import com.diy.software.payment.AddItemAfterPartialPayment;
+import com.diy.software.payment.Payment;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
 import com.jimmyselectronics.opeechee.Card;
+import com.unitedbankingservices.DisabledException;
+import com.unitedbankingservices.TooMuchCashException;
 import com.unitedbankingservices.banknote.Banknote;
 import com.unitedbankingservices.coin.Coin;
 import org.junit.After;
 import org.junit.Before;
-import com.diy.software.payment.*;
 import org.junit.Test;
-import org.junit.Assert;
-import com.unitedbankingservices.TooMuchCashException;
-import com.unitedbankingservices.DisabledException;
 
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 
-import static org.junit.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
 
 public class AddItemAfterPartialPaymentTest {
 
@@ -41,8 +42,8 @@ public class AddItemAfterPartialPaymentTest {
     Banknote twentybill, tenbill, fivebill, fiftybill, hundredbill;
     Coin penny, nickel, dime, quarter, loonie, toonie; //For the sake of simplicity, we'll assume this test takes place in an alternate universe where canadian pennies are still in circulation
     boolean flag;
-    int [] denominations;
-    long [] coindenoms;
+    int[] denominations;
+    long[] coindenoms;
     static DoItYourselfStationLogic stationLogic;
     DoItYourselfStationAR station;
     Card card;
@@ -52,10 +53,9 @@ public class AddItemAfterPartialPaymentTest {
     Calendar c;
 
     @Before
-    public void setup()
-    {
-        denominations = new int[] {5, 10, 20, 50, 100};
-        coindenoms = new long[] {1, 5, 10, 25, 100, 200};
+    public void setup() {
+        denominations = new int[]{5, 10, 20, 50, 100};
+        coindenoms = new long[]{1, 5, 10, 25, 100, 200};
         DoItYourselfStationAR.configureBanknoteDenominations(denominations); //Note that the static call to configure banknote denominations
         //is done BEFORE constructing a station
         DoItYourselfStationAR.configureBanknoteStorageUnitCapacity(4); //Only four bills can fit in station2's storage unit
@@ -65,9 +65,9 @@ public class AddItemAfterPartialPaymentTest {
         station.turnOn();
 
         // Create barcodes
-        barcode1 = new Barcode(new Numeral[] { Numeral.one });
-        barcode2 = new Barcode(new Numeral[] { Numeral.two, Numeral.three });
-        barcode3 = new Barcode(new Numeral[] { Numeral.one, Numeral.two, Numeral.three });
+        barcode1 = new Barcode(new Numeral[]{Numeral.one});
+        barcode2 = new Barcode(new Numeral[]{Numeral.two, Numeral.three});
+        barcode3 = new Barcode(new Numeral[]{Numeral.one, Numeral.two, Numeral.three});
 
         // Create barcoded items
         item1 = new BarcodedItem(barcode1, 15);
@@ -109,47 +109,37 @@ public class AddItemAfterPartialPaymentTest {
     }
 
     @After
-    public void teardown()
-    {
+    public void teardown() {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.clear();
         customer.wallet.cards.clear();
         stationLogic.scannerController.reset();
     }
 
     @Test
-    public void PartialCredit()
-    {
+    public void PartialCredit() {
         boolean flag;
         stationLogic.scannerController.barcodeScanned(station.scanner, item3.getBarcode());
-        stationLogic.setStatus(DoItYourselfStationLogic.Status.READY);
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         Payment newpay = new Payment(station, stationLogic, stationLogic.scannerController.getTotal());
-        assertTrue(newpay.checkoutTotal == 20);
-        flag = newpay.CreditPay("345", card, 10, creditIssuer); //Even though the checkout total is 20, we'll only pay for 10
-        assertTrue(flag); //After paying ten dollars, there should still be ten dollars left to pay
-        assertTrue(newpay.checkoutTotal == 10);
-        assertTrue(stationLogic.scannerController.getTotal() == 20); //The checkout total for the scanner controller should still be 20
+        assertEquals(20.0, newpay.checkoutTotal);
+        try {
+            while (!newpay.CreditPay("345", card, 10, creditIssuer));
+        } catch (PowerSurge e) { }
+        assertEquals(10.0, newpay.checkoutTotal); //After paying ten dollars, there should still be ten dollars left to pay
+        assertEquals(20.0, stationLogic.scannerController.getTotal()); //The checkout total for the scanner controller should still be 20
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController); //This will allow us to add more items after partially paying
-        stationLogic.setStatus(DoItYourselfStationLogic.Status.READY);
-        assertTrue(stationLogic.scannerController.getTotal() == 10);
-        stationLogic.scannerController.barcodeScanned(station.scanner, item2.getBarcode());
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, stationLogic.scannerController.getTotal());
     }
 
-    @Test public void PartialCash() throws TooMuchCashException, DisabledException
-    {
-        boolean flag;
+    @Test
+    public void PartialCash() throws TooMuchCashException, DisabledException {
         stationLogic.scannerController.barcodeScanned(station.scanner, item3.getBarcode());
-        stationLogic.setStatus(DoItYourselfStationLogic.Status.READY);
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         Payment newpay = new Payment(station, stationLogic, stationLogic.scannerController.getTotal());
         station.banknoteInput.receive(tenbill);
-        assertTrue(newpay.checkoutTotal == 10);
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, newpay.checkoutTotal);
+        assertEquals(20.0, stationLogic.scannerController.getTotal());
         AddItemAfterPartialPayment.AddAfterPartial(newpay, stationLogic.scannerController);
-        assertTrue(stationLogic.scannerController.getTotal() == 10);
-        stationLogic.scannerController.barcodeScanned(station.scanner, item2.getBarcode());
-        stationLogic.setStatus(DoItYourselfStationLogic.Status.READY);
-        assertTrue(stationLogic.scannerController.getTotal() == 20);
+        assertEquals(10.0, stationLogic.scannerController.getTotal());
     }
 }

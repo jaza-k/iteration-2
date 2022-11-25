@@ -22,7 +22,7 @@ public class AddInkPopup extends JDialog implements ActionListener {
         }
     }
 
-    public AddInkPopup(){
+    public AddInkPopup() {
         addInkFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 400, 300);
         addInkContentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

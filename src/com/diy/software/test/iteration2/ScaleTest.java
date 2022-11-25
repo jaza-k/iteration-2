@@ -4,8 +4,8 @@ import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.DoItYourselfStationAR;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
+import com.diy.software.AttendantStationLogic;
 import com.diy.software.DoItYourselfStationLogic;
-import com.diy.software.controllers.ScaleController;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static com.diy.software.DoItYourselfStationLogic.Status.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ScaleTest {
     DoItYourselfStationAR station;
@@ -33,6 +33,7 @@ public class ScaleTest {
         ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode2, product2);
         station = new DoItYourselfStationAR();
         stationLogic = new DoItYourselfStationLogic(station);
+        AttendantStationLogic.getInstance().quantizeStations(new DoItYourselfStationLogic[]{stationLogic});
         customer = new Customer();
         customer.useStation(station);
         customer.shoppingCart.add(item2);

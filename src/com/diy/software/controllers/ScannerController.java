@@ -4,6 +4,8 @@ package com.diy.software.controllers;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.software.DoItYourselfStationLogic;
+import com.jimmyselectronics.AbstractDevice;
+import com.jimmyselectronics.AbstractDeviceListener;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodeScanner;
 import com.jimmyselectronics.necchi.BarcodeScannerListener;
@@ -36,7 +38,7 @@ public class ScannerController implements BarcodeScannerListener {
     @Override
     public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
         // Ignore when there system is not ready
-        if(stationLogic.getStatus() != READY)
+        if (stationLogic.getStatus() != READY)
             return;
 
         // Ignore when there is no product associated with the barcode
@@ -64,7 +66,10 @@ public class ScannerController implements BarcodeScannerListener {
     public double getTotal() {
         return total;
     }
-    public void setTotal(double newval) {total = newval;} //This function will be used when adding items after a partial payment
+
+    public void setTotal(double newval) {
+        total = newval;
+    } //This function will be used when adding items after a partial payment
 
     /**
      * Obtains the list of items scanned with this machine
@@ -81,5 +86,21 @@ public class ScannerController implements BarcodeScannerListener {
     public void reset() {
         scannedItems.clear();
         total = 0;
+    }
+
+    @Override
+    public void enabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void disabled(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void turnedOn(AbstractDevice<? extends AbstractDeviceListener> device) {
+    }
+
+    @Override
+    public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
     }
 }
