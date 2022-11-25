@@ -216,7 +216,7 @@ public class DoItYourselfStationLogic {
             // do nothing?
 
         } else if (this.status == Status.DISCREPANCY) {
-            AttendantStationLogic.getInstance().notifyProblem(this.getStationID(), 0);    // pID = 0 == Weight Discrepancy
+            AttendantStationLogic.getInstance().notifyProblem(this.getStationID(), 4);    // pID = 4 == Weight Discrepancy
         } else if (this.status == Status.OVERLOAD) {
 
         } else if (this.status == Status.WAITING_FOR_WEIGHT) {

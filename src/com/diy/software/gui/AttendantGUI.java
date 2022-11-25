@@ -62,7 +62,7 @@ public class AttendantGUI {
         sIssues = AttendantStationLogic.getInstance().getIssues();
         // update/refresh GUI based on above line
         for(int i = 0; i < sIssues.length; i++) {
-        	System.out.print("\nStation " + i + " status is: " + sIssues[i]);
+        	//System.out.print("\nStation " + i + " status is: " + sIssues[i]);
         }
         
         if(sIssues[0] != 0) s1.setBackground(Color.getHSBColor(160, 100, 60)); else s1.setBackground(null);
@@ -206,9 +206,9 @@ public class AttendantGUI {
         PermitstationUse.addActionListener(e -> {
             //call function  of "Permit Station Use", make sure the scanner, scale etc is turned on.
             if (sID != -1) {
-                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
                 AttendantStationLogic.getInstance().getStationLogic(sID).unblock(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
-                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
             }
         });
 
@@ -218,9 +218,9 @@ public class AttendantGUI {
         BlockstationUse.addActionListener(e -> {
             //call function of "Block Station Use", make sure the scanner, scale etc is enabled.
             if (sID != -1) {
-                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
                 AttendantStationLogic.getInstance().getStationLogic(sID).block(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
-                System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
             }
         });
 

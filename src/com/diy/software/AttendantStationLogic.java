@@ -10,11 +10,11 @@ public class AttendantStationLogic {
 
     private static int[] issues;    // tracks what issue stations have - ints for now
     public String[] probDesc = {
-            "Weight Discrepancy",        // 0
+            "No Issues",        		// 0
             "Bag Approval Required",    // 1
-            "Out of Bags",                // 2
-            "Insufficient Change",        // 3
-            "",    // 4
+            "Out of Bags",              // 2
+            "Insufficient Change",      // 3
+            "Weight Discrepancy",    	// 4
             "",    // 5
             "",    // 6
             "",    // 7
@@ -104,7 +104,7 @@ public class AttendantStationLogic {
             instance.stations[sID].unblock(instance.stations[sID].getStation());
             instance.getStationLogic(sID).scaleController.clearDiscrepancy();
             instance.getStationLogic(sID).setStatus(DoItYourselfStationLogic.Status.READY);
-
+            instance.issues[sID] = 0;
             // update customer GUI that is OK
             instance.getStationLogic(sID).getCustomerGUI().setTabbedFocus(0);
 
