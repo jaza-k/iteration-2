@@ -33,7 +33,7 @@ public class AttendantGUI {
     JButton bigger, smaller, finish;
 
     // STATIONS (temporary solution)
-    JButton s1, s2, s3, s4, s5, s6;    // SHOULD HAVE DONE AS ARRAY
+    JButton s1, s2, s3, s4, s5, s6;	// SHOULD HAVE DONE AS ARRAY
 
 
     //int issue = -1;	// represents the station having an issue
@@ -41,7 +41,7 @@ public class AttendantGUI {
 
     // sID which is currently selected
     int sID = -1;    // should be nothing or -1 by default
-    int[] sIssues;    // issues per station, each -1 if not init, 0 if init & good
+    int[] sIssues;	// issues per station, each -1 if not init, 0 if init & good
 
 
     // sized = scaling tracker
@@ -62,35 +62,23 @@ public class AttendantGUI {
     public void updateIssues() {
         sIssues = AttendantStationLogic.getInstance().getIssues();
         // update/refresh GUI based on above line
-        for (int i = 0; i < sIssues.length; i++) {
-            //System.out.print("\nStation " + i + " status is: " + sIssues[i]);
+        for(int i = 0; i < sIssues.length; i++) {
+        	//System.out.print("\nStation " + i + " status is: " + sIssues[i]);
         }
 
-        if (sIssues[0] != 0) s1.setBackground(Color.getHSBColor(160, 100, 60));
-        else s1.setBackground(null);
-        if (sIssues[1] != 0) s2.setBackground(Color.getHSBColor(160, 100, 60));
-        else s2.setBackground(null);
-        if (sIssues[2] != 0) s3.setBackground(Color.getHSBColor(160, 100, 60));
-        else s3.setBackground(null);
-        if (sIssues[3] != 0) s4.setBackground(Color.getHSBColor(160, 100, 60));
-        else s4.setBackground(null);
-        if (sIssues[4] != 0) s5.setBackground(Color.getHSBColor(160, 100, 60));
-        else s5.setBackground(null);
-        if (sIssues[5] != 0) s6.setBackground(Color.getHSBColor(160, 100, 60));
-        else s6.setBackground(null);
+        if(sIssues[0] != 0) s1.setBackground(Color.getHSBColor(160, 100, 60)); else s1.setBackground(null);
+        if(sIssues[1] != 0) s2.setBackground(Color.getHSBColor(160, 100, 60)); else s2.setBackground(null);
+        if(sIssues[2] != 0) s3.setBackground(Color.getHSBColor(160, 100, 60)); else s3.setBackground(null);
+        if(sIssues[3] != 0) s4.setBackground(Color.getHSBColor(160, 100, 60)); else s4.setBackground(null);
+        if(sIssues[4] != 0) s5.setBackground(Color.getHSBColor(160, 100, 60)); else s5.setBackground(null);
+        if(sIssues[5] != 0) s6.setBackground(Color.getHSBColor(160, 100, 60)); else s6.setBackground(null);
 
-        if (sIssues[0] > 0) p1.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[0]]);
-        else p1.setText("");
-        if (sIssues[1] > 0) p2.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[1]]);
-        else p2.setText("");
-        if (sIssues[2] > 0) p3.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[2]]);
-        else p3.setText("");
-        if (sIssues[3] > 0) p4.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[3]]);
-        else p4.setText("");
-        if (sIssues[4] > 0) p5.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[4]]);
-        else p5.setText("");
-        if (sIssues[5] > 0) p6.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[5]]);
-        else p6.setText("");
+        if(sIssues[0] > 0) p1.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[0]]); else p1.setText("");
+        if(sIssues[1] > 0) p2.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[1]]); else p2.setText("");
+        if(sIssues[2] > 0) p3.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[2]]); else p3.setText("");
+        if(sIssues[3] > 0) p4.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[3]]); else p4.setText("");
+        if(sIssues[4] > 0) p5.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[4]]); else p5.setText("");
+        if(sIssues[5] > 0) p6.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[5]]); else p6.setText("");
 
     }
 
@@ -180,18 +168,12 @@ public class AttendantGUI {
         p6 = new JTextField("");
         p6.setEditable(false);
 
-        sts.add(s1);
-        sts.add(p1);
-        sts.add(s2);
-        sts.add(p2);
-        sts.add(s3);
-        sts.add(p3);
-        sts.add(s4);
-        sts.add(p4);
-        sts.add(s5);
-        sts.add(p5);
-        sts.add(s6);
-        sts.add(p6);
+        sts.add(s1);	sts.add(p1);
+        sts.add(s2);	sts.add(p2);
+        sts.add(s3);	sts.add(p3);
+        sts.add(s4);	sts.add(p4);
+        sts.add(s5);	sts.add(p5);
+        sts.add(s6);	sts.add(p6);
 
     }
 

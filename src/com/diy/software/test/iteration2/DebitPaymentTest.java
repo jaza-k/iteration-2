@@ -3,11 +3,8 @@ package com.diy.software.test.iteration2;
 import com.diy.hardware.external.CardIssuer;
 import com.diy.software.payment.CreditPayment;
 import com.diy.software.payment.DebitPayment;
-import com.jimmyselectronics.opeechee.BlockedCardException;
-import com.jimmyselectronics.opeechee.Card;
+import com.jimmyselectronics.opeechee.*;
 import com.jimmyselectronics.opeechee.Card.CardData;
-import com.jimmyselectronics.opeechee.CardReader;
-import com.jimmyselectronics.opeechee.InvalidPINException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +68,8 @@ public class DebitPaymentTest {
     public void ConstructorTesting2() {
         try {
             new DebitPayment(100, null, testReader, pin, bank);
-        } catch (NullPointerException | IOException e) {
+        }
+        catch (NullPointerException | IOException e) {
             flag = true;
         }
         assertTrue(flag);

@@ -121,7 +121,7 @@ public class DoItYourselfStationLogic {
     }
 
     public void initCustomerGUI(DoItYourselfStationLogic d, Customer c, TouchScreen s, HashMap<Card, CardIssuer> b, Barcode bagBarcode) {
-        this.customerGUI = new CustomerGUI(d, c, s, b, bagBarcode);
+    	this.customerGUI = new CustomerGUI(d,c,s,b, bagBarcode);
 
     }
 

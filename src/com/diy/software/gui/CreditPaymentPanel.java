@@ -5,6 +5,7 @@ import com.diy.hardware.external.CardIssuer;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.payment.CreditPayment;
+import com.jimmyselectronics.disenchantment.TouchScreen;
 import com.jimmyselectronics.opeechee.Card;
 import com.jimmyselectronics.opeechee.InvalidPINException;
 
@@ -73,7 +74,7 @@ public class CreditPaymentPanel extends JPanel {
                 } catch (IOException e1) {
                     // When Transaction Fails
                     JOptionPane.showMessageDialog(getParent(), "Invalid Transaction!", "Payment Error", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception e3) {
+                } catch (Exception e3 ){
                     System.out.println("DEBUG2");
                 }
             }
