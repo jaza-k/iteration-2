@@ -235,19 +235,10 @@ public class MainCustomerPanel extends JPanel {
             private void updateFields() {
                 WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
                 priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
-
-                StringBuilder stringBuilder = new StringBuilder();
-                for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
-                    if(barcodedProduct.getBarcode() != bagBarcode) {
-                        stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t" + dollarFormat.format(barcodedProduct.getPrice()) + "\n");
-                    }
-                }
-                scannedItemPane.setText(stringBuilder.toString());
             }
         	public void actionPerformed(ActionEvent e) {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
         		// At this point the attendant should be pinged
-        		
 
                 Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
                 BarcodedItem ownBags = new BarcodedItem(barcode, 10);
