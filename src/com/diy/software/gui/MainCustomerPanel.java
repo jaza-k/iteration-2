@@ -209,12 +209,23 @@ public class MainCustomerPanel extends JPanel {
         	public void actionPerformed(ActionEvent e) {
         		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
         		// At this point the attendant should be pinged
+        		
+
+                Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
+                BarcodedItem ownBags = new BarcodedItem(barcode, 10);
+                
+        		tabbedPane.setSelectedIndex(1);
+        		
+        		stationLogic.bagApproval(ownBags);
+        		
+        		/*
         		tabbedPane.setSelectedIndex(1);
                 Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
                 BarcodedItem ownBags = new BarcodedItem(barcode, 10);
                 stationLogic.scaleController.addExpectedWeight(ownBags.getWeight());
         		// Notifying using the scale that the weight has changed
         		updateFields(ownBags);
+        		*/
             }
         });
         addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));
