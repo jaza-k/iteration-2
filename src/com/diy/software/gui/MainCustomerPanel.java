@@ -52,11 +52,12 @@ public class MainCustomerPanel extends JPanel {
 
         JTextPane scannedItemPane = new JTextPane();
         scannedItemPane.setEditable(false);
-        scannedItemPane.setBounds(56, 11, 350, 304);
+        scannedItemPane.setBounds(58, 11, 350, 304);
         add(scannedItemPane);
 
 
         JButton scanButton = new JButton("Scan Item");
+        scanButton.setBackground(SystemColor.activeCaptionBorder);
         scanButton.setToolTipText("");
         scanButton.setFont(new Font("Georgia", Font.PLAIN, 12));
 
@@ -126,27 +127,28 @@ public class MainCustomerPanel extends JPanel {
         add(scanButton);
 
         // Button for switching to payment tab
-        JButton finishBagging = new JButton("Finish Bagging");
-        finishBagging.setFont(new Font("Georgia", Font.PLAIN, 13));
+        JButton payment = new JButton("Proceed to Payment");
+        payment.setBackground(SystemColor.activeCaptionBorder);
+        payment.setFont(new Font("Georgia", Font.PLAIN, 13));
         
         // Action event when "Proceed" button clicked
-        finishBagging.addActionListener(new ActionListener() {
+        payment.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(1);
+                tabbedPane.setSelectedIndex(2);
             }
         });
 
-        finishBagging.setBounds(276, 440, 130, 35);
-        add(finishBagging);
+        payment.setBounds(142, 481, 177, 36);
+        add(payment);
         
         numberOfBags = new JTextField();
-        numberOfBags.setBounds(40, 445, 76, 27);
+        numberOfBags.setBounds(50, 432, 76, 27);
         add(numberOfBags);
         numberOfBags.setColumns(10);
 
         JLabel bagLabel = new JLabel("Number of Bags");
         bagLabel.setFont(new Font("Georgia", Font.PLAIN, 13));
-        bagLabel.setBounds(40, 416, 113, 23);
+        bagLabel.setBounds(50, 398, 113, 23);
         add(bagLabel);
 
         JButton purchaseBags = new JButton("Buy Bags");
@@ -189,7 +191,19 @@ public class MainCustomerPanel extends JPanel {
 				numberOfBags.setText("");
 			}
         });
-        purchaseBags.setBounds(126, 440, 98, 35);
+        purchaseBags.setBounds(166, 427, 95, 35);
         add(purchaseBags);
+        
+        JButton addOwnBag = new JButton("Add Bag");
+        addOwnBag.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		JOptionPane.showMessageDialog(getParent(), "Please add your bag!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
+        		// At this point the attendant should be pinged
+        		tabbedPane.setSelectedIndex(1);
+        	}
+        });
+        addOwnBag.setFont(new Font("Georgia", Font.PLAIN, 13));
+        addOwnBag.setBounds(283, 427, 95, 35);
+        add(addOwnBag);
     }
 }

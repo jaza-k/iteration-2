@@ -46,7 +46,7 @@ public class PayPanelV2 extends JPanel {
 
         debitButton = new JButton("Debit");
         debitButton.setBackground(SystemColor.inactiveCaption);
-        debitButton.setBounds(0, 300, 225, 200);
+        debitButton.setBounds(0, 300, 225, 274);
         debitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // switch to appropriate panel after selection
@@ -56,7 +56,7 @@ public class PayPanelV2 extends JPanel {
 
         backToScanButton = new JButton("Back to Scanning");
         backToScanButton.setBackground(new Color(240, 128, 128));
-        backToScanButton.setBounds(225, 300, 240, 200);
+        backToScanButton.setBounds(225, 300, 240, 274);
         backToScanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // switch to appropriate panel after selection
