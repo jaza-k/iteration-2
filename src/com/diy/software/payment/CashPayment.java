@@ -14,13 +14,13 @@ import java.util.List;
 public class CashPayment {
 	DoItYourselfStationAR customerStation;
 	DoItYourselfStationLogic stationLogic;
-	
+
 	public CashPayment(DoItYourselfStationAR newstation, DoItYourselfStationLogic newlogic)
 	{
 		customerStation = newstation;
 		stationLogic = newlogic;
 	}
-	
+
 	public double payWithBill(Banknote bill, double checkoutTotal) throws TooMuchCashException, DisabledException
 	{
 		//It is assumed that the bill was already successfully inserted, validated, and stored in the parent class
@@ -35,7 +35,7 @@ public class CashPayment {
 			return returner;
 		}
 	}
-	
+
 	public double payWithCoin(Coin coin, double checkoutTotal) throws TooMuchCashException, DisabledException
 	{
 		double coinvalue = (double)coin.getValue() / (double)100;
@@ -50,7 +50,7 @@ public class CashPayment {
 			return returner;
 		}
 	}
-	
+
 	public double dispenseChange(double changevalue) throws TooMuchCashException, DisabledException
 	{
 		double temp;
@@ -74,7 +74,7 @@ public class CashPayment {
 			try
 			{
 				customerStation.coinDispensers.get(cointoget).emit();
-				centvalue -= cointoget; 
+				centvalue -= cointoget;
 				cointoget = 0;
 			}
 			catch (OutOfCashException e)

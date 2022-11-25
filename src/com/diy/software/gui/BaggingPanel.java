@@ -18,7 +18,7 @@ public class BaggingPanel extends JPanel {
     public BaggingPanel(Customer customer, TouchScreen screen, DoItYourselfStationLogic doItYourselfStationLogic, JTabbedPane tabbedPane) {
         setBackground(Color.PINK);
         setLayout(null);
-        
+
         JLabel lblNewLabel = new JLabel("Please wait for the attendant to approve your request!");
         lblNewLabel.setFont(new Font("Georgia", Font.PLAIN, 14));
         lblNewLabel.setForeground(Color.WHITE);

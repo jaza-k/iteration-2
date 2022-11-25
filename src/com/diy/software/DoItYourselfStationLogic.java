@@ -119,7 +119,7 @@ public class DoItYourselfStationLogic {
     public CustomerGUI getCustomerGUI() {
         return this.customerGUI;
     }
-    
+
     public void initCustomerGUI(DoItYourselfStationLogic d, Customer c, TouchScreen s, HashMap<Card, CardIssuer> b, Barcode bagBarcode) {
     	this.customerGUI = new CustomerGUI(d,c,s,b, bagBarcode);
 
@@ -170,7 +170,7 @@ public class DoItYourselfStationLogic {
         //stat.banknoteOutput.disactivate();
         stat.coinSlot.disactivate();
         stat.cardReader.turnOff();
-        
+
         //System.out.print("\n" + stat.scanner.isDisabled());
 
         //AttendantStationLogic.getInstance().stations[sID].scanner.disable();
@@ -192,7 +192,7 @@ public class DoItYourselfStationLogic {
         //stat.banknoteOutput.activate();
         stat.coinSlot.activate();
         stat.cardReader.turnOn();
-        
+
         this.status = Status.READY;
     }
 

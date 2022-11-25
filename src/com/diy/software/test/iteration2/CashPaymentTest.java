@@ -56,12 +56,12 @@ public class CashPaymentTest {
 	private static class NoteDispenserObserver implements BanknoteDispenserObserver
 	{
 		String name;
-		
+
 		public NoteDispenserObserver(String newname)
 		{
 			name = newname;
 		}
-		
+
 		@Override
 		public void moneyFull(IBanknoteDispenser dispenser)
 		{
@@ -83,7 +83,7 @@ public class CashPaymentTest {
 		@Override
 		public void banknoteRemoved(IBanknoteDispenser dispenser, Banknote banknote)
 		{
-			System.out.println(name + ": " + Long.toString(banknote.getValue()) + " dollar bill removed."); 
+			System.out.println(name + ": " + Long.toString(banknote.getValue()) + " dollar bill removed.");
 		}
 
 		@Override
@@ -98,16 +98,16 @@ public class CashPaymentTest {
 			System.out.println(name + ": banknotes unloaded");
 		}
 	}
-	
+
 	private static class NoteStorageObserver implements BanknoteStorageUnitObserver
 	{
 		String name;
-		
+
 		public NoteStorageObserver(String newname)
 		{
 			name = newname;
 		}
-		
+
 		@Override
 		public void banknotesFull(BanknoteStorageUnit unit)
 		{
@@ -132,7 +132,7 @@ public class CashPaymentTest {
 			System.out.println(name + ": banknotes unloaded. Current count == " + Integer.toString(unit.getBanknoteCount()));
 		}
 	}
-	
+
 	private static class NoteValidObserver implements BanknoteValidatorObserver
 	{
 		String name;
@@ -140,29 +140,29 @@ public class CashPaymentTest {
 		{
 			name = newname;
 		}
-		
+
 		@Override
 		public void validBanknoteDetected(BanknoteValidator validator, Currency currency, long value)
 		{
 			System.out.println(name + ": Valid " + currency.getDisplayName() + " bill detected. Value == " + Long.toString(value));
 		}
-		
+
 		@Override
 		public void invalidBanknoteDetected(BanknoteValidator validator)
 		{
 			System.out.println(name + ": Invalid bill detected.");
 		}
 	}
-	
+
 	private static class MySlotObserver implements BanknoteSlotRObserver
-	{    
+	{
 		String name;
-		
+
 		public MySlotObserver(String newname)
 		{
 			name = newname;
 		}
-		
+
 		@Override
 		public void banknoteInserted(BanknoteSlotR slot)
 		{
@@ -172,7 +172,7 @@ public class CashPaymentTest {
 		/**
 		 * An event announcing that a banknote has been returned to the user, dangling
 		 * from the slot.
-		 * 
+		 *
 		 * @param slot
 		 *            The device on which the event occurred.
 		 */
@@ -184,7 +184,7 @@ public class CashPaymentTest {
 
 		/**
 		 * An event announcing that a dangling banknote has been removed by the user.
-		 * 
+		 *
 		 * @param slot
 		 *            The device on which the event occurred.
 		 */
@@ -194,7 +194,7 @@ public class CashPaymentTest {
 			System.out.println(name + ": Banknote removed from slot.");
 		}
 	}
-	
+
 	MySlotObserver observer = new MySlotObserver("Observer");
 	MySlotObserver output1 = new MySlotObserver("Output1");
 	NoteValidObserver noteobs1 = new NoteValidObserver("Validator1");
@@ -203,7 +203,7 @@ public class CashPaymentTest {
 	CoinStorageObserver coinstoreob = new CoinStorageObserver("COINSTORE");
 	DoItYourselfStationAR station;
 	DoItYourselfStationLogic stationLogic;
-	
+
 	Banknote twentybill, tenbill, fivebill, fiftybill, hundredbill;
 	Coin penny, nickel, dime, quarter, loonie, toonie, toonie2; //For the sake of simplicity, we'll assume this test takes place in an alternate universe where canadian pennies are still in circulation
 	boolean flag;
@@ -211,7 +211,7 @@ public class CashPaymentTest {
 	long [] coindenoms;
 
 	MySlotObserver slotob = new MySlotObserver("Slot");
-	
+
 	@Before
 	public void setUp() throws Exception {
 		denominations = new int[] {5, 10, 20, 50, 100};
@@ -226,16 +226,16 @@ public class CashPaymentTest {
 		station.plugIn();
 		station.turnOn();
 		stationLogic = new DoItYourselfStationLogic(station);
-		
+
 		DoItYourselfStationLogic[] stations = {stationLogic};
 		AttendantStationLogic.getInstance().quantizeStations(stations);
-		
+
 		twentybill = new Banknote(Currency.getInstance("CAD"), 20);
 		tenbill = new Banknote(Currency.getInstance("CAD"), 10);
 		fivebill = new Banknote(Currency.getInstance("CAD"), 5);
 		fiftybill = new Banknote(Currency.getInstance("CAD"), 50);
 		hundredbill = new Banknote(Currency.getInstance("CAD"), 100);
-		
+
 		penny = new Coin(Currency.getInstance("CAD"), 1);
 		nickel = new Coin(Currency.getInstance("CAD"),5);
 		dime = new Coin(Currency.getInstance("CAD"),10);
@@ -253,14 +253,14 @@ public class CashPaymentTest {
 		station.banknoteDispensers.get(5).load(fivebill, fivebill, fivebill);
 		station.banknoteDispensers.get(10).load(tenbill, tenbill);
 		station.banknoteDispensers.get(20).load(twentybill, twentybill);
-		
+
 		station.coinDispensers.get((long)1).load(penny);
 		station.coinDispensers.get((long)5).load(nickel);
 		station.coinDispensers.get((long)10).load(dime);
 		station.coinDispensers.get((long)25).load(quarter);
 		station.coinDispensers.get((long)100).load(loonie);
 		station.coinDispensers.get((long)200).load(toonie);
-		
+
 		for (int denomination : denominations)
 		{
 			station.banknoteDispensers.get(denomination).attach(dispobs1);
@@ -270,7 +270,7 @@ public class CashPaymentTest {
 			//station.coinDispensers,get(denom).attach(); //Have to make coindispenser obvserver first -_-
 		//}
 	}
-	
+
 	@After
 	public void teardown()
 	{
@@ -283,7 +283,7 @@ public class CashPaymentTest {
 			station.coinDispensers.get(coindenom).unload();
 		}
 	}
-	
+
 	@Test
 	public void NormalPayment() throws DisabledException, TooMuchCashException
 	{
@@ -301,7 +301,7 @@ public class CashPaymentTest {
 		Assert.assertTrue(coinlist.size() == 1); //The station should have given one quarter as change.
 		Assert.assertTrue(coinlist.get(0).getValue() == 25);
 	}
-	
+
 	@Test
 	public void NotEnoughChange() throws DisabledException, TooMuchCashException
 	{
@@ -320,7 +320,7 @@ public class CashPaymentTest {
 		int[] issues = AttendantStationLogic.getInstance().getIssues();
 		Assert.assertTrue(issues[0] == 3);
 	}
-	
+
 	@Test
 	public void PartialPayment() throws DisabledException, TooMuchCashException
 	{
@@ -336,7 +336,7 @@ public class CashPaymentTest {
 		List<Coin> coinlist = station.coinTray.collectCoins();
 		Assert.assertTrue(coinlist.size() == 0);
 	}
-	
+
 	@Test
 	public void SameBillTwice() throws DisabledException, TooMuchCashException
 	{
@@ -357,7 +357,7 @@ public class CashPaymentTest {
 		}
 		Assert.assertTrue(newpay.checkoutTotal == 0);
 	}
-	
+
 	@Test
 	public void BillsInChange() throws DisabledException, TooMuchCashException
 	{
@@ -374,7 +374,7 @@ public class CashPaymentTest {
 		List<Coin> coinlist = station.coinTray.collectCoins();
 		Assert.assertTrue(coinlist.size() == 2);
 	}
-	
+
 	@Test
 	public void LargeBillSmallCheckout() throws DisabledException, TooMuchCashException
 	{
@@ -391,7 +391,7 @@ public class CashPaymentTest {
 		Assert.assertTrue(coinlist.size() == 2);
 		Assert.assertTrue(newpay.checkoutTotal == (-95));
 	}
-	
+
 	@Test
 	public void PayWithCoin() throws DisabledException, TooMuchCashException
 	{

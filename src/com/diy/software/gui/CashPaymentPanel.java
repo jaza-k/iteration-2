@@ -34,9 +34,9 @@ public class CashPaymentPanel extends JPanel {
     NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(ca);
 
 
-    
 
-    
+
+
 
     public CashPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
         this.customer = customer;
@@ -44,8 +44,7 @@ public class CashPaymentPanel extends JPanel {
         this.tabbedPane = tabbedPane;
         // CURRENCY SHOULD IDEALLY BE PASSED INTO CONSTRUCTOR
         this.currency = Currency.getInstance("CAD");
-        
-        
+
         GridLayout experimentLayout = new GridLayout(4,3);
         setLayout(experimentLayout);
 
@@ -76,14 +75,14 @@ public class CashPaymentPanel extends JPanel {
         priceTotal.setFont(new Font("Georgia", Font.PLAIN, 13));
         priceTotal.setBounds(175, 321, 144, 14);
         add(priceTotal);
-        
-        
+
+
         JLabel changeTotal = new JLabel();
         priceTotal.setFont(new Font("Georgia", Font.PLAIN, 13));
         priceTotal.setBounds(175, 500, 144, 14);
         add(changeTotal);
 
-        
+
 
         newPay = new Payment(stationLogic.station, stationLogic, total);
         CashPayment cashPayment = new CashPayment(stationLogic.station, stationLogic);
@@ -94,8 +93,8 @@ public class CashPaymentPanel extends JPanel {
         changeTotal.setText("Change to be outputted: 0" + dollarFormat.getCurrency().getSymbol());
 
 
-        
-        
+
+
         // Combo-box for denominations setup
         JComboBox<String> billComboBox = new JComboBox<String>();
         JComboBox<String> coinComboBox = new JComboBox<String>();
@@ -112,8 +111,8 @@ public class CashPaymentPanel extends JPanel {
         coinComboBox.setBounds(109, 349, 91, 23);
         add(coinComboBox);
 
-        
-        
+
+
         // Insert Bill Button setup
         JButton payBillButton = new JButton("Insert Bill");
         payBillButton.setFont(new Font("Georgia", Font.PLAIN, 12));
@@ -140,7 +139,7 @@ public class CashPaymentPanel extends JPanel {
                 	JOptionPane.showMessageDialog(getParent(), "Remove Dangling Banknote", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (NoPowerException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Loss of power!", "Insertion Error", JOptionPane.ERROR_MESSAGE);
-                	
+
                 	/////////////////// For testing////////////////////////////
                 	stationLogic.station.plugIn();
                 	stationLogic.station.turnOn();
@@ -152,8 +151,8 @@ public class CashPaymentPanel extends JPanel {
         payBillButton.setBounds(237, 349, 91, 23);
         add(payBillButton);
 
-        
-        
+
+
         // Insert Coin Button setup
         JButton payCoinButton = new JButton("Insert Coin");
         payCoinButton.setFont(new Font("Georgia", Font.PLAIN, 12));
@@ -189,8 +188,7 @@ public class CashPaymentPanel extends JPanel {
         });
         payCoinButton.setBounds(237, 349, 91, 23);
         add(payCoinButton);
-
-        
+ 
     // Insert removeBankNote setup
     JButton removeBanknoteButton = new JButton("Remove Dangling Banknote");
     removeBanknoteButton.setFont(new Font("Georgia", Font.PLAIN, 12));
@@ -205,11 +203,10 @@ public class CashPaymentPanel extends JPanel {
 			}
         }
     });
-       
-   
+
+
     removeBanknoteButton.setBounds(237, 349, 20, 20);
-    add(removeBanknoteButton);
-   
+    add(removeBanknoteButton);   
     
     // collect change setup
     JButton collectChangeButton = new JButton("Collect Change");
@@ -231,9 +228,6 @@ public class CashPaymentPanel extends JPanel {
     collectChangeButton.setBounds(237, 349, 20, 20);
     add(collectChangeButton);
     }
-    
-    
-    
     
 
     

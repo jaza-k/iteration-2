@@ -65,21 +65,21 @@ public class AttendantGUI {
         for(int i = 0; i < sIssues.length; i++) {
         	//System.out.print("\nStation " + i + " status is: " + sIssues[i]);
         }
-        
+
         if(sIssues[0] != 0) s1.setBackground(Color.getHSBColor(160, 100, 60)); else s1.setBackground(null);
         if(sIssues[1] != 0) s2.setBackground(Color.getHSBColor(160, 100, 60)); else s2.setBackground(null);
         if(sIssues[2] != 0) s3.setBackground(Color.getHSBColor(160, 100, 60)); else s3.setBackground(null);
         if(sIssues[3] != 0) s4.setBackground(Color.getHSBColor(160, 100, 60)); else s4.setBackground(null);
         if(sIssues[4] != 0) s5.setBackground(Color.getHSBColor(160, 100, 60)); else s5.setBackground(null);
         if(sIssues[5] != 0) s6.setBackground(Color.getHSBColor(160, 100, 60)); else s6.setBackground(null);
-        
+
         if(sIssues[0] > 0) p1.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[0]]); else p1.setText("");
         if(sIssues[1] > 0) p2.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[1]]); else p2.setText("");
         if(sIssues[2] > 0) p3.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[2]]); else p3.setText("");
         if(sIssues[3] > 0) p4.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[3]]); else p4.setText("");
         if(sIssues[4] > 0) p5.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[4]]); else p5.setText("");
         if(sIssues[5] > 0) p6.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[5]]); else p6.setText("");
-        
+
     }
 
     public void receiptPrinterPaperLowPopUp() {
@@ -154,7 +154,7 @@ public class AttendantGUI {
             sID = 5;
 
         });
-        
+
         p1 = new JTextField("");
         p1.setEditable(false);
         p2 = new JTextField("");
@@ -256,7 +256,7 @@ public class AttendantGUI {
             AttendantFrame.repaint();
             sID = -1;    // no station selected
         });
-        
+
         att.add(AddownBag);
         att.add(AddItem);
         att.add(RemoveItem);

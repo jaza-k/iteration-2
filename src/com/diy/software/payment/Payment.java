@@ -28,7 +28,7 @@ public class Payment {
 	private static boolean cashinserted;
 	private static boolean coininserted;
 	private static Coin latestcoin;
-	
+
 	private static class CoinStorage implements CoinStorageUnitObserver
 	{
 		@Override
@@ -63,7 +63,7 @@ public class Payment {
 		@Override
 		public void coinsUnloaded(CoinStorageUnit unit) {}
 	}
-	
+
 	private static class CoinValid implements CoinValidatorObserver
 	{
 		@Override
@@ -88,12 +88,12 @@ public class Payment {
 		@Override
 		public void invalidCoinDetected(CoinValidator validator) {}
 	}
-	
+
 	private static class NoteStorage implements BanknoteStorageUnitObserver
 	{
 		public NoteStorage() {}
 		@Override
-		public void banknotesFull(BanknoteStorageUnit unit) 
+		public void banknotesFull(BanknoteStorageUnit unit)
 		{
 			stationLogic.block(customerStation);
 			int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
@@ -101,7 +101,7 @@ public class Payment {
 		}
 
 		@Override
-		public void banknoteAdded(BanknoteStorageUnit unit) 
+		public void banknoteAdded(BanknoteStorageUnit unit)
 		{
 			if (cashinserted && latestnote != null)
 			{
@@ -139,11 +139,11 @@ public class Payment {
 		@Override
 		public void banknotesUnloaded(BanknoteStorageUnit unit) {} //The station should already be disabled if an attendant unloads it, so i don't think we'd have to do anything here
 	}
-	
+
 	private static class NoteValid implements BanknoteValidatorObserver
 	{
 		public NoteValid() {}
-		
+
 		@Override
 		public void validBanknoteDetected(BanknoteValidator validator, Currency currency, long value)
 		{
@@ -157,13 +157,13 @@ public class Payment {
 			//In this case, it may be a good idea to alert the attendant.
 		}
 	}
-	
+
 	private NoteValid notevalidob; //These observers should handle the insertion of banknotes
 	private NoteStorage notestoreob;
-	
+
 	private CoinValid coinvalidob;
 	private CoinStorage coinstoreob; //These observers will hand the insertion of coins
-	
+
 	public boolean CreditPay(String newpin, Card newcard, double payval, CardIssuer newbank) //I apologize for how many parameters go into this call.
 	{
 		//Call this function when the customer chooses to pay with a credit card. Using payval allows for the possibility of partial payments.
@@ -182,7 +182,7 @@ public class Payment {
 			return false;
 		}
 	}
-	
+
 	public void dispenseChange() throws DisabledException, TooMuchCashException
 	{
 		//If the customer is owed change, this function should be called after the attendant refills the change dispensers.
@@ -193,7 +193,7 @@ public class Payment {
 			checkoutTotal = newchange.dispenseChange(-checkoutTotal);
 		}
 	}
-	
+
 	public Payment(DoItYourselfStationAR newstation, DoItYourselfStationLogic newlogic, double newtotal)
 	{
 		customerStation = newstation;
@@ -207,7 +207,7 @@ public class Payment {
 		notestoreob = new NoteStorage();
 		coinvalidob = new CoinValid();
 		coinstoreob = new CoinStorage();
-		
+
 		customerStation.banknoteValidator.attach(notevalidob); //By attaching the observers to the station, the software can detect when
 		customerStation.banknoteStorage.attach(notestoreob); //bills or coins are inserted into the checkout station. it may be a good
 		customerStation.coinValidator.attach(coinvalidob); //idea to attach them only in the case when the customer chooses to pay with

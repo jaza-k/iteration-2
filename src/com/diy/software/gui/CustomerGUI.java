@@ -27,7 +27,7 @@ public class CustomerGUI {
 
     /**
      * Constructor for CustomerGUI
-     * @param bagBarcode 
+     * @param bagBarcode
      *
      * @param doItYourselfStationLogic: The logic to be installed on the statio
      * @param customer:                 The customer currently using the station

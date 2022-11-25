@@ -26,7 +26,7 @@ public class MainCustomerPanel extends JPanel {
 	private JTextField numberOfBags;
     /**
      * Creation of the panel
-     * @param bagBarcode 
+     * @param bagBarcode
      */
     public MainCustomerPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane, Barcode bagBarcode) {
 
@@ -109,7 +109,7 @@ public class MainCustomerPanel extends JPanel {
 					}
 				}
 				if(bagTotal != 0) {
-					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
+					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
 				}
 				scannedItemPane.setText(stringBuilder.toString());
             }
@@ -117,11 +117,14 @@ public class MainCustomerPanel extends JPanel {
         scanButton.setBounds(142, 346, 177, 36);
         add(scanButton);
 
+
+        ///////////////////////////////////////////////////////////////////
+
         // Button for switching to payment tab
         JButton payment = new JButton("Proceed to Payment");
         payment.setBackground(SystemColor.activeCaptionBorder);
         payment.setFont(new Font("Georgia", Font.PLAIN, 13));
-        
+
         // Action event when "Proceed" button clicked
         payment.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -129,9 +132,35 @@ public class MainCustomerPanel extends JPanel {
             }
         });
 
-        payment.setBounds(142, 481, 177, 36);
+        payment.setBounds(20, 481, 140, 36);
         add(payment);
-        
+
+        ///////////////////////////////////////////////////////////////////
+
+        JTextField memNum = new JTextField();
+        memNum.setBounds(320, 481, 120, 36);
+        add(memNum);
+
+        ///////////////////////////////////////////////////////////////////
+
+        // Button for switching to payment tab
+        JButton enterMem = new JButton("Enter Member#");
+        enterMem.setBackground(SystemColor.activeCaptionBorder);
+        enterMem.setFont(new Font("Georgia", Font.PLAIN, 13));
+
+        // Action event when "Proceed" button clicked
+        enterMem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(memNum.getText().equals("12345")) System.out.print("\nHello again, Dr. Walker!\n");
+                //tabbedPane.setSelectedIndex(2);
+            }
+        });
+
+        enterMem.setBounds(170, 481, 140, 36);
+        add(enterMem);
+
+        ///////////////////////////////////////////////////////////////////
+
         numberOfBags = new JTextField();
         numberOfBags.setBounds(50, 432, 76, 27);
         add(numberOfBags);
@@ -143,8 +172,8 @@ public class MainCustomerPanel extends JPanel {
         add(bagLabel);
 
         JButton purchaseBags = new JButton("Buy Bags");
-        purchaseBags.setFont(new Font("Georgia", Font.PLAIN, 13)); 
-        
+        purchaseBags.setFont(new Font("Georgia", Font.PLAIN, 13));
+
         purchaseBags.addActionListener(new ActionListener() {
         	// Action when the customer wants to buy bags
         	public void actionPerformed(ActionEvent e) {
@@ -201,7 +230,7 @@ public class MainCustomerPanel extends JPanel {
                     }
                 }
                 if(bagTotal != 0) {
-                    stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
+                    stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
                 }
                 scannedItemPane.setText(stringBuilder.toString());
             }
@@ -229,7 +258,7 @@ public class MainCustomerPanel extends JPanel {
 
         purchaseBags.setBounds(166, 427, 95, 35);
         add(purchaseBags);
-        
+
         JButton addOwnBag = new JButton("Use Own Bags");
         addOwnBag.addActionListener(new ActionListener() {
             private void updateFields() {
@@ -242,11 +271,11 @@ public class MainCustomerPanel extends JPanel {
 
                 Barcode barcode = new Barcode(new Numeral[]{Numeral.valueOf((byte) 7)});
                 BarcodedItem ownBags = new BarcodedItem(barcode, 10);
-                
+
         		tabbedPane.setSelectedIndex(1);
-        		
+
         		stationLogic.bagApproval(ownBags);
-        		
+
 
         		tabbedPane.setSelectedIndex(1);
                 stationLogic.scaleController.addExpectedWeight(ownBags.getWeight());
