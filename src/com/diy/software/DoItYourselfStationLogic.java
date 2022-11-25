@@ -160,6 +160,7 @@ public class DoItYourselfStationLogic {
         //freezeButtons = true;
 
         //System.out.print("\nFrom Block: " + stat + "\n");
+        //System.out.print("\n" + stat.scanner.isDisabled());
 
         // MAYBE MORE???
         stat.scanner.turnOff();
@@ -169,6 +170,8 @@ public class DoItYourselfStationLogic {
         stat.banknoteOutput.disactivate();
         stat.coinSlot.disactivate();
         stat.cardReader.turnOff();
+        
+        //System.out.print("\n" + stat.scanner.isDisabled());
 
         //AttendantStationLogic.getInstance().stations[sID].scanner.disable();
 
