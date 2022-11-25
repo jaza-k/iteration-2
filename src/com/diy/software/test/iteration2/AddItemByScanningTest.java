@@ -24,15 +24,16 @@ public class AddItemByScanningTest {
     DoItYourselfStationLogic stationLogic;
     Customer customer;
 
+    //create dummy items and products
     Barcode barcode1 = new Barcode(new Numeral[]{Numeral.valueOf((byte) 1)});
     BarcodedItem item1 = new BarcodedItem(barcode1, 5);
     Barcode barcode2 = new Barcode(new Numeral[]{Numeral.valueOf((byte) 2)});
     BarcodedItem item2 = new BarcodedItem(barcode2, 5);
 
-
+    // create barcoded product
     BarcodedProduct product1 = new BarcodedProduct(barcode1, "Test product 1", 10, 5);
     BarcodedProduct product2 = new BarcodedProduct(barcode2, "Test product 2", 10, 10);
-
+    //Set before tests run
     @Before
     public void setup(){
         ScannerController scanControl = new ScannerController(stationLogic);
@@ -51,7 +52,7 @@ public class AddItemByScanningTest {
 
     }
 
-
+    //Testing when scanning a valid item
     @Test
     public void validItemScanned(){
 
@@ -62,7 +63,7 @@ public class AddItemByScanningTest {
         assertEquals(1,stationLogic.scannerController.getScannedItems().size());
 
     }
-
+    //testing when not scanning from an empty db and shopping cart
     @Test
     public void noItemScanned(){
         ProductDatabases.BARCODED_PRODUCT_DATABASE.remove(barcode1, product1);
@@ -76,7 +77,7 @@ public class AddItemByScanningTest {
 
         assertTrue(stationLogic.scannerController.getScannedItems().isEmpty());
     }
-
+    //testing scanning when disabled
     @Test
     public void scannerDisabled(){
 
@@ -92,7 +93,7 @@ public class AddItemByScanningTest {
         assertTrue(stationLogic.scannerController.getScannedItems().isEmpty());
 
     }
-
+    //Testing when scanning two items
     @Test
     public void scanTwoItems(){
         station.scanner.enable();
