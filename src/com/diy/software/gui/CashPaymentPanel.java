@@ -15,8 +15,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 public class CashPaymentPanel extends JPanel {
 
@@ -27,6 +29,13 @@ public class CashPaymentPanel extends JPanel {
     private Customer customer;
     private JTabbedPane tabbedPane;
     private Currency currency;
+    Locale ca = new Locale("en", "CA");
+    NumberFormat dollarFormat = NumberFormat.getCurrencyInstance(ca);
+
+
+    
+
+    
 
     public CashPaymentPanel(Customer customer, DoItYourselfStationLogic stationLogic, JTabbedPane tabbedPane) {
         this.customer = customer;
@@ -34,6 +43,8 @@ public class CashPaymentPanel extends JPanel {
         this.tabbedPane = tabbedPane;
         // CURRENCY SHOULD IDEALLY BE PASSED INTO CONSTRUCTOR
         this.currency = Currency.getInstance("CAD");
+
+        
 
         
         GridLayout experimentLayout = new GridLayout(4,3);
@@ -80,9 +91,12 @@ public class CashPaymentPanel extends JPanel {
 
 
         double cost = newPay.checkoutTotal;
-        priceTotal.setText("Total: " + cost + currency.getSymbol());
-        changeTotal.setText("Change to be outputted: 0" + currency.getSymbol());
+        priceTotal.setText("Total: " +  (dollarFormat.format(cost)));
+        changeTotal.setText("Change to be outputted: 0" + dollarFormat.getCurrency().getSymbol());
 
+
+        
+        
         // Combo-box for denominations setup
         JComboBox<String> billComboBox = new JComboBox<String>();
         JComboBox<String> coinComboBox = new JComboBox<String>();
@@ -118,8 +132,8 @@ public class CashPaymentPanel extends JPanel {
                     	change = -cost;
                     	cost = 0;
                     }
-                    priceTotal.setText("Remaining Cost: " + cost + currency.getSymbol());
-                    changeTotal.setText("Change: " + change + currency.getSymbol());
+                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(cost)));
+                    changeTotal.setText("Change: " +  (dollarFormat.format(cost)));
                 } catch (DisabledException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Banknote Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
@@ -156,8 +170,8 @@ public class CashPaymentPanel extends JPanel {
                     	change = -cost;
                     	cost = 0;
                     }
-                    priceTotal.setText("Remaining Cost: " + cost + currency.getSymbol());
-                    changeTotal.setText("Change: " + change + currency.getSymbol());
+                    priceTotal.setText("Remaining Cost: " +  (dollarFormat.format(cost)));
+                    changeTotal.setText("Change: " +  (dollarFormat.format(cost)));
                 } catch (DisabledException e1) {
                 	JOptionPane.showMessageDialog(getParent(), "Coin Slot is disabled! Ask Attendant", "Insertion Error", JOptionPane.ERROR_MESSAGE);
                 } catch (TooMuchCashException e1) {
@@ -184,7 +198,7 @@ public class CashPaymentPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
 			Boolean flag = stationLogic.station.banknoteInput.hasDanglingBanknote();
 			if (flag) {
-				stationLogic.station.banknoteInput.removeDanglingBanknote();
+				System.out.println(stationLogic.station.banknoteInput.removeDanglingBanknote());
 			} else {
 				JOptionPane.showMessageDialog(getParent(), "No Banknote is Dangling!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
