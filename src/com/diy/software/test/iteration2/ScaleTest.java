@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.diy.software.test.iteration2;
 
 import com.diy.hardware.BarcodedProduct;
