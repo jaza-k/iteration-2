@@ -63,7 +63,7 @@ public class CustomerGUI {
         frame.setTitle("Customer GUI");
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
         frame.pack();
-        frame.setSize(465, 550);
+        frame.setSize(465, 575);
         frame.setLocation(700, 200);
         //frame.setLocationRelativeTo(null);
         screen.setVisible(true);

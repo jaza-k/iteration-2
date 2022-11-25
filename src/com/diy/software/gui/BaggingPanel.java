@@ -16,18 +16,15 @@ public class BaggingPanel extends JPanel {
      * Create the panel.
      */
     public BaggingPanel(Customer customer, TouchScreen screen, DoItYourselfStationLogic doItYourselfStationLogic, JTabbedPane tabbedPane) {
-        setBackground(SystemColor.inactiveCaption);
+        setBackground(Color.PINK);
         setLayout(null);
-
-        JButton btnNewButton = new JButton("Continue to Payment");
-        btnNewButton.setFont(new Font("Georgia", Font.PLAIN, 13));
-        btnNewButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tabbedPane.setSelectedIndex(2);
-            }
-        });
-        btnNewButton.setBounds(210, 391, 189, 39);
-        add(btnNewButton);
+        
+        JLabel lblNewLabel = new JLabel("Please wait for the attendant to approve your request!");
+        lblNewLabel.setFont(new Font("Georgia", Font.PLAIN, 14));
+        lblNewLabel.setForeground(Color.WHITE);
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(46, 274, 363, 22);
+        add(lblNewLabel);
 
     }
 }

@@ -147,7 +147,7 @@ public class AttendantGUI {
 
     private void addWidgets(JPanel att) {
 
-        AddownBag = new JButton("Add Own Bag");
+        AddownBag = new JButton("Approve Bags");
         AddownBag.setHorizontalAlignment(SwingConstants.LEFT);
         AddownBag.setFocusPainted(false);
         AddownBag.addActionListener(e -> {
@@ -192,7 +192,11 @@ public class AttendantGUI {
         PermitstationUse.setFocusPainted(false);
         PermitstationUse.addActionListener(e -> {
             //call function  of "Permit Station Use", make sure the scanner, scale etc is turned on.
-
+            if (sID != -1) {
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                AttendantStationLogic.getInstance().getStationLogic(sID).unblock(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+            }
         });
 
         BlockstationUse = new JButton("Block Station Use");
@@ -200,7 +204,11 @@ public class AttendantGUI {
         BlockstationUse.setFocusPainted(false);
         BlockstationUse.addActionListener(e -> {
             //call function of "Block Station Use", make sure the scanner, scale etc is enabled.
-
+            if (sID != -1) {
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+                AttendantStationLogic.getInstance().getStationLogic(sID).block(AttendantStationLogic.getInstance().getStationLogic(sID).getStation());
+                //System.out.print("\nStation " + sID + " status is currently: " + AttendantStationLogic.getInstance().getStationLogic(sID).getStatus());
+            }
         });
 
         Close = new JButton("Close");

@@ -39,7 +39,8 @@ public class DoItYourselfStationLogic {
         READY,
         WAITING_FOR_WEIGHT,
         DISCREPANCY,
-        OVERLOAD
+        OVERLOAD,
+        BLOCKED
     }
 
     private Status status = Status.READY;
@@ -160,15 +161,21 @@ public class DoItYourselfStationLogic {
         //freezeButtons = true;
 
         //System.out.print("\nFrom Block: " + stat + "\n");
-
+        //System.out.print("\n" + stat.scanner.isDisabled());
+    	this.status = Status.BLOCKED;
+    	
         // MAYBE MORE???
         stat.scanner.turnOff();
         stat.cardReader.turnOff();
         stat.printer.turnOff();
-        stat.banknoteInput.disactivate();
-        stat.banknoteOutput.disactivate();
+        stat.banknoteInput.disable();
+        stat.banknoteOutput.disable();
+        //stat.banknoteInput.disactivate();
+        //stat.banknoteOutput.disactivate();
         stat.coinSlot.disactivate();
         stat.cardReader.turnOff();
+        
+        //System.out.print("\n" + stat.scanner.isDisabled());
 
         //AttendantStationLogic.getInstance().stations[sID].scanner.disable();
 
@@ -183,10 +190,14 @@ public class DoItYourselfStationLogic {
         stat.scanner.turnOn();
         stat.cardReader.turnOn();
         stat.printer.turnOn();
-        stat.banknoteInput.activate();
-        stat.banknoteOutput.activate();
+        stat.banknoteInput.enable();
+        stat.banknoteOutput.enable();
+        //stat.banknoteInput.activate();
+        //stat.banknoteOutput.activate();
         stat.coinSlot.activate();
         stat.cardReader.turnOn();
+        
+        this.status = Status.READY;
     }
 
 
