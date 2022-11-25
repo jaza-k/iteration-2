@@ -22,6 +22,9 @@ import com.unitedbankingservices.coin.*;
 import com.diy.software.payment.Payment;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.AttendantStationLogic;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class CashPaymentTest {
