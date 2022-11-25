@@ -147,7 +147,7 @@ public class AttendantGUI {
 
     private void addWidgets(JPanel att) {
 
-        AddownBag = new JButton("Add Own Bag");
+        AddownBag = new JButton("Approve Bags");
         AddownBag.setHorizontalAlignment(SwingConstants.LEFT);
         AddownBag.setFocusPainted(false);
         AddownBag.addActionListener(e -> {
