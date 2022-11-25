@@ -6,7 +6,6 @@ import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
-import com.diy.software.DoItYourselfStationLogic.Status;
 import com.jimmyselectronics.necchi.Barcode;
 import com.jimmyselectronics.necchi.BarcodedItem;
 import com.jimmyselectronics.necchi.Numeral;
@@ -157,7 +156,7 @@ public class MainCustomerPanel extends JPanel {
                             customer.deselectCurrentItem();
                         } catch (NullPointerSimulationException e1) { }
                         customer.shoppingCart.add(bagItem);
-                        while(!scanItem());
+                        scanBag();
 					}
                     updateBaggingFields();
         		}catch (NumberFormatException e1) {
@@ -165,18 +164,19 @@ public class MainCustomerPanel extends JPanel {
         			JOptionPane.showMessageDialog(getParent(), "Invalid Number of Bags!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
         	}
-            private boolean scanItem() {
-                //if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
-                if (stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
-                    customer.selectNextItem();
-                    customer.scanItem();
-                }
-                if (stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
-                    customer.deselectCurrentItem();
-                    return false;
+            private void scanBag() {
+                while (true) {
+                    if (stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
+                        customer.selectNextItem();
+                        customer.scanItem();
+                    }
+                    if (stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                        customer.deselectCurrentItem();
+                    } else {
+                        break;
+                    }
                 }
                 bagItem();
-                return true;
             }
             private void bagItem() {
                 // Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
