@@ -42,22 +42,18 @@ public class Payment {
 		@Override
 		public void coinAdded(CoinStorageUnit unit)
 		{
-			if (coininserted && latestcoin != null)
-			{
-				try
-				{
+			if (coininserted = true && latestcoin != null) {
+				try {
 					CashPayment newpayment = new CashPayment(customerStation, stationLogic);
 					checkoutTotal = newpayment.payWithCoin(latestcoin, checkoutTotal);
 					coininserted = false;
 					latestcoin = null;
-				}
-				catch(TooMuchCashException e)
-				{
+				} catch (TooMuchCashException e) {
 					stationLogic.block(customerStation);
 					int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
 					AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
+				} catch (Exception e) {
 				}
-				catch (Exception e) {}
 			}
 		}
 
@@ -73,8 +69,20 @@ public class Payment {
 		@Override
 		public void validCoinDetected(CoinValidator validator, long value)
 		{
-			latestcoin = new Coin(value);
+			//System.out.println("Valid coin detected");
+			latestcoin = new Coin(Currency.getInstance("CAD"), value);
 			coininserted = true;
+			try
+			{
+				customerStation.coinStorage.receive(latestcoin);
+			}
+			catch (TooMuchCashException e)
+			{
+				stationLogic.block(customerStation);
+				int stationid = AttendantStationLogic.getInstance().matchStationID(stationLogic);
+				AttendantStationLogic.getInstance().notifyProblem(stationid, 4);
+			}
+			catch (Exception e) {}
 		}
 
 		@Override

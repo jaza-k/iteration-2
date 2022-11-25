@@ -38,9 +38,10 @@ public class CashPayment {
 	
 	public double payWithCoin(Coin coin, double checkoutTotal) throws TooMuchCashException, DisabledException
 	{
-		double coinvalue = coin.getValue() / 100;
+		double coinvalue = (double)coin.getValue() / (double)100;
 		if (checkoutTotal - coinvalue >= 0)
 		{
+			System.out.println(Double.toString(coinvalue));
 			return checkoutTotal - coinvalue;
 		}
 		else
@@ -63,6 +64,7 @@ public class CashPayment {
 		long cointoget = 0;
 		int billtoget = 0;
 		int stationid; //Used to flag attendant
+		//System.out.println("Cent value == " + Long.toString(centvalue));
 		while (centvalue > 0)
 		{
 			for (int i = 0; i < coindenom.size(); i++)
