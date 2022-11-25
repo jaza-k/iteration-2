@@ -166,8 +166,10 @@ public class DoItYourselfStationLogic {
         stat.scanner.turnOff();
         stat.cardReader.turnOff();
         stat.printer.turnOff();
-        stat.banknoteInput.disactivate();
-        stat.banknoteOutput.disactivate();
+        stat.banknoteInput.disable();
+        stat.banknoteOutput.disable();
+        //stat.banknoteInput.disactivate();
+        //stat.banknoteOutput.disactivate();
         stat.coinSlot.disactivate();
         stat.cardReader.turnOff();
         
@@ -186,8 +188,10 @@ public class DoItYourselfStationLogic {
         stat.scanner.turnOn();
         stat.cardReader.turnOn();
         stat.printer.turnOn();
-        stat.banknoteInput.activate();
-        stat.banknoteOutput.activate();
+        stat.banknoteInput.enable();
+        stat.banknoteOutput.enable();
+        //stat.banknoteInput.activate();
+        //stat.banknoteOutput.activate();
         stat.coinSlot.activate();
         stat.cardReader.turnOn();
     }
