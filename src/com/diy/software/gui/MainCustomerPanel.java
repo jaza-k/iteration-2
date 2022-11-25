@@ -1,33 +1,21 @@
 package com.diy.software.gui;
 
 
-import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.Locale;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
 import com.diy.software.DoItYourselfStationLogic;
 import com.diy.software.DoItYourselfStationLogic.Status;
 import com.jimmyselectronics.necchi.Barcode;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import static com.diy.software.DoItYourselfStationLogic.Status.WAITING_FOR_WEIGHT;
 
 public class MainCustomerPanel extends JPanel {
     Locale ca = new Locale("en", "CA");
