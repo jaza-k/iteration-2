@@ -75,8 +75,9 @@ public class DebitPaymentPanel extends JPanel {
                     boolean flag = newPayment.payForTotal(stationLogic.scannerController.getTotal());
 
                     if (flag) {
-                        screen.setVisible(false);
-                        JOptionPane.showMessageDialog(getParent(), "Payment Successful!", "Transaction Update", JOptionPane.INFORMATION_MESSAGE);
+                        tabbedPane.setSelectedIndex(7);
+                    } else {
+                        JOptionPane.showMessageDialog(getParent(), "Transaction Failed!", "Payment Error", JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (InvalidPINException e2) {
                     JOptionPane.showMessageDialog(getParent(), "Invalid PIN", "Payment Error", JOptionPane.ERROR_MESSAGE);

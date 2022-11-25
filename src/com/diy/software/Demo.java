@@ -49,14 +49,14 @@ public class Demo {
         Barcode barcode3 = new Barcode(new Numeral[]{Numeral.one, Numeral.two, Numeral.three});
 
         // Create barcoded items
-        BarcodedItem item1 = new BarcodedItem(barcode1, 12);
-        BarcodedItem item2 = new BarcodedItem(barcode2, 5);
-        BarcodedItem item3 = new BarcodedItem(barcode3, 21);
+        BarcodedItem item1 = new BarcodedItem(barcode1, 1);
+        BarcodedItem item2 = new BarcodedItem(barcode2, 6);
+        BarcodedItem item3 = new BarcodedItem(barcode3, 20);
 
         // Create barcoded products
         BarcodedProduct product1 = new BarcodedProduct(barcode1, "Crackers", 5, 1);
         BarcodedProduct product2 = new BarcodedProduct(barcode2, "Juice", 10, 5);
-        BarcodedProduct product3 = new BarcodedProduct(barcode3, "Chocolate", 4, 2);
+        BarcodedProduct product3 = new BarcodedProduct(barcode3, "Chocolate", 4, 20);
 
 
         // Add barcoded products to database
