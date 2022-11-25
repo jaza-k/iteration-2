@@ -1,6 +1,7 @@
 package com.diy.software.gui;
 
 
+import ca.ucalgary.seng300.simulation.NullPointerSimulationException;
 import com.diy.hardware.BarcodedProduct;
 import com.diy.hardware.external.ProductDatabases;
 import com.diy.simulation.Customer;
@@ -85,7 +86,7 @@ public class MainCustomerPanel extends JPanel {
                 // At this point, the status should be "Waiting for Weight"
                 JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
                 bagItem();
-                
+
             }
 
             private void bagItem() {
@@ -94,8 +95,6 @@ public class MainCustomerPanel extends JPanel {
 	            updateFields();
 				if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
 					tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
-					
-					
 				}
             }
             private void updateFields() {
@@ -155,17 +154,62 @@ public class MainCustomerPanel extends JPanel {
         		try {
         			int numberOFBags = Integer.parseInt(numberOfBags.getText());
         			for (int i = 0; i < numberOFBags; i++) {
-            			stationLogic.scannerController.barcodeScanned(stationLogic.station.scanner, bagBarcode);
-            			stationLogic.setStatus(Status.READY);
+                        BarcodedItem bagItem = new BarcodedItem(bagBarcode, 1.0);
+                        try {
+                            customer.deselectCurrentItem();
+                        } catch (NullPointerSimulationException e1) { }
+                        customer.shoppingCart.add(bagItem);
+                        scanItem();
 					}
                     updateBaggingFields();
-
-					
         		}catch (Exception e1) {
 					// Catching when the number of bags isn't a valid number
         			JOptionPane.showMessageDialog(getParent(), "Invalid Number of Bags!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
         	}
+            private void scanItem() {
+                //if(stationLogic.scaleController.getStatus() == ScaleController.Status.READY) {
+                if (stationLogic.getStatus() == DoItYourselfStationLogic.Status.READY) {
+                    customer.selectNextItem();
+                    customer.scanItem();
+                }
+                if (stationLogic.getStatus() != WAITING_FOR_WEIGHT) {
+                    customer.deselectCurrentItem();
+                    JOptionPane.showMessageDialog(getParent(), "Scan Failed!", "Scan Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                // At this point, the status should be "Waiting for Weight"
+                JOptionPane.showMessageDialog(getParent(), "Place Item in Bagging!", "Bagging Update", JOptionPane.INFORMATION_MESSAGE);
+                bagItem();
+
+            }
+            private void bagItem() {
+                // Customer "puts" the item into the bagging area so now we can compare expected vs actual weight
+                customer.placeItemInBaggingArea();
+                updateFields();
+                if(stationLogic.getStatus() == DoItYourselfStationLogic.Status.DISCREPANCY) {
+                    tabbedPane.setSelectedIndex(6);	// Weight Discrepancy
+                }
+            }
+            private void updateFields() {
+                // Initializing this integer here to avoid duplicate prices
+                int bagTotal = 0;
+                WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
+                priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (BarcodedProduct barcodedProduct : stationLogic.scannerController.getScannedItems()) {
+                    if(barcodedProduct.getBarcode() != bagBarcode) {
+                        stringBuilder.append(barcodedProduct.getDescription() + "\t\t\t\t" + dollarFormat.format(barcodedProduct.getPrice()) + "\n");
+                    }else {
+                        bagTotal++;
+                    }
+                }
+                if(bagTotal != 0) {
+                    stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
+                }
+                scannedItemPane.setText(stringBuilder.toString());
+            }
 
 			private void updateBaggingFields() {
 				
