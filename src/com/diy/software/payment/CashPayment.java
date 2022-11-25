@@ -41,7 +41,7 @@ public class CashPayment {
 		double coinvalue = (double)coin.getValue() / (double)100;
 		if (checkoutTotal - coinvalue >= 0)
 		{
-			System.out.println(Double.toString(coinvalue));
+			//System.out.println(Double.toString(coinvalue));
 			return checkoutTotal - coinvalue;
 		}
 		else
