@@ -1,4 +1,3 @@
-
 package com.diy.software.test.iteration1;
 
 public class AttendantDemo {

@@ -1,4 +1,3 @@
-
 package com.diy.software.ancillary;
 
 public class Member {

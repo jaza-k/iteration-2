@@ -64,4 +64,3 @@ public class ReceiptPrinterController implements ReceiptPrinterListener {
     public void turnedOff(AbstractDevice<? extends AbstractDeviceListener> device) {
     }
 }
-
