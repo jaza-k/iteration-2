@@ -16,6 +16,7 @@ public class AttendantGUI {
     JPanel Controls, MainMenu;
 
     JTextArea statText;
+    JTextField p1, p2, p3, p4, p5, p6;
 
     JScrollPane scroller;
 
@@ -71,7 +72,13 @@ public class AttendantGUI {
         if(sIssues[3] != 0) s4.setBackground(Color.getHSBColor(160, 100, 60)); else s4.setBackground(null);
         if(sIssues[4] != 0) s5.setBackground(Color.getHSBColor(160, 100, 60)); else s5.setBackground(null);
         if(sIssues[5] != 0) s6.setBackground(Color.getHSBColor(160, 100, 60)); else s6.setBackground(null);
-       
+        
+        if(sIssues[0] > 0) p1.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[0]]); else p1.setText("");
+        if(sIssues[1] > 0) p2.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[1]]); else p2.setText("");
+        if(sIssues[2] > 0) p3.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[2]]); else p3.setText("");
+        if(sIssues[3] > 0) p4.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[3]]); else p4.setText("");
+        if(sIssues[4] > 0) p5.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[4]]); else p5.setText("");
+        if(sIssues[5] > 0) p6.setText("  Issue:  " + AttendantStationLogic.getInstance().probDesc[sIssues[5]]); else p6.setText("");
         
     }
 
@@ -147,13 +154,26 @@ public class AttendantGUI {
             sID = 5;
 
         });
+        
+        p1 = new JTextField("");
+        p1.setEditable(false);
+        p2 = new JTextField("");
+        p2.setEditable(false);
+        p3 = new JTextField("");
+        p3.setEditable(false);
+        p4 = new JTextField("");
+        p4.setEditable(false);
+        p5 = new JTextField("");
+        p5.setEditable(false);
+        p6 = new JTextField("");
+        p6.setEditable(false);
 
-        sts.add(s1);
-        sts.add(s2);
-        sts.add(s3);
-        sts.add(s4);
-        sts.add(s5);
-        sts.add(s6);
+        sts.add(s1);	sts.add(p1);
+        sts.add(s2);	sts.add(p2);
+        sts.add(s3);	sts.add(p3);
+        sts.add(s4);	sts.add(p4);
+        sts.add(s5);	sts.add(p5);
+        sts.add(s6);	sts.add(p6);
 
     }
 
@@ -236,7 +256,7 @@ public class AttendantGUI {
             AttendantFrame.repaint();
             sID = -1;    // no station selected
         });
-
+        
         att.add(AddownBag);
         att.add(AddItem);
         att.add(RemoveItem);
