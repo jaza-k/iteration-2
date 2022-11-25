@@ -128,9 +128,9 @@ public class DoItYourselfStationLogic {
     /*
      *  ADD OWN BAG
      */
-    public void bagApproval() {
+    public void bagApproval(BarcodedItem ownBag) {
 
-        System.out.print("\nAdding Own Bags Now...\n");
+//        System.out.print("\nAdding Own Bags Now...\n");
         // notify station done adding to scale
     	
     	/*
