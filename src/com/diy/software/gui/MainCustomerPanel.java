@@ -109,7 +109,7 @@ public class MainCustomerPanel extends JPanel {
 					}
 				}
 				if(bagTotal != 0) {
-					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
+					stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
 				}
 				scannedItemPane.setText(stringBuilder.toString());
             }
@@ -201,7 +201,7 @@ public class MainCustomerPanel extends JPanel {
                     }
                 }
                 if(bagTotal != 0) {
-                    stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
+                    stringBuilder.append(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getDescription() + "\t\t\t" + dollarFormat.format(ProductDatabases.BARCODED_PRODUCT_DATABASE.get(bagBarcode).getPrice() * bagTotal) + "\n");
                 }
                 scannedItemPane.setText(stringBuilder.toString());
             }
