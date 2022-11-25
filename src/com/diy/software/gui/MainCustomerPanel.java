@@ -212,7 +212,6 @@ public class MainCustomerPanel extends JPanel {
             }
 
 			private void updateBaggingFields() {
-				
 				int bagTotal = 0;
 				WeightLabel.setText("Weight: " + stationLogic.scaleController.getExpectedWeightInGrams() + "g");
 				priceTotal.setText("Cart Total: " + (dollarFormat.format(stationLogic.scannerController.getTotal())));

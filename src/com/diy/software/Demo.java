@@ -51,7 +51,7 @@ public class Demo {
         // Create barcoded items
         BarcodedItem item1 = new BarcodedItem(barcode1, 12);
         BarcodedItem item2 = new BarcodedItem(barcode2, 5);
-        BarcodedItem item3 = new BarcodedItem(barcode3, 2);
+        BarcodedItem item3 = new BarcodedItem(barcode3, 21);
 
         // Create barcoded products
         BarcodedProduct product1 = new BarcodedProduct(barcode1, "Crackers", 5, 1);
