@@ -28,7 +28,31 @@ import com.diy.software.AttendantStationLogic;
 
 
 public class CashPaymentTest {
-	
+	private static class CoinStorageObserver implements CoinStorageUnitObserver
+	{
+		String name;
+		public CoinStorageObserver(String newname)
+		{
+			name = newname;
+		}
+		@Override
+		public void coinsFull(CoinStorageUnit unit)
+		{
+			System.out.println(name + ": Coin storage full");
+		}
+
+		@Override
+		public void coinAdded(CoinStorageUnit unit)
+		{
+			System.out.println(name + ": Coin added to storage");
+		}
+
+		@Override
+		public void coinsLoaded(CoinStorageUnit unit) {}
+
+		@Override
+		public void coinsUnloaded(CoinStorageUnit unit) {}
+	}
 	private static class NoteDispenserObserver implements BanknoteDispenserObserver
 	{
 		String name;
@@ -176,14 +200,17 @@ public class CashPaymentTest {
 	NoteValidObserver noteobs1 = new NoteValidObserver("Validator1");
 	NoteStorageObserver storeobs1 = new NoteStorageObserver("Storage1");
 	NoteDispenserObserver dispobs1 = new NoteDispenserObserver("Dispenser1");
+	CoinStorageObserver coinstoreob = new CoinStorageObserver("COINSTORE");
 	DoItYourselfStationAR station;
 	DoItYourselfStationLogic stationLogic;
 	
 	Banknote twentybill, tenbill, fivebill, fiftybill, hundredbill;
-	Coin penny, nickel, dime, quarter, loonie, toonie; //For the sake of simplicity, we'll assume this test takes place in an alternate universe where canadian pennies are still in circulation
+	Coin penny, nickel, dime, quarter, loonie, toonie, toonie2; //For the sake of simplicity, we'll assume this test takes place in an alternate universe where canadian pennies are still in circulation
 	boolean flag;
 	int [] denominations;
 	long [] coindenoms;
+
+	MySlotObserver slotob = new MySlotObserver("Slot");
 	
 	@Before
 	public void setUp() throws Exception {
@@ -194,6 +221,7 @@ public class CashPaymentTest {
 		DoItYourselfStationAR.configureBanknoteStorageUnitCapacity(4); //Only four bills can fit in station2's storage unit
 		DoItYourselfStationAR.configureCoinDenominations(coindenoms);
 		DoItYourselfStationAR.configureCoinTrayCapacity(10);
+		DoItYourselfStationAR.configureCurrency(Currency.getInstance("CAD"));
 		station = new DoItYourselfStationAR();
 		station.plugIn();
 		station.turnOn();
@@ -214,12 +242,14 @@ public class CashPaymentTest {
 		quarter = new Coin(Currency.getInstance("CAD"),25);
 		loonie = new Coin(Currency.getInstance("CAD"),100);
 		toonie = new Coin(Currency.getInstance("CAD"),200);
-		
+		toonie2 = new Coin(Currency.getInstance("CAD"),200);
+
 		station.banknoteInput.attach(observer);
 		station.banknoteValidator.attach(noteobs1);
 		station.banknoteStorage.attach(storeobs1);;
 		station.banknoteOutput.attach(output1);
-		
+		station.coinStorage.attach(coinstoreob);
+
 		station.banknoteDispensers.get(5).load(fivebill, fivebill, fivebill);
 		station.banknoteDispensers.get(10).load(tenbill, tenbill);
 		station.banknoteDispensers.get(20).load(twentybill, twentybill);
@@ -362,5 +392,15 @@ public class CashPaymentTest {
 		Assert.assertTrue(newpay.checkoutTotal == (-95));
 	}
 	
-	
+	@Test
+	public void PayWithCoin() throws DisabledException, TooMuchCashException
+	{
+		System.out.println("\nPAY WITH COIN\n");
+		Payment newpay = new Payment(station, stationLogic, 1.75);
+		station.coinSlot.receive(toonie);
+		List<Coin> coinlist = station.coinTray.collectCoins();
+		System.out.println("Checkout total == " + Double.toString(newpay.checkoutTotal));
+		Assert.assertTrue(coinlist.size() == 1); //The change should be one quarter
+		Assert.assertTrue(newpay.checkoutTotal == 0);
+	}
 }
